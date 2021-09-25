@@ -1,0 +1,13 @@
+.btn {
+    color: #FFFFFF;
+    border-radius: 20px;
+    width: 200px;
+}
+
+.btn-pink-disabled {
+    background-color: rgba(218, 1, 117, 0.35);
+}
+
+.btn-pink-activated {
+    background-color: #DA0175;
+}

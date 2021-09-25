@@ -1,0 +1,22 @@
+.container-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 100vh;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 50px 72px;
+}
+
+button {
+    margin-bottom: 30px;
+}

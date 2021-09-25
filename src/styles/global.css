@@ -1,3 +1,13 @@
 @import './alignments.css';
 @import './buttons.css';
 @import './texts.css';
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #F7F7F7;;
+}

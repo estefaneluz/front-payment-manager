@@ -1,6 +1,13 @@
+import './styles.css';
+import '../../styles/form.css';
+
 function SignIn() {
     return (
-        <h1>Login</h1>
+        <div className="container-form">
+            <form className="form">
+
+            </form>
+        </div>
     )
 }
 

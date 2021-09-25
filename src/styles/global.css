@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 @import './alignments.css';
 @import './buttons.css';
 @import './texts.css';
@@ -9,5 +10,7 @@
 }
 
 body {
-    background-color: #F7F7F7;;
+    background-color: #F7F7F7;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
 }

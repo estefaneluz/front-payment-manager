@@ -29,7 +29,7 @@ function SignUp() {
             </form>
 
             <p>
-                Já possui uma conta? <Link to='/sign-in'>Acesse agora!</Link>
+                Já possui uma conta? <Link to='/'>Acesse agora!</Link>
             </p>
         </div>
     )

@@ -2,6 +2,7 @@
 @import './alignments.css';
 @import './buttons.css';
 @import './texts.css';
+@import './modal.css';
 
 * {
     box-sizing: border-box;
@@ -13,4 +14,15 @@ body {
     background-color: #F7F7F7;
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
+}
+
+h1 {
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+h1:before {
+    content: "//";
+    margin-right: 8px;
 }

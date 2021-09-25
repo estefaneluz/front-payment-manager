@@ -1,7 +1,12 @@
 .btn {
+    all: unset;
+
     color: #FFFFFF;
+    text-align: center;
+    
     border-radius: 20px;
     width: 200px;
+    padding: 11px;
 }
 
 .btn-pink-disabled {
@@ -10,4 +15,5 @@
 
 .btn-pink-activated {
     background-color: #DA0175;
+    cursor: pointer;
 }

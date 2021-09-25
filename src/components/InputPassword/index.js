@@ -6,7 +6,7 @@ import {
     InputLabel,
   } from "@material-ui/core";
   import { Visibility, VisibilityOff } from "@material-ui/icons/";
-  import { useStyles } from "../../styles/material-ui-form";
+  import { useStyles } from "../../styles/form-material-ui";
   import { useState } from "react";
   
   export default function Password(props) {
@@ -14,7 +14,7 @@ import {
     const styles = useStyles();
   
     return (
-      <FormControl className={styles.textField}>
+      <FormControl className={styles.input}>
         <InputLabel htmlFor={props.id}>
           {props.label}
         </InputLabel>

@@ -1,6 +1,6 @@
 import './styles.css';
 import '../../styles/form.css';
-import { useStyles } from '../../styles/material-ui-form';
+import { useStyles } from '../../styles/form-material-ui';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
 import TextField from '@material-ui/core/TextField';
@@ -16,13 +16,13 @@ function SignUp() {
                 <TextField 
                     id="standard-basic" 
                     label="Nome" 
-                    className={styles.textField}
+                    className={styles.input}
                 />
                 <TextField 
                     id="standard-basic" 
                     label="E-mail" 
                     placeholder="exemplo@gmail.com"
-                    className={styles.textField}
+                    className={styles.input}
                 />
                 <InputPassword id="password" label="Senha" />
                 <button className="btn btn-pink-opacity">Criar Conta</button>

@@ -13,11 +13,13 @@
     display: flex;
     align-items: center;
     column-gap: 20px;
+    padding: 12px 30px;
 
     color: white;
+    font-size: 12px;
+    font-weight: 600;
     text-decoration: none;
     text-transform: uppercase;
-    padding: 12px 30px;
 }
 
 .sidebar-menu .activated {
@@ -27,7 +29,7 @@
 .logo {
     width: 135px;
     height: 32px;
-    align-self: center;
+    margin-left: 30px;
 }
 
 .sidebar button {

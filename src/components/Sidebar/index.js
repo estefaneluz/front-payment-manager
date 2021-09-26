@@ -21,7 +21,7 @@ function Sidebar() {
             <div className="sidebar-menu">
                 <Link
                     to="/home" 
-                    className={location.pathname.includes('/home') && 'activated'}
+                    className={location.pathname.includes('/home') ? 'activated' : ''}
                 >
                     <img src={homeIcon} alt="icone da opção home" />
                     <p>Home</p>
@@ -29,7 +29,7 @@ function Sidebar() {
 
                 <Link 
                     to="/cobrancas"
-                    className={location.pathname.includes('/cobrancas') && 'activated'}
+                    className={location.pathname.includes('/cobrancas') ? 'activated' : ''}
                 >
                     <img src={moneyIcon} alt="icone da opção cobranças" />
                     <p>Cobranças</p>
@@ -37,7 +37,7 @@ function Sidebar() {
 
                 <Link 
                     to="/clientes"
-                    className={location.pathname.includes('/clientes') && 'activated'}
+                    className={location.pathname.includes('/clientes') ? 'activated' : ''}
                 >
                     <img src={userIcon} alt="icone da opção clientes" />
                     <p>Clientes</p>

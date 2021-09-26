@@ -1,6 +1,6 @@
 import './styles.css'
 import '../../styles/global.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import logoWhite from '../../assets/logo-white.svg';
 import homeIcon from '../../assets/home-icon.svg';
@@ -9,6 +9,8 @@ import userIcon from '../../assets/user-icon.svg';
 
 
 function Sidebar() {
+    const location = useLocation();
+
     return (
         <nav className="sidebar">
             <img 
@@ -17,17 +19,26 @@ function Sidebar() {
                 className="logo"
             />
             <div className="sidebar-menu">
-                <Link className='activated'>
+                <Link
+                    to="/home" 
+                    className={location.pathname.includes('/home') && 'activated'}
+                >
                     <img src={homeIcon} alt="icone da opção home" />
                     <p>Home</p>
                 </Link>
 
-                <Link>
+                <Link 
+                    to="/cobrancas"
+                    className={location.pathname.includes('/cobrancas') && 'activated'}
+                >
                     <img src={moneyIcon} alt="icone da opção cobranças" />
                     <p>Cobranças</p>
                 </Link>
 
-                <Link>
+                <Link 
+                    to="/clientes"
+                    className={location.pathname.includes('/clientes') && 'activated'}
+                >
                     <img src={userIcon} alt="icone da opção clientes" />
                     <p>Clientes</p>
                 </Link>

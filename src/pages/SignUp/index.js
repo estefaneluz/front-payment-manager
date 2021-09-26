@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
 import TextField from '@material-ui/core/TextField';
 import InputPassword from '../../components/InputPassword';
-import { useForm, register } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 function SignUp() {
     const styles = useStyles();

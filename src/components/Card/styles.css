@@ -20,7 +20,7 @@
 .card-content {
     background-color: #FFFFFF;
     border-radius: 16px;
-    padding: 40px;
+    padding: 40px 0 60px 0;
 
     display: flex;
     flex-direction: column;

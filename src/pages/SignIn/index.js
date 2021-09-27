@@ -44,14 +44,15 @@ function SignIn() {
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <img src={logo} alt="Logo da Cubos Academy" />
                 <TextField 
-
+                    error={!!errors.email}
                     id="email" 
                     label="E-mail" 
                     placeholder="exemplo@gmail.com"
                     className={styles.input}
-                    {...register('email')}
+                    {...register('email', { required: true })}
                 />
                 <InputPassword
+                    error={!!errors.password}
                     id="password"
                     label="Senha"
                     register={register}

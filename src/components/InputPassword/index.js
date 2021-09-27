@@ -31,6 +31,7 @@ import {
               </IconButton>
             </InputAdornment>
           }
+          {...props.register(props.id)}
         />
       </FormControl>
     );

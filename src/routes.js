@@ -5,7 +5,7 @@ import {
     Switch,
     Redirect 
 } from "react-router-dom";
-import { AuthContext } from "./contexts/authContext";
+import { AuthContext } from "./contexts/AuthContext";
 
 import Main from './pages/Main';
 import SignIn from './pages/SignIn';
@@ -22,7 +22,10 @@ const ProtectedRoutes = (props) => {
 function Routes() {
     const [token, setToken] = useState("");
 
-    const valueContext = {token, setToken}
+    const login = (value) => setToken(value);
+    const logout = () => setToken('');
+
+    const valueContext = {token, login, logout}
 
     return (
         <AuthContext.Provider value={valueContext}>

@@ -15,10 +15,11 @@ import {
   
     return (
       <FormControl className={styles.input}>
-        <InputLabel htmlFor={props.id}>
+        <InputLabel error={props.error} htmlFor={props.id}>
           {props.label}
         </InputLabel>
         <Input
+          error={props.error}
           id={props.id}
           type={showPassword ? "text" : "password"}
           endAdornment={
@@ -31,7 +32,7 @@ import {
               </IconButton>
             </InputAdornment>
           }
-          {...props.register(props.id)}
+          {...props.register(props.id, { required: true })}
         />
       </FormControl>
     );

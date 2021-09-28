@@ -3,18 +3,23 @@ import '../../styles/form.css';
 
 import { useState, useEffect } from 'react';
 import { useStyles } from '../../styles/form-material-ui';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import logo from '../../assets/logo.svg';
-import TextField from '@material-ui/core/TextField';
+import { TextField, Snackbar } from '@material-ui/core/';
+import { Alert } from '@material-ui/lab';
 import InputPassword from '../../components/InputPassword';
 
 function SignIn() {
     const styles = useStyles();
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const [buttonClass, setButtonClass] = useState('-pink-opacity');
+    const [alert, setAlert] = useState({});
     const watchAllFields = watch();
+    const history = useHistory();
+
+    const clearAlert = () => setAlert({});
 
     const onSubmit = async data => {
         const response = await fetch('http://localhost:8000/login', {
@@ -28,7 +33,15 @@ function SignIn() {
             body: JSON.stringify(data)
         });
 
-        console.log(response);
+        if(response.ok) {
+            return history.push('/home');
+        }
+
+        const message = await response.json();
+        setAlert({
+            type: 'error',
+            message
+        });
     }
 
     useEffect(() => {
@@ -44,7 +57,7 @@ function SignIn() {
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <img src={logo} alt="Logo da Cubos Academy" />
                 <TextField 
-                    error={!!errors.email}
+                    error={!!errors.email || !!alert.message}
                     id="email" 
                     label="E-mail" 
                     placeholder="exemplo@gmail.com"
@@ -52,7 +65,7 @@ function SignIn() {
                     {...register('email', { required: true })}
                 />
                 <InputPassword
-                    error={!!errors.password}
+                    error={!!errors.password || !!alert.message}
                     id="password"
                     label="Senha"
                     register={register}
@@ -68,6 +81,17 @@ function SignIn() {
             <p>
                 Não tem uma conta? <Link to='/sign-up'>Cadastre-se</Link>
             </p>
+
+            {!!alert.message && 
+                <Snackbar 
+                    open={!!alert.message} 
+                    autoHideDuration={4000} 
+                    onClose={clearAlert}>
+                    <Alert onClose={clearAlert} severity={alert.type}>
+                        {alert.message}
+                    </Alert>
+                </Snackbar>
+            }
         </div>
     )
 }

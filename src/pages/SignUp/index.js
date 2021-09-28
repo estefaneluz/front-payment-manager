@@ -71,7 +71,7 @@ function SignUp() {
                     {...register('name', { required: true })}
                 />
                 <TextField 
-                    error={!!errors.email}
+                    error={!!errors.email || !!alert.message}
                     id="email" 
                     label="E-mail" 
                     placeholder="exemplo@gmail.com"

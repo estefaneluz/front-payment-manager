@@ -1,0 +1,30 @@
+.counter-container {
+    width: 266px;
+    border-radius: 5px;
+    border: 2px solid;
+    font-weight: 600;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.counter-number {
+    font-size: 36px;
+}
+
+.green {
+    border-color: #4EC06E;
+    color: #4EC06E;
+}
+
+.red {
+    border-color: #FF4D4D;
+    color: #FF4D4D;
+}
+
+.blue {
+    border-color: #5197B5;
+    color: #5197B5;
+}

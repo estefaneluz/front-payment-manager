@@ -24,6 +24,11 @@ function RegisterCostumer() {
                     <InputCustomer label="Complemento" type="half" />
                     <InputCustomer label="Ponto de Referencia" type="half" />
                 </div>
+
+                <div className="flex-row column-gap-20">
+                    <button className="btn btn-border-pink">Cancelar</button>
+                    <button className="btn btn-pink-opacity">Adicionar Cliente</button>
+                </div>
             </form>
         </div>
     );

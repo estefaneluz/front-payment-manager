@@ -14,3 +14,7 @@
 .flex-row {
     display: flex;
 }
+
+.column-gap-20 {
+    column-gap: 20px;
+}

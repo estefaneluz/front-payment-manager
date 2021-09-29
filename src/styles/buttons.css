@@ -17,3 +17,10 @@
     background-color: #DA0175;
     cursor: pointer;
 }
+
+.btn-border-pink {
+    cursor: pointer;
+    color: #DA0175;
+    font-weight: bold;
+    border: 2px solid #DA0175;
+}

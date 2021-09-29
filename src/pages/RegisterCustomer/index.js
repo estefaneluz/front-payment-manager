@@ -1,7 +1,11 @@
 import './styles.css';
+import { useState } from 'react';
 import InputCustomer from '../../components/InputCustomer'
 
 function RegisterCostumer() {
+    const [cep, setCep] = useState('');
+    const [city, setCity] = useState('')
+
     return (
         <div className="container-register-costumer">
             <h1>Adicionar Cliente</h1>
@@ -26,7 +30,9 @@ function RegisterCostumer() {
                     <InputCustomer 
                         label="CEP" 
                         classType="half" 
-                        type="text" 
+                        type="text"
+                        value={cep}
+                        setState={setCep}
                     />
                     <InputCustomer 
                         label="Logradouro" 
@@ -44,7 +50,9 @@ function RegisterCostumer() {
                     <InputCustomer 
                         label="Cidade" 
                         classType="half" 
-                        type="text" 
+                        type="text"
+                        value={city}
+                        setState={setCity}
                     />
                 </div>
 

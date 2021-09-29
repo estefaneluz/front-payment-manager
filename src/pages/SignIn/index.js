@@ -61,7 +61,7 @@ function SignIn() {
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <img src={logo} alt="Logo da Cubos Academy" />
                 <TextField 
-                    error={!!errors.email || !!alert.message}
+                    error={!!errors.email || alert.type==="error"}
                     id="email" 
                     label="E-mail" 
                     placeholder="exemplo@gmail.com"

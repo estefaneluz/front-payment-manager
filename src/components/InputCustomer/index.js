@@ -1,12 +1,12 @@
 import './styles.css';
 
-function InputCustomer({type, label}) {
+function InputCustomer({type, classType, label}) {
     return(
         <div 
-            className={`customer-input ${!!type && type}`}
+            className={`customer-input ${!!classType && classType}`}
         >
             <label>{label}</label>
-            <input />
+            <input type={type}/>
         </div>
     );
 }

@@ -6,23 +6,23 @@ function RegisterCostumer() {
         <div className="container-register-costumer">
             <h1>Adicionar Cliente</h1>
             <form className="form">
-                <InputCustomer label="Nome" type="large"/>
-                <InputCustomer label="E-mail" type="large"/>
+                <InputCustomer label="Nome"/>
+                <InputCustomer label="E-mail"/>
                 <div className="double-input">
-                    <InputCustomer label="CPF" type="half" />
-                    <InputCustomer label="Telefone" type="half" />
+                    <InputCustomer label="CPF" classType="half" />
+                    <InputCustomer label="Telefone" classType="half" />
                 </div>
                 <div className="double-input">
-                    <InputCustomer label="CEP" type="half" />
-                    <InputCustomer label="Logradouro" type="half" />
+                    <InputCustomer label="CEP" classType="half" />
+                    <InputCustomer label="Logradouro" classType="half" />
                 </div>
                 <div className="double-input">
-                    <InputCustomer label="Bairro" type="half" />
-                    <InputCustomer label="Cidade" type="half" />
+                    <InputCustomer label="Bairro" classType="half" />
+                    <InputCustomer label="Cidade" classType="half" />
                 </div>
                 <div className="double-input">
-                    <InputCustomer label="Complemento" type="half" />
-                    <InputCustomer label="Ponto de Referencia" type="half" />
+                    <InputCustomer label="Complemento" classType="half" />
+                    <InputCustomer label="Ponto de Referência" classType="half" />
                 </div>
 
                 <div className="flex-row column-gap-20">

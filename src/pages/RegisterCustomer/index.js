@@ -1,10 +1,15 @@
 import './styles.css';
-import { useState } from 'react';
-import InputCustomer from '../../components/InputCustomer'
+import { useState, useEffect } from 'react';
+import InputCustomer from '../../components/InputCustomer';
+import { getCityByCep } from '../../services/viaCEP';
 
 function RegisterCostumer() {
     const [cep, setCep] = useState('');
-    const [city, setCity] = useState('')
+    const [city, setCity] = useState('');
+
+    useEffect(() => {
+        getCityByCep('');
+    }, []);
 
     return (
         <div className="container-register-costumer">

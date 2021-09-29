@@ -7,9 +7,23 @@ function RegisterCostumer() {
     const [cep, setCep] = useState('');
     const [city, setCity] = useState('');
 
+    const loadCityByCep = async (cep) => {
+        const cityByCep = await getCityByCep(cep);
+        setCity(cityByCep);
+    }
+
     useEffect(() => {
-        getCityByCep('');
-    }, []);
+        if(cep.indexOf('-') !== -1) {
+            if(cep.length === 9) {
+                loadCityByCep(cep)
+            }
+            return;
+        }
+
+        if(cep.length === 8) {
+            loadCityByCep(cep)
+        }
+    }, [cep]);
 
     return (
         <div className="container-register-costumer">

@@ -2,6 +2,11 @@ import './styles.css';
 
 function InputCustomer(props) {
 
+    const inputAttributes = {
+        value: props.value,
+        onChange: (e) => handleSetState(e)
+    }
+
     const handleSetState = (e) => {
         if(!!props.setState) {
             props.setState(e.target.value)
@@ -14,9 +19,8 @@ function InputCustomer(props) {
         >
             <label>{props.label}</label>
             <input 
-                value={!!props.value && props.value} 
+                {...inputAttributes}
                 type={props.type} 
-                onChange={(e) => handleSetState(e)}
             />
         </div>
     );

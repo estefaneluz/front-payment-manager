@@ -8,40 +8,21 @@ function RegisterCostumer() {
             <form className="form">
                 <InputCustomer label="Nome" type="large"/>
                 <InputCustomer label="E-mail" type="large"/>
-                <div className="flex-row">
-                    <InputCustomer label="CPF" type="half" margin-left />
+                <div className="double-input">
+                    <InputCustomer label="CPF" type="half" />
                     <InputCustomer label="Telefone" type="half" />
                 </div>
-
-                <div className="flex-row">
-                    <div>
-                        <label>CEP</label>
-                        <input/>
-                    </div>
-                    <div>
-                        <label>Logradouro</label>
-                        <input/>
-                    </div>
+                <div className="double-input">
+                    <InputCustomer label="CEP" type="half" />
+                    <InputCustomer label="Logradouro" type="half" />
                 </div>
-                <div className="flex-row">
-                    <div>
-                        <label>Bairro</label>
-                        <input/>
-                    </div>
-                    <div>
-                        <label>Cidade</label>
-                        <input/>
-                    </div>
+                <div className="double-input">
+                    <InputCustomer label="Bairro" type="half" />
+                    <InputCustomer label="Cidade" type="half" />
                 </div>
-                <div className="flex-row">
-                    <div>
-                        <label>Complemento</label>
-                        <input/>
-                    </div>
-                    <div>
-                        <label>Ponto de Referência</label>
-                        <input/>
-                    </div>
+                <div className="double-input">
+                    <InputCustomer label="Complemento" type="half" />
+                    <InputCustomer label="Ponto de Referencia" type="half" />
                 </div>
             </form>
         </div>

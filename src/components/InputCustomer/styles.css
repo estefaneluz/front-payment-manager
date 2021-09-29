@@ -1,6 +1,9 @@
 .customer-input {
     width: 50%;
     min-width: 500px;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .customer-input input {
@@ -10,11 +13,12 @@
     width: 100%;
 }
 
-.half {
-    width: 25%;
-    min-width: 250px;
+.customer-input label {
+    font-weight: bold;
+    color: #374952;
 }
 
-.half input {
-    width: 95%;
+.half {
+    width: 49%;
+    min-width: 240px;
 }

@@ -5,7 +5,6 @@ import { useState, useEffect, useContext } from 'react';
 import { useStyles } from '../../styles/form-material-ui';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-
 import { AuthContext } from '../../contexts/AuthContext';
 import logo from '../../assets/logo.svg';
 import { TextField, Snackbar } from '@material-ui/core/';
@@ -24,7 +23,7 @@ function SignIn() {
     const clearAlert = () => setAlert({});
 
     const onSubmit = async data => {
-        const response = await fetch('http://localhost:8000/login', {
+        const response = await fetch('https://api-payment-manager.herokuapp.com/login', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

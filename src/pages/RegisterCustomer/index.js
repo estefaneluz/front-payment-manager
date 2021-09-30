@@ -1,5 +1,8 @@
 import './styles.css';
+
 import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+
 import InputCustomer from '../../components/InputCustomer';
 import { getAddressByCep } from '../../services/viaCEP';
 
@@ -8,12 +11,17 @@ function RegisterCostumer() {
     const [city, setCity] = useState('');
     const [neighborhood, setNeighborhood] = useState('');
     const [street, setStreet] = useState('');
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const loadAddressByCep = async (cep) => {
         const { localidade, bairro, logradouro} = await getAddressByCep(cep);
         setCity(localidade);
         setNeighborhood(bairro);
         setStreet(logradouro);
+    }
+
+    const onSubmit = async (data) => {
+        console.log(data);
     }
 
     useEffect(() => {
@@ -32,67 +40,93 @@ function RegisterCostumer() {
     return (
         <div className="container-register-costumer">
             <h1>Adicionar Cliente</h1>
-            <form className="form">
-                <InputCustomer label="Nome" type="text" />
-                <InputCustomer label="E-mail" type="email" />
+            <form className="form" onSubmit={handleSubmit(onSubmit)}>
+                <InputCustomer 
+                    id="name"
+                    label="Nome" 
+                    type="text" 
+                    register={register}
+                    required={true}
+                />
+                <InputCustomer
+                    id="email"
+                    label="E-mail" 
+                    type="email" 
+                    register={register}
+                    required={true}
+                />
 
                 <div className="double-input">
-                    <InputCustomer 
+                    <InputCustomer
+                        id="cpf"
                         label="CPF" 
                         classType="half" 
-                        type="text" 
+                        type="text"
+                        register={register}
+                        required={true}
                     />
-                    <InputCustomer 
+                    <InputCustomer
+                        id="phone"
                         label="Telefone" 
                         classType="half"
-                        type="text" 
+                        type="text"
+                        register={register}
+                        required={true}
                     />
                 </div>
 
                 <div className="double-input">
-                    <InputCustomer 
+                    <InputCustomer
+                        id="zipcode"
                         label="CEP" 
                         classType="half" 
                         type="text"
                         value={cep}
                         setState={setCep}
                     />
-                    <InputCustomer 
+                    <InputCustomer
+                        id="street"
                         label="Logradouro" 
                         classType="half" 
                         type="text" 
                         value={street}
-                        setState={setStreet}  
+                        setState={setStreet}
                     />
                 </div>
 
                 <div className="double-input">
-                    <InputCustomer 
+                    <InputCustomer
+                        id="neighborhood"
                         label="Bairro" 
                         classType="half" 
                         type="text"
                         value={neighborhood}
-                        setState={setNeighborhood}  
+                        setState={setNeighborhood}
                     />
                     <InputCustomer 
+                        id="city"
                         label="Cidade" 
                         classType="half" 
                         type="text"
                         value={city}
-                        setState={setCity}                   
+                        setState={setCity}
                     />
                 </div>
 
                 <div className="double-input">
-                    <InputCustomer 
+                    <InputCustomer
+                        id="additional"
                         label="Complemento" 
                         classType="half" 
-                        type="text" 
+                        type="text"
+                        register={register}
                     />
                     <InputCustomer 
+                        id="landmark"
                         label="Ponto de Referência" 
                         classType="half" 
-                        type="text" 
+                        type="text"
+                        register={register}
                     />
                 </div>
 

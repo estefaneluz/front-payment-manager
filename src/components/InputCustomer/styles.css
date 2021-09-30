@@ -4,6 +4,9 @@
 
     display: flex;
     flex-direction: column;
+
+    font-weight: bold;
+    color: #374952;
 }
 
 .customer-input input {
@@ -13,12 +16,15 @@
     width: 100%;
 }
 
-.customer-input label {
-    font-weight: bold;
-    color: #374952;
-}
-
 .half {
     width: 49%;
     min-width: 240px;
+}
+
+.error label {
+    color: #F44336;
+}
+
+.error input {
+    border: 1px solid #F44336;
 }

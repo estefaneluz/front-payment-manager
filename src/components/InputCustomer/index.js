@@ -14,8 +14,11 @@ function InputCustomer(props) {
   }
 
   return (
-    <div className={`customer-input ${!!props.classType && props.classType}`}>
-      <label>{props.label}</label>
+    <div className={
+        `customer-input 
+        ${!!props.classType && props.classType} 
+        ${!!props.error ? 'error' : ''}`}>
+      <label> {props.label} </label>
       <input {...inputAttributes} type={props.type} />
     </div>
   )

@@ -59,6 +59,7 @@ function RegisterCostumer() {
                     type="text" 
                     register={register}
                     required={true}
+                    error={!!errors.name}
                 />
                 <InputCustomer
                     id="email"
@@ -66,6 +67,7 @@ function RegisterCostumer() {
                     type="email" 
                     register={register}
                     required={true}
+                    error={!!errors.email}
                 />
 
                 <div className="double-input">
@@ -76,6 +78,7 @@ function RegisterCostumer() {
                         type="text"
                         register={register}
                         required={true}
+                        error={!!errors.cpf}
                     />
                     <InputCustomer
                         id="phone"
@@ -84,6 +87,7 @@ function RegisterCostumer() {
                         type="text"
                         register={register}
                         required={true}
+                        error={!!errors.phone}
                     />
                 </div>
 

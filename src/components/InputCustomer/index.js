@@ -2,15 +2,15 @@ import './styles.css';
 
 function InputCustomer(props) {
 
+    const handleSetState = (e) => {
+        if(!!props.setState) {
+            props.setState(e.target.value);
+        }
+    }
+
     const inputAttributes = {
         value: props.value,
         onChange: (e) => handleSetState(e)
-    }
-
-    const handleSetState = (e) => {
-        if(!!props.setState) {
-            props.setState(e.target.value)
-        }
     }
 
     return(

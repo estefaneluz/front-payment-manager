@@ -1,27 +1,31 @@
 import './styles.css';
 import { useState, useEffect } from 'react';
 import InputCustomer from '../../components/InputCustomer';
-import { getCityByCep } from '../../services/viaCEP';
+import { getAddressByCep } from '../../services/viaCEP';
 
 function RegisterCostumer() {
     const [cep, setCep] = useState('');
     const [city, setCity] = useState('');
+    const [neighborhood, setNeighborhood] = useState('');
+    const [street, setStreet] = useState('');
 
-    const loadCityByCep = async (cep) => {
-        const cityByCep = await getCityByCep(cep);
-        setCity(cityByCep);
+    const loadAddressByCep = async (cep) => {
+        const { localidade, bairro, logradouro} = await getAddressByCep(cep);
+        setCity(localidade);
+        setNeighborhood(bairro);
+        setStreet(logradouro);
     }
 
     useEffect(() => {
         if(cep.indexOf('-') !== -1) {
             if(cep.length === 9) {
-                loadCityByCep(cep)
+                loadAddressByCep(cep)
             }
             return;
         }
 
         if(cep.length === 8) {
-            loadCityByCep(cep)
+            loadAddressByCep(cep)
         }
     }, [cep]);
 
@@ -57,6 +61,8 @@ function RegisterCostumer() {
                         label="Logradouro" 
                         classType="half" 
                         type="text" 
+                        value={street}
+                        setState={setStreet}  
                     />
                 </div>
 
@@ -64,14 +70,16 @@ function RegisterCostumer() {
                     <InputCustomer 
                         label="Bairro" 
                         classType="half" 
-                        type="text" 
+                        type="text"
+                        value={neighborhood}
+                        setState={setNeighborhood}  
                     />
                     <InputCustomer 
                         label="Cidade" 
                         classType="half" 
                         type="text"
                         value={city}
-                        setState={setCity}
+                        setState={setCity}                   
                     />
                 </div>
 

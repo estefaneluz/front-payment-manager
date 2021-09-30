@@ -1,19 +1,19 @@
-async function getCityByCep(cep) {
+async function getAddressByCep(cep) {
     try {
         const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`, {
             method: 'GET'
         })
 
-        const { localidade, erro } = await response.json();
+        const data = await response.json();
         
-        if(erro) {
+        if(data.erro) {
             return false;
         }
 
-        return localidade;
+        return data;
     } catch {
         return false;
     }
 }
 
-module.exports = { getCityByCep };
+module.exports = { getAddressByCep };

@@ -11,7 +11,11 @@ function RegisterCostumer() {
     const [city, setCity] = useState('');
     const [neighborhood, setNeighborhood] = useState('');
     const [street, setStreet] = useState('');
-    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const [buttonClass, setButtonClass] = useState('pink-opacity');
+    const { register, watch, handleSubmit, formState: { errors } } = useForm();
+    const watchFields = watch(['name', 'email', 'cpf', 'phone']);
+
 
     const loadAddressByCep = async (cep) => {
         const { localidade, bairro, logradouro} = await getAddressByCep(cep);
@@ -36,6 +40,14 @@ function RegisterCostumer() {
             loadAddressByCep(cep)
         }
     }, [cep]);
+
+    useEffect(() => {
+        if(watchFields.includes('')) {
+            setButtonClass('pink-opacity');
+        } else {
+            setButtonClass('pink');
+        }
+    }, [watchFields]);
 
     return (
         <div className="container-register-costumer">
@@ -134,7 +146,7 @@ function RegisterCostumer() {
                     <button className="btn btn-border-pink">
                         Cancelar
                     </button>
-                    <button className="btn btn-pink-opacity">
+                    <button className={`btn btn-${buttonClass}`} type="submit">
                         Adicionar Cliente
                     </button>
                 </div>

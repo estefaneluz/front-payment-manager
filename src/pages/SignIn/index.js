@@ -7,20 +7,16 @@ import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../contexts/AuthContext';
 import logo from '../../assets/logo.svg';
-import { TextField, Snackbar } from '@material-ui/core/';
-import { Alert } from '@material-ui/lab';
+import { TextField } from '@material-ui/core/';
 import InputPassword from '../../components/InputPassword';
 
 function SignIn() {
     const styles = useStyles();
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const [buttonClass, setButtonClass] = useState('pink-opacity');
-    const [alert, setAlert] = useState({});
-    const { login, setLoading } = useContext(AuthContext);
+    const { login, setLoading, setAlert } = useContext(AuthContext);
     const watchAllFields = watch();
     const history = useHistory();
-
-    const clearAlert = () => setAlert({});
 
     const onSubmit = async data => {
         setLoading(true);
@@ -97,17 +93,6 @@ function SignIn() {
             <p>
                 Não tem uma conta? <Link to='/sign-up'>Cadastre-se</Link>
             </p>
-
-            {!!alert.message && 
-                <Snackbar 
-                    open={!!alert.message} 
-                    autoHideDuration={4000} 
-                    onClose={clearAlert}>
-                    <Alert onClose={clearAlert} severity={alert.type}>
-                        {alert.message}
-                    </Alert>
-                </Snackbar>
-            }
         </div>
     )
 }

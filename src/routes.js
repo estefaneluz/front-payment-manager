@@ -6,7 +6,8 @@ import {
     Redirect 
 } from "react-router-dom";
 import { AuthContext } from "./contexts/AuthContext";
-import { Backdrop, CircularProgress } from "@material-ui/core";
+import { Backdrop, CircularProgress, Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 import { useStyles } from './styles/loading-material-ui';
 import Main from './pages/Main';
@@ -26,6 +27,7 @@ function Routes() {
     const [token, setToken] = useState("");
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(false);
+    const [alert, setAlert] = useState({});
     const styles = useStyles();
 
     const login = (value) => {
@@ -34,14 +36,17 @@ function Routes() {
     }
     const logout = () => setToken('');
 
+    const clearAlert = () => setAlert({});
+
     const valueContext = {
         token, 
         login, 
         logout, 
         user, 
         setUser,
-        loading,
-        setLoading
+        setLoading,
+        setAlert,
+        clearAlert
     }
 
     return (
@@ -58,6 +63,16 @@ function Routes() {
                     </ProtectedRoutes>
                 </Switch>
             </Router>
+
+            <Snackbar
+                open={!!alert.message}
+                autoHideDuration={4000}
+                onClose={clearAlert}
+            >
+                <Alert onClose={clearAlert} severity={alert.type}>
+                    {alert.message}
+                </Alert>
+            </Snackbar>
 
             <Backdrop
                 className={styles.backdrop}

@@ -5,8 +5,11 @@ import {
     Switch,
     Redirect 
 } from "react-router-dom";
-import { AuthContext } from "./contexts/AuthContext";
+import { GlobalStatesContext } from "./contexts/GlobalStatesContext";
+import { Backdrop, CircularProgress, Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
+import { useStyles } from './styles/loading-material-ui';
 import Main from './pages/Main';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
@@ -14,7 +17,7 @@ import Home from "./pages/Home";
 import RegisterCostumer from "./pages/RegisterCustomer";
 
 const ProtectedRoutes = (props) => {
-    const { token } = useContext(AuthContext);
+    const { token } = useContext(GlobalStatesContext);
     return (
       <Route render={() => (token ? props.children : <Redirect to="/" />)} />
     );
@@ -23,6 +26,9 @@ const ProtectedRoutes = (props) => {
 function Routes() {
     const [token, setToken] = useState("");
     const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [alert, setAlert] = useState({});
+    const styles = useStyles();
 
     const login = (value) => {
         setToken(value.token);
@@ -30,10 +36,21 @@ function Routes() {
     }
     const logout = () => setToken('');
 
-    const valueContext = {token, login, logout, user, setUser}
+    const clearAlert = () => setAlert({});
+
+    const valueContext = {
+        token, 
+        login, 
+        logout, 
+        user, 
+        setUser,
+        setLoading,
+        setAlert,
+        clearAlert
+    }
 
     return (
-        <AuthContext.Provider value={valueContext}>
+        <GlobalStatesContext.Provider value={valueContext}>
             <Router>
                 <Switch>
                     <Route path="/" exact component={SignIn} />
@@ -46,7 +63,25 @@ function Routes() {
                     </ProtectedRoutes>
                 </Switch>
             </Router>
-        </AuthContext.Provider>
+
+            <Snackbar
+                open={!!alert.message}
+                autoHideDuration={4000}
+                onClose={clearAlert}
+            >
+                <Alert onClose={clearAlert} severity={alert.type}>
+                    {alert.message}
+                </Alert>
+            </Snackbar>
+
+            <Backdrop
+                className={styles.backdrop}
+                open={loading}
+                onClick={() => setLoading(false)}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        </GlobalStatesContext.Provider>
     )
 }
 

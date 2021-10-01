@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import './styles.css';
-import { AuthContext } from '../../contexts/AuthContext';
+import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 import userPicture from '../../assets/user-picture.jpg';
 import editIcon from '../../assets/edit-icon.svg';
 import logoutIcon from '../../assets/logout-icon.svg';
@@ -29,7 +29,7 @@ const useClickOutside = (handler) => {
 function MenuUser() {
     const [dropdown, setDropdown] = useState(false);
     const [openModal, setOpenModal] = useState(false);
-    const { logout } = useContext(AuthContext);
+    const { logout } = useContext(GlobalStatesContext);
 
     const refDropdown = useClickOutside(() => setDropdown(false));
 

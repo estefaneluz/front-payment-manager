@@ -11,7 +11,7 @@ function ModalEditUser({ open, setOpen }) {
   const styles = useStyles();
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-  const { token, user } = useContext(AuthContext);
+  const { token, user, setUser } = useContext(AuthContext);
   const [alert, setAlert] = useState({});
   const watchFields = watch(['name', 'email']);
   const [buttonClass, setButtonClass] = useState('pink-opacity');
@@ -27,10 +27,24 @@ function ModalEditUser({ open, setOpen }) {
     } else {
       setButtonClass("pink");
     }
-    console.log(watchFields);
   }, [watchFields]);
 
   const clearAlert = () => setAlert({});
+
+  const saveUser = async () => {
+    const response = await fetch(
+      "https://api-payment-manager.herokuapp.com/perfil",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const userData = await response.json();
+    return setUser(userData);
+  }
 
   const onSubmit = async (data) => {
     clearAlert();
@@ -51,10 +65,13 @@ function ModalEditUser({ open, setOpen }) {
     );
 
     if (response.ok) {
+      await saveUser();
+      
       setAlert({
         type: "success",
         message: "Usuário atualizado com sucesso!",
       });
+
       setTimeout(() => closeModal(), 3000);
       return;
     }

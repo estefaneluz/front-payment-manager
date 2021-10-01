@@ -1,54 +1,66 @@
 import './styles.css';
 import '../../styles/form.css';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useStyles } from '../../styles/form-material-ui';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 
 import logo from '../../assets/logo.svg';
-import { TextField, Snackbar } from '@material-ui/core/';
-import { Alert } from '@material-ui/lab';
+import { TextField } from '@material-ui/core/';
 import InputPassword from '../../components/InputPassword';
 
 function SignUp() {
     const styles = useStyles();
+
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const [buttonClass, setButtonClass] = useState('-pink-opacity');
-    const [alert, setAlert] = useState({});
     const watchAllFields = watch();
     const history = useHistory();
 
-    const clearAlert = () => setAlert({});
+    const { setLoading, setAlert, clearAlert
+     } = useContext(GlobalStatesContext);
 
     const onSubmit = async data => {
         clearAlert();
-
-        const response = await fetch('https://api-payment-manager.herokuapp.com/cadastrar', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        if(response.ok) {
-            setAlert({
-                type: 'success',
-                message: "Usuário cadastrado com sucesso!"
+        setLoading(true);
+        try {
+            const response = await fetch(
+                'https://api-payment-manager.herokuapp.com/cadastrar', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             });
-            setTimeout(()=>history.push('/'), 4000);
-            return;
-        }
 
-        const message = await response.json();
-        setAlert({
-            type: 'error',
-            message
-        });
+            setLoading(false);
+
+            if(response.ok) {
+                setAlert({
+                    type: 'success',
+                    message: "Usuário cadastrado com sucesso!"
+                });
+                setTimeout(()=>history.push('/'), 3000);
+                return;
+            }
+
+            const message = await response.json();
+            setAlert({
+                type: 'error',
+                message
+            });
+        } catch (error) {
+            setAlert({
+                type: 'error',
+                message: error.message
+            });
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -84,6 +96,7 @@ function SignUp() {
                     id="password"
                     label="Senha"
                     register={register}
+                    required={true}
                 />
                 <button 
                     className={`btn btn-${buttonClass}`} 
@@ -96,17 +109,6 @@ function SignUp() {
             <p>
                 Já possui uma conta? <Link to='/'>Acesse agora!</Link>
             </p>
-
-            {!!alert.message && 
-                <Snackbar 
-                    open={!!alert.message} 
-                    autoHideDuration={4000} 
-                    onClose={clearAlert}>
-                    <Alert onClose={clearAlert} severity={alert.type}>
-                        {alert.message}
-                    </Alert>
-                </Snackbar>
-            }
         </div>
     )
 }

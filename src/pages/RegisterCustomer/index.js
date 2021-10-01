@@ -5,9 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import InputCustomer from '../../components/InputCustomer';
 import { getAddressByCep } from '../../services/viaCEP';
-import { AuthContext } from '../../contexts/AuthContext';
-import { Snackbar } from '@material-ui/core/';
-import { Alert } from '@material-ui/lab';
+import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 
 function RegisterCostumer() {
     const [cep, setCep] = useState('');
@@ -16,14 +14,10 @@ function RegisterCostumer() {
     const [street, setStreet] = useState('');
 
     const [buttonClass, setButtonClass] = useState('pink-opacity');
-    const [alert, setAlert] = useState({});
 
     const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
     const watchFields = watch(['name', 'email', 'cpf', 'phone']);
-    const { token } = useContext(AuthContext);
-
-
-    const clearAlert = () => setAlert({});
+    const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
 
     const loadAddressByCep = async (cep) => {
         const { localidade, bairro, logradouro} = await getAddressByCep(cep);
@@ -33,38 +27,59 @@ function RegisterCostumer() {
     }
 
     const onSubmit = async (data) => {
-        const response = await fetch('http://localhost:8000/clientes', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                ...data, 
-                city, 
-                district, 
-                street, 
-                zipcode: 
-                cep
-            })
-        });
+        setLoading(true);
 
-        if(response.ok) {
-            setAlert({
-                type: 'success',
-                message: "Usuário cadastrado com sucesso!"
+        try {
+            const response = await fetch(
+                'https://api-payment-manager.herokuapp.com/clientes', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    ...data, 
+                    city, 
+                    district, 
+                    street, 
+                    zipcode: 
+                    cep
+                })
             });
-            return reset();
-        }
 
-        const message = await response.json();
-        return setAlert({
-            type: 'error',
-            message
-        });
+            setLoading(false);
+
+            if(response.ok) {
+                setAlert({
+                    type: 'success',
+                    message: "Usuário cadastrado com sucesso!"
+                });
+
+                reset();
+                setCep('');
+                setCity('');
+                setDistrict('');
+                setStreet('');
+
+                return;
+            }
+
+            const message = await response.json();
+            return setAlert({
+                type: 'error',
+                message
+            });
+        } catch (error) {
+            setLoading(false);
+
+            return setAlert({
+                type: 'error',
+                message: error.message
+            });
+        }
     }
 
     useEffect(() => {
@@ -194,17 +209,6 @@ function RegisterCostumer() {
                     </button>
                 </div>
             </form>
-
-            {!!alert.message && 
-                <Snackbar 
-                    open={!!alert.message} 
-                    autoHideDuration={4000} 
-                    onClose={clearAlert}>
-                    <Alert onClose={clearAlert} severity={alert.type}>
-                        {alert.message}
-                    </Alert>
-                </Snackbar>
-            }
         </div>
     );
 }

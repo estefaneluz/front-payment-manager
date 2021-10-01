@@ -33,46 +33,53 @@ function RegisterCostumer() {
     }
 
     const onSubmit = async (data) => {
-        const response = await fetch(
-            'https://api-payment-manager.herokuapp.com/clientes', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                ...data, 
-                city, 
-                district, 
-                street, 
-                zipcode: 
-                cep
-            })
-        });
-
-        if(response.ok) {
-            setAlert({
-                type: 'success',
-                message: "Usuário cadastrado com sucesso!"
+        try {
+            const response = await fetch(
+                'https://api-payment-manager.herokuapp.com/clientes', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    ...data, 
+                    city, 
+                    district, 
+                    street, 
+                    zipcode: 
+                    cep
+                })
             });
 
-            reset();
-            setCep('');
-            setCity('');
-            setDistrict('');
-            setStreet('');
+            if(response.ok) {
+                setAlert({
+                    type: 'success',
+                    message: "Usuário cadastrado com sucesso!"
+                });
 
-            return;
+                reset();
+                setCep('');
+                setCity('');
+                setDistrict('');
+                setStreet('');
+
+                return;
+            }
+
+            const message = await response.json();
+            return setAlert({
+                type: 'error',
+                message
+            });
+        } catch (error) {
+            return setAlert({
+                type: 'error',
+                message: error.message
+            });
         }
-
-        const message = await response.json();
-        return setAlert({
-            type: 'error',
-            message
-        });
     }
 
     useEffect(() => {

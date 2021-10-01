@@ -1,0 +1,26 @@
+.btn {
+    all: unset;
+
+    color: #FFFFFF;
+    text-align: center;
+    
+    border-radius: 20px;
+    width: 150px;
+    padding: 11px;
+}
+
+.btn-pink-opacity {
+    background-color: rgba(218, 1, 117, 0.35);
+}
+
+.btn-pink{
+    background-color: #DA0175;
+    cursor: pointer;
+}
+
+.btn-border-pink {
+    cursor: pointer;
+    color: #DA0175;
+    font-weight: bold;
+    border: 2px solid #DA0175;
+}

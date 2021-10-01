@@ -23,33 +23,39 @@ function SignUp() {
 
     const onSubmit = async data => {
         clearAlert();
-
-        const response = await fetch(
-            'https://api-payment-manager.herokuapp.com/cadastrar', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        if(response.ok) {
-            setAlert({
-                type: 'success',
-                message: "Usuário cadastrado com sucesso!"
+        try {
+            const response = await fetch(
+                'https://api-payment-manager.herokuapp.com/cadastrar', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             });
-            setTimeout(()=>history.push('/'), 3000);
-            return;
-        }
 
-        const message = await response.json();
-        setAlert({
-            type: 'error',
-            message
-        });
+            if(response.ok) {
+                setAlert({
+                    type: 'success',
+                    message: "Usuário cadastrado com sucesso!"
+                });
+                setTimeout(()=>history.push('/'), 3000);
+                return;
+            }
+
+            const message = await response.json();
+            setAlert({
+                type: 'error',
+                message
+            });
+        } catch (error) {
+            setAlert({
+                type: 'error',
+                message: error.message
+            });
+        }
     }
 
     useEffect(() => {

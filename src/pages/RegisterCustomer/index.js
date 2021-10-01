@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
 import InputCustomer from '../../components/InputCustomer';
-import { getAddressByCep } from '../../services/viaCEP';
+import getAddressByCep from '../../services/viaCEP';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 
 function RegisterCostumer() {

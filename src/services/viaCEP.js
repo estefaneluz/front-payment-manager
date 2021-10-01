@@ -16,4 +16,4 @@ async function getAddressByCep(cep) {
     }
 }
 
-module.exports = { getAddressByCep };
+export default  getAddressByCep;

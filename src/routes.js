@@ -5,7 +5,7 @@ import {
     Switch,
     Redirect 
 } from "react-router-dom";
-import { AuthContext } from "./contexts/AuthContext";
+import { GlobalStatesContext } from "./contexts/GlobalStatesContext";
 import { Backdrop, CircularProgress, Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
@@ -17,7 +17,7 @@ import Home from "./pages/Home";
 import RegisterCostumer from "./pages/RegisterCustomer";
 
 const ProtectedRoutes = (props) => {
-    const { token } = useContext(AuthContext);
+    const { token } = useContext(GlobalStatesContext);
     return (
       <Route render={() => (token ? props.children : <Redirect to="/" />)} />
     );
@@ -50,7 +50,7 @@ function Routes() {
     }
 
     return (
-        <AuthContext.Provider value={valueContext}>
+        <GlobalStatesContext.Provider value={valueContext}>
             <Router>
                 <Switch>
                     <Route path="/" exact component={SignIn} />
@@ -81,7 +81,7 @@ function Routes() {
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
-        </AuthContext.Provider>
+        </GlobalStatesContext.Provider>
     )
 }
 

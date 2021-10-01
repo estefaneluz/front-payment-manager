@@ -2,7 +2,7 @@ import "./styles.css";
 import { useEffect, useState, useContext } from "react";
 import { useStyles } from "../../styles/form-material-ui";
 import { TextField } from "@material-ui/core/";
-import { AuthContext } from "../../contexts/AuthContext";
+import { GlobalStatesContext } from "../../contexts/GlobalStatesContext";
 import { useForm } from "react-hook-form";
 import InputPassword from "../../components/InputPassword";
 
@@ -17,7 +17,7 @@ function ModalEditUser({ open, setOpen }) {
     setLoading, 
     setAlert, 
     clearAlert 
-  } = useContext(AuthContext);
+  } = useContext(GlobalStatesContext);
   const watchFields = watch(['name', 'email']);
   const [buttonClass, setButtonClass] = useState('pink-opacity');
 

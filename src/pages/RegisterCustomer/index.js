@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import InputCustomer from '../../components/InputCustomer';
 import { getAddressByCep } from '../../services/viaCEP';
-import { AuthContext } from '../../contexts/AuthContext';
+import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 
 function RegisterCostumer() {
     const [cep, setCep] = useState('');
@@ -17,7 +17,7 @@ function RegisterCostumer() {
 
     const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
     const watchFields = watch(['name', 'email', 'cpf', 'phone']);
-    const { token, setLoading, setAlert } = useContext(AuthContext);
+    const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
 
     const loadAddressByCep = async (cep) => {
         const { localidade, bairro, logradouro} = await getAddressByCep(cep);

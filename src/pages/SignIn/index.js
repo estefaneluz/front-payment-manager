@@ -5,7 +5,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useStyles } from '../../styles/form-material-ui';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { AuthContext } from '../../contexts/AuthContext';
+import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 import logo from '../../assets/logo.svg';
 import { TextField } from '@material-ui/core/';
 import InputPassword from '../../components/InputPassword';
@@ -14,7 +14,7 @@ function SignIn() {
     const styles = useStyles();
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const [buttonClass, setButtonClass] = useState('pink-opacity');
-    const { login, setLoading, setAlert } = useContext(AuthContext);
+    const { login, setLoading, setAlert } = useContext(GlobalStatesContext);
     const watchAllFields = watch();
     const history = useHistory();
 

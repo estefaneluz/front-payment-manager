@@ -1,31 +1,65 @@
 import './styles.css';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
 import InputCustomer from '../../components/InputCustomer';
 import { getAddressByCep } from '../../services/viaCEP';
+import { AuthContext } from '../../contexts/AuthContext';
 
 function RegisterCostumer() {
     const [cep, setCep] = useState('');
     const [city, setCity] = useState('');
-    const [neighborhood, setNeighborhood] = useState('');
+    const [district, setDistrict] = useState('');
     const [street, setStreet] = useState('');
 
     const [buttonClass, setButtonClass] = useState('pink-opacity');
+    const [alert, setAlert] = useState({});
+
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const watchFields = watch(['name', 'email', 'cpf', 'phone']);
+    const { token } = useContext(AuthContext);
 
 
     const loadAddressByCep = async (cep) => {
         const { localidade, bairro, logradouro} = await getAddressByCep(cep);
         setCity(localidade);
-        setNeighborhood(bairro);
+        setDistrict(bairro);
         setStreet(logradouro);
     }
 
     const onSubmit = async (data) => {
-        console.log(data);
+        const response = await fetch('http://localhost:8000/clientes', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                ...data, 
+                city, 
+                district, 
+                street, 
+                zipcode: 
+                cep
+            })
+        });
+
+        if(response.ok) {
+            setAlert({
+                type: 'success',
+                message: "Usuário cadastrado com sucesso!"
+            });
+        }
+
+        const message = await response.json();
+        setAlert({
+            type: 'error',
+            message
+        });
     }
 
     useEffect(() => {
@@ -112,12 +146,12 @@ function RegisterCostumer() {
 
                 <div className="double-input">
                     <InputCustomer
-                        id="neighborhood"
+                        id="district"
                         label="Bairro" 
                         classType="half" 
                         type="text"
-                        value={neighborhood}
-                        setState={setNeighborhood}
+                        value={district}
+                        setState={setDistrict}
                     />
                     <InputCustomer 
                         id="city"

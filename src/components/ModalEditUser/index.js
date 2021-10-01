@@ -49,38 +49,47 @@ function ModalEditUser({ open, setOpen }) {
   const onSubmit = async (data) => {
     clearAlert();
 
-    const response = await fetch(
-      "https://api-payment-manager.herokuapp.com/perfil",
-      {
-        method: "PUT",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    try {
+      const response = await fetch(
+        "https://api-payment-manager.herokuapp.com/perfil",
+        {
+          method: "PUT",
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
-    if (response.ok) {
-      await saveUser();
-      
+      if (response.ok) {
+        await saveUser();
+        
+        setAlert({
+          type: "success",
+          message: "Usuário atualizado com sucesso!",
+        });
+
+        setTimeout(() => closeModal(), 3000);
+        return;
+      }
+
+      const message = await response.json();
+
       setAlert({
-        type: "success",
-        message: "Usuário atualizado com sucesso!",
+        type: "error",
+        message,
       });
 
-      setTimeout(() => closeModal(), 3000);
-      return;
+    } catch (error) {
+      setAlert({
+        type: "error",
+        message: error.message
+      });
     }
-
-    const message = await response.json();
-    setAlert({
-      type: "error",
-      message,
-    });
   };
 
   return (

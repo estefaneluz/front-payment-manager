@@ -16,13 +16,15 @@ function SignIn() {
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const [buttonClass, setButtonClass] = useState('pink-opacity');
     const [alert, setAlert] = useState({});
-    const { login } = useContext(AuthContext);
+    const { login, setLoading } = useContext(AuthContext);
     const watchAllFields = watch();
     const history = useHistory();
 
     const clearAlert = () => setAlert({});
 
     const onSubmit = async data => {
+        setLoading(true);
+
         try {
             const response = await fetch(
                 'https://api-payment-manager.herokuapp.com/login', {
@@ -37,6 +39,7 @@ function SignIn() {
             });
 
             const result = await response.json();
+            setLoading(false);
 
             if(response.ok) {
                 login(result);
@@ -52,6 +55,7 @@ function SignIn() {
                 type: 'error',
                 message: error.message
             });
+            setLoading(false);
         }
     }
 

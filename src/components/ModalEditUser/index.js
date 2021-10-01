@@ -11,7 +11,7 @@ function ModalEditUser({ open, setOpen }) {
   const styles = useStyles();
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-  const { token, user, setUser } = useContext(AuthContext);
+  const { token, user, setUser, setLoading } = useContext(AuthContext);
   const [alert, setAlert] = useState({});
   const watchFields = watch(['name', 'email']);
   const [buttonClass, setButtonClass] = useState('pink-opacity');
@@ -32,6 +32,8 @@ function ModalEditUser({ open, setOpen }) {
   const clearAlert = () => setAlert({});
 
   const saveUser = async () => {
+    setLoading(true);
+
     const response = await fetch(
       "https://api-payment-manager.herokuapp.com/perfil",
       {
@@ -43,11 +45,15 @@ function ModalEditUser({ open, setOpen }) {
     );
 
     const userData = await response.json();
+
+    setLoading(false);
+
     return setUser(userData);
   }
 
   const onSubmit = async (data) => {
     clearAlert();
+    setLoading(true);
 
     try {
       const response = await fetch(
@@ -64,6 +70,8 @@ function ModalEditUser({ open, setOpen }) {
           body: JSON.stringify(data),
         }
       );
+
+      setLoading(false);
 
       if (response.ok) {
         await saveUser();
@@ -85,7 +93,9 @@ function ModalEditUser({ open, setOpen }) {
       });
 
     } catch (error) {
-      setAlert({
+      setLoading(false);
+
+      return setAlert({
         type: "error",
         message: error.message
       });

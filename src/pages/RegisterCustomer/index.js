@@ -20,7 +20,7 @@ function RegisterCostumer() {
 
     const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
     const watchFields = watch(['name', 'email', 'cpf', 'phone']);
-    const { token } = useContext(AuthContext);
+    const { token, setLoading } = useContext(AuthContext);
 
 
     const clearAlert = () => setAlert({});
@@ -33,6 +33,8 @@ function RegisterCostumer() {
     }
 
     const onSubmit = async (data) => {
+        setLoading(true);
+
         try {
             const response = await fetch(
                 'https://api-payment-manager.herokuapp.com/clientes', {
@@ -53,6 +55,8 @@ function RegisterCostumer() {
                     cep
                 })
             });
+
+            setLoading(false);
 
             if(response.ok) {
                 setAlert({
@@ -75,6 +79,8 @@ function RegisterCostumer() {
                 message
             });
         } catch (error) {
+            setLoading(false);
+
             return setAlert({
                 type: 'error',
                 message: error.message

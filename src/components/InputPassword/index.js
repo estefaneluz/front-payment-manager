@@ -32,7 +32,7 @@ import {
               </IconButton>
             </InputAdornment>
           }
-          {...props.register(props.id, { required: true })}
+          {...props.register(props.id, { required: !!props.required })}
         />
       </FormControl>
     );

@@ -9,12 +9,12 @@ import InputPassword from "../../components/InputPassword";
 
 function ModalEditUser({ open, setOpen }) {
   const styles = useStyles();
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
   const { token, user } = useContext(AuthContext);
   const [alert, setAlert] = useState({});
-  const watchAllFields = watch();
-  const [buttonClass, setButtonClass] = useState('-pink-opacity');
+  const watchFields = watch(['name', 'email']);
+  const [buttonClass, setButtonClass] = useState('pink-opacity');
 
 
   const closeModal = () => {
@@ -22,16 +22,13 @@ function ModalEditUser({ open, setOpen }) {
   };
 
   useEffect(() => {
-    if (
-      !watchAllFields.name ||
-      !watchAllFields.password ||
-      !watchAllFields.email
-    ) {
+    if (watchFields.includes('')) {
       setButtonClass("pink-opacity");
     } else {
       setButtonClass("pink");
     }
-  }, [watchAllFields]);
+    console.log(watchFields);
+  }, [watchFields]);
 
   const clearAlert = () => setAlert({});
 
@@ -58,7 +55,7 @@ function ModalEditUser({ open, setOpen }) {
         type: "success",
         message: "Usuário atualizado com sucesso!",
       });
-      setTimeout(() => closeModal(), 4000);
+      setTimeout(() => closeModal(), 3000);
       return;
     }
 
@@ -82,6 +79,7 @@ function ModalEditUser({ open, setOpen }) {
                 label="Nome"
                 className={styles.input}
                 defaultValue={user.name}
+                error={!!errors.name}
                 {...register("name", { required: true })}
               />
               <TextField
@@ -89,7 +87,8 @@ function ModalEditUser({ open, setOpen }) {
                 label="E-mail"
                 placeholder="exemplo@gmail.com"
                 className={styles.input}
-                value={user.email}
+                defaultValue={user.email}
+                error={!!errors.email}
                 {...register("email", { required: true })}
               />
               <InputPassword
@@ -99,17 +98,17 @@ function ModalEditUser({ open, setOpen }) {
                 register={register}
               />
               <TextField
-                id="standard-basic"
+                id="phone"
                 label="Telefone"
                 className={styles.input}
-                value={user.phone && user.phone}
+                defaultValue={user.phone && user.phone}
                 {...register("phone")}
               />
               <TextField
-                id="standard-basic"
+                id="cpf"
                 label="CPF"
                 className={styles.input}
-                value={user.cpf && user.cpf}
+                defaultValue={user.cpf && user.cpf}
                 {...register("cpf")}
               />
               <button className={`btn btn-${buttonClass}`} type="submit">

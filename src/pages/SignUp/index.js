@@ -41,7 +41,7 @@ function SignUp() {
                 type: 'success',
                 message: "Usuário cadastrado com sucesso!"
             });
-            setTimeout(()=>history.push('/'), 4000);
+            setTimeout(()=>history.push('/'), 3000);
             return;
         }
 
@@ -85,6 +85,7 @@ function SignUp() {
                     id="password"
                     label="Senha"
                     register={register}
+                    required={true}
                 />
                 <button 
                     className={`btn btn-${buttonClass}`} 

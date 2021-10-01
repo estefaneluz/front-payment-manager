@@ -73,6 +73,7 @@ function SignIn() {
                     id="password"
                     label="Senha"
                     register={register}
+                    required={true}
                 />
                 <button 
                     className={`btn btn-${buttonClass}`} 

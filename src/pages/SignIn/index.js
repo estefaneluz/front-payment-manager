@@ -23,29 +23,36 @@ function SignIn() {
     const clearAlert = () => setAlert({});
 
     const onSubmit = async data => {
-        const response = await fetch(
-            'https://api-payment-manager.herokuapp.com/login', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+        try {
+            const response = await fetch(
+                'https://api-payment-manager.herokuapp.com/login', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
 
-        const result = await response.json();
+            const result = await response.json();
 
-        if(response.ok) {
-            login(result);
-            return history.push('/home');
+            if(response.ok) {
+                login(result);
+                return history.push('/home');
+            }
+
+            setAlert({
+                type: 'error',
+                message: result
+            });
+        } catch (error) {
+            setAlert({
+                type: 'error',
+                message: error.message
+            });
         }
-
-        setAlert({
-            type: 'error',
-            message: result
-        });
     }
 
     useEffect(() => {

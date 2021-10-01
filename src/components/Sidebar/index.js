@@ -28,16 +28,16 @@ function Sidebar() {
                 </Link>
 
                 <Link 
-                    to="/cobrancas"
-                    className={location.pathname.includes('/cobrancas') ? 'activated' : ''}
+                    to="/charges"
+                    className={location.pathname.includes('/charges') ? 'activated' : ''}
                 >
                     <img src={moneyIcon} alt="icone da opção cobranças" />
                     <p>Cobranças</p>
                 </Link>
 
                 <Link 
-                    to="/clientes"
-                    className={location.pathname.includes('/clientes') ? 'activated' : ''}
+                    to="/customers"
+                    className={location.pathname.includes('/customers') ? 'activated' : ''}
                 >
                     <img src={userIcon} alt="icone da opção clientes" />
                     <p>Clientes</p>

@@ -11,6 +11,7 @@ import Main from './pages/Main';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Home from "./pages/Home";
+import RegisterCostumer from "./pages/RegisterCustomer";
 
 const ProtectedRoutes = (props) => {
     const { token } = useContext(AuthContext);
@@ -36,6 +37,7 @@ function Routes() {
                     <ProtectedRoutes>
                         <Main>
                             <Route path="/home" component={Home} />
+                            <Route path="/customers" component={RegisterCostumer} />
                         </Main>
                     </ProtectedRoutes>
                 </Switch>

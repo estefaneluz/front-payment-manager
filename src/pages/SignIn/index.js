@@ -15,7 +15,7 @@ import InputPassword from '../../components/InputPassword';
 function SignIn() {
     const styles = useStyles();
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
-    const [buttonClass, setButtonClass] = useState('-pink-opacity');
+    const [buttonClass, setButtonClass] = useState('pink-opacity');
     const [alert, setAlert] = useState({});
     const { login } = useContext(AuthContext);
     const watchAllFields = watch();
@@ -61,7 +61,7 @@ function SignIn() {
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <img src={logo} alt="Logo da Cubos Academy" />
                 <TextField 
-                    error={!!errors.email || !!alert.message}
+                    error={!!errors.email || alert.type==="error"}
                     id="email" 
                     label="E-mail" 
                     placeholder="exemplo@gmail.com"

@@ -6,7 +6,9 @@ import {
     Redirect 
 } from "react-router-dom";
 import { AuthContext } from "./contexts/AuthContext";
+import { Backdrop, CircularProgress } from "@material-ui/core";
 
+import { useStyles } from './styles/loading-material-ui';
 import Main from './pages/Main';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
@@ -23,6 +25,8 @@ const ProtectedRoutes = (props) => {
 function Routes() {
     const [token, setToken] = useState("");
     const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(false);
+    const styles = useStyles();
 
     const login = (value) => {
         setToken(value.token);
@@ -30,7 +34,15 @@ function Routes() {
     }
     const logout = () => setToken('');
 
-    const valueContext = {token, login, logout, user, setUser}
+    const valueContext = {
+        token, 
+        login, 
+        logout, 
+        user, 
+        setUser,
+        loading,
+        setLoading
+    }
 
     return (
         <AuthContext.Provider value={valueContext}>
@@ -46,6 +58,14 @@ function Routes() {
                     </ProtectedRoutes>
                 </Switch>
             </Router>
+
+            <Backdrop
+                className={styles.backdrop}
+                open={loading}
+                onClick={() => setLoading(false)}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </AuthContext.Provider>
     )
 }

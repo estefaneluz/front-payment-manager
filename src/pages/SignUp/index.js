@@ -1,10 +1,11 @@
 import './styles.css';
 import '../../styles/form.css';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useStyles } from '../../styles/form-material-ui';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../contexts/AuthContext';
 
 import logo from '../../assets/logo.svg';
 import { TextField, Snackbar } from '@material-ui/core/';
@@ -13,16 +14,20 @@ import InputPassword from '../../components/InputPassword';
 
 function SignUp() {
     const styles = useStyles();
+
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const [buttonClass, setButtonClass] = useState('-pink-opacity');
     const [alert, setAlert] = useState({});
     const watchAllFields = watch();
     const history = useHistory();
 
+    const { setLoading } = useContext(AuthContext);
+
     const clearAlert = () => setAlert({});
 
     const onSubmit = async data => {
         clearAlert();
+        setLoading(true);
         try {
             const response = await fetch(
                 'https://api-payment-manager.herokuapp.com/cadastrar', {
@@ -35,6 +40,8 @@ function SignUp() {
                 },
                 body: JSON.stringify(data)
             });
+
+            setLoading(false);
 
             if(response.ok) {
                 setAlert({
@@ -55,6 +62,7 @@ function SignUp() {
                 type: 'error',
                 message: error.message
             });
+            setLoading(false);
         }
     }
 

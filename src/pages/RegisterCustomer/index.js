@@ -58,7 +58,14 @@ function RegisterCostumer() {
                 type: 'success',
                 message: "Usuário cadastrado com sucesso!"
             });
-            return reset();
+
+            reset();
+            setCep('');
+            setCity('');
+            setDistrict('');
+            setStreet('');
+
+            return;
         }
 
         const message = await response.json();

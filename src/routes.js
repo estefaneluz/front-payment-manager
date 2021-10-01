@@ -21,11 +21,15 @@ const ProtectedRoutes = (props) => {
 
 function Routes() {
     const [token, setToken] = useState("");
+    const [user, setUser] = useState({});
 
-    const login = (value) => setToken(value);
+    const login = (value) => {
+        setToken(value.token);
+        setUser(value.userData);
+    }
     const logout = () => setToken('');
 
-    const valueContext = {token, login, logout}
+    const valueContext = {token, login, logout, user, setUser}
 
     return (
         <AuthContext.Provider value={valueContext}>

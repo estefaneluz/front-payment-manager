@@ -10,8 +10,8 @@ import InputPassword from "../../components/InputPassword";
 function ModalEditUser({ open, setOpen }) {
   const styles = useStyles();
   const { register, handleSubmit, watch } = useForm();
-  // const [userData, setUserData] = useState();
-  const { token } = useContext(AuthContext);
+
+  const { token, user } = useContext(AuthContext);
   const [alert, setAlert] = useState({});
   const watchAllFields = watch();
   const [buttonClass, setButtonClass] = useState('-pink-opacity');
@@ -20,19 +20,6 @@ function ModalEditUser({ open, setOpen }) {
   const closeModal = () => {
     setOpen(!open);
   };
-
-  // const getUserProfile = async () => {
-  //     const response = await fetch('https://api-payment-manager.herokuapp.com/perfil', {
-  //         method: 'GET',
-  //         headers: { 'Authorization': `Bearer ${token}` }
-  //     });
-  //     const result = await response.json();
-  //     await setUserData(result);
-  // }
-
-  // useEffect(() => {
-  //   getUserProfile();
-  // }, []);
 
   useEffect(() => {
     if (
@@ -87,14 +74,14 @@ function ModalEditUser({ open, setOpen }) {
       {open && (
         <div className="modal">
           <div id="form-edit-user">
-            <div className="modal-close" onClick={() => closeModal()}></div>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
+              <div className="modal-close" onClick={() => closeModal()}>X</div>
               <h1>Editar Usuário</h1>
               <TextField
                 id="name"
                 label="Nome"
                 className={styles.input}
-                // value={userData.name}
+                defaultValue={user.name}
                 {...register("name", { required: true })}
               />
               <TextField
@@ -102,7 +89,7 @@ function ModalEditUser({ open, setOpen }) {
                 label="E-mail"
                 placeholder="exemplo@gmail.com"
                 className={styles.input}
-                // value={userData.email}
+                value={user.email}
                 {...register("email", { required: true })}
               />
               <InputPassword
@@ -115,14 +102,14 @@ function ModalEditUser({ open, setOpen }) {
                 id="standard-basic"
                 label="Telefone"
                 className={styles.input}
-                // value={userData.phone && userData.phone}
+                value={user.phone && user.phone}
                 {...register("phone")}
               />
               <TextField
                 id="standard-basic"
                 label="CPF"
                 className={styles.input}
-                // value={userData.cpf && userData.cpf}
+                value={user.cpf && user.cpf}
                 {...register("cpf")}
               />
               <button className={`btn btn-${buttonClass}`} type="submit">

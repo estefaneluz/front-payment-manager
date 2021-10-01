@@ -24,7 +24,8 @@ function SignUp() {
     const onSubmit = async data => {
         clearAlert();
 
-        const response = await fetch('http://localhost:8000/cadastrar', {
+        const response = await fetch(
+            'https://api-payment-manager.herokuapp.com/cadastrar', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

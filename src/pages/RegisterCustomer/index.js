@@ -33,7 +33,8 @@ function RegisterCostumer() {
     }
 
     const onSubmit = async (data) => {
-        const response = await fetch('http://localhost:8000/clientes', {
+        const response = await fetch(
+            'https://api-payment-manager.herokuapp.com/clientes', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

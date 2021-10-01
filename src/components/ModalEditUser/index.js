@@ -1,8 +1,7 @@
 import "./styles.css";
 import { useEffect, useState, useContext } from "react";
 import { useStyles } from "../../styles/form-material-ui";
-import { TextField, Snackbar } from "@material-ui/core/";
-import { Alert } from "@material-ui/lab";
+import { TextField } from "@material-ui/core/";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
 import InputPassword from "../../components/InputPassword";
@@ -11,8 +10,14 @@ function ModalEditUser({ open, setOpen }) {
   const styles = useStyles();
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-  const { token, user, setUser, setLoading } = useContext(AuthContext);
-  const [alert, setAlert] = useState({});
+  const { 
+    token, 
+    user, 
+    setUser, 
+    setLoading, 
+    setAlert, 
+    clearAlert 
+  } = useContext(AuthContext);
   const watchFields = watch(['name', 'email']);
   const [buttonClass, setButtonClass] = useState('pink-opacity');
 
@@ -29,7 +34,6 @@ function ModalEditUser({ open, setOpen }) {
     }
   }, [watchFields]);
 
-  const clearAlert = () => setAlert({});
 
   const saveUser = async () => {
     setLoading(true);
@@ -152,17 +156,6 @@ function ModalEditUser({ open, setOpen }) {
               </button>
             </form>
           </div>
-          {!!alert.message && (
-            <Snackbar
-              open={!!alert.message}
-              autoHideDuration={4000}
-              onClose={clearAlert}
-            >
-              <Alert onClose={clearAlert} severity={alert.type}>
-                {alert.message}
-              </Alert>
-            </Snackbar>
-          )}
         </div>
       )}
     </>

@@ -8,8 +8,7 @@ import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../contexts/AuthContext';
 
 import logo from '../../assets/logo.svg';
-import { TextField, Snackbar } from '@material-ui/core/';
-import { Alert } from '@material-ui/lab';
+import { TextField } from '@material-ui/core/';
 import InputPassword from '../../components/InputPassword';
 
 function SignUp() {
@@ -17,13 +16,10 @@ function SignUp() {
 
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const [buttonClass, setButtonClass] = useState('-pink-opacity');
-    const [alert, setAlert] = useState({});
     const watchAllFields = watch();
     const history = useHistory();
 
-    const { setLoading } = useContext(AuthContext);
-
-    const clearAlert = () => setAlert({});
+    const { setLoading, setAlert, clearAlert } = useContext(AuthContext);
 
     const onSubmit = async data => {
         clearAlert();
@@ -112,17 +108,6 @@ function SignUp() {
             <p>
                 Já possui uma conta? <Link to='/'>Acesse agora!</Link>
             </p>
-
-            {!!alert.message && 
-                <Snackbar 
-                    open={!!alert.message} 
-                    autoHideDuration={4000} 
-                    onClose={clearAlert}>
-                    <Alert onClose={clearAlert} severity={alert.type}>
-                        {alert.message}
-                    </Alert>
-                </Snackbar>
-            }
         </div>
     )
 }

@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import InputCustomer from '../../components/InputCustomer';
 import { getAddressByCep } from '../../services/viaCEP';
 import { AuthContext } from '../../contexts/AuthContext';
+import { Snackbar } from '@material-ui/core/';
+import { Alert } from '@material-ui/lab';
 
 function RegisterCostumer() {
     const [cep, setCep] = useState('');
@@ -16,10 +18,12 @@ function RegisterCostumer() {
     const [buttonClass, setButtonClass] = useState('pink-opacity');
     const [alert, setAlert] = useState({});
 
-    const { register, watch, handleSubmit, formState: { errors } } = useForm();
+    const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
     const watchFields = watch(['name', 'email', 'cpf', 'phone']);
     const { token } = useContext(AuthContext);
 
+
+    const clearAlert = () => setAlert({});
 
     const loadAddressByCep = async (cep) => {
         const { localidade, bairro, logradouro} = await getAddressByCep(cep);
@@ -53,10 +57,11 @@ function RegisterCostumer() {
                 type: 'success',
                 message: "Usuário cadastrado com sucesso!"
             });
+            return reset();
         }
 
         const message = await response.json();
-        setAlert({
+        return setAlert({
             type: 'error',
             message
         });
@@ -189,6 +194,17 @@ function RegisterCostumer() {
                     </button>
                 </div>
             </form>
+
+            {!!alert.message && 
+                <Snackbar 
+                    open={!!alert.message} 
+                    autoHideDuration={4000} 
+                    onClose={clearAlert}>
+                    <Alert onClose={clearAlert} severity={alert.type}>
+                        {alert.message}
+                    </Alert>
+                </Snackbar>
+            }
         </div>
     );
 }

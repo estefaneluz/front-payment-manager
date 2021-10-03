@@ -110,8 +110,7 @@ function ModalEditUser({ open, setOpen }) {
     <>
       {open && (
         <div className="modal">
-          <div id="form-edit-user">
-            <form className="form" onSubmit={handleSubmit(onSubmit)}>
+            <form className="form" id="form-edit-user" onSubmit={handleSubmit(onSubmit)}>
               <div className="modal-close" onClick={() => closeModal()}>X</div>
               <h1>Editar Usuário</h1>
               <TextField
@@ -155,7 +154,6 @@ function ModalEditUser({ open, setOpen }) {
                 Editar conta
               </button>
             </form>
-          </div>
         </div>
       )}
     </>

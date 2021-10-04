@@ -20,10 +20,19 @@ function RegisterCostumer() {
     const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
 
     const loadAddressByCep = async (cep) => {
-        const { localidade, bairro, logradouro} = await getAddressByCep(cep);
-        setCity(localidade);
-        setDistrict(bairro);
-        setStreet(logradouro);
+        const address = await getAddressByCep(cep);
+        
+        if(!address) {
+            setAlert({
+                type:"error",
+                message: "Endereço não encontrado"
+            });
+            return;
+        }
+
+        setCity(address.localidade);
+        setDistrict(address.bairro);
+        setStreet(address.logradouro);
     }
 
     const onSubmit = async (data) => {
@@ -83,6 +92,13 @@ function RegisterCostumer() {
     }
 
     useEffect(() => {
+
+        if(cep.length < 9 && city.length > 0) {
+            setCity('');
+            setDistrict('');
+            setStreet('');
+        }
+
         if(cep.indexOf('-') !== -1) {
             if(cep.length === 9) {
                 loadAddressByCep(cep)
@@ -152,6 +168,7 @@ function RegisterCostumer() {
                         classType="half" 
                         type="text"
                         value={cep}
+                        maxLength={9}
                         setState={setCep}
                     />
                     <InputCustomer

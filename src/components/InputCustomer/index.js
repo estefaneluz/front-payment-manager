@@ -19,7 +19,11 @@ function InputCustomer(props) {
         ${!!props.classType && props.classType} 
         ${!!props.error ? 'error' : ''}`}>
       <label> {props.label} </label>
-      <input {...inputAttributes} type={props.type} />
+      <input 
+        {...inputAttributes} 
+        type={props.type}
+        maxLength={props.maxLength}
+      />
     </div>
   )
 }

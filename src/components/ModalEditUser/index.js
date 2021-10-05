@@ -85,7 +85,7 @@ function ModalEditUser({ open, setOpen }) {
           message: "Usuário atualizado com sucesso!",
         });
 
-        setTimeout(() => closeModal(), 3000);
+        setTimeout(() => closeModal(), 2000);
         return;
       }
 

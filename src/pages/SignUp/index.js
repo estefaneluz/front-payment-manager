@@ -45,7 +45,7 @@ function SignUp() {
                     type: 'success',
                     message: "Usuário cadastrado com sucesso!"
                 });
-                setTimeout(()=>history.push('/'), 3000);
+                setTimeout(()=>history.push('/'), 2000);
                 return;
             }
 

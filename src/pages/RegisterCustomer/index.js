@@ -12,12 +12,21 @@ function RegisterCostumer() {
     const [city, setCity] = useState('');
     const [district, setDistrict] = useState('');
     const [street, setStreet] = useState('');
+    const [state, setState] = useState('');
 
     const [buttonClass, setButtonClass] = useState('pink-opacity');
 
     const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
     const watchFields = watch(['name', 'email', 'cpf', 'phone']);
     const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
+
+    const clearAddress = () => {
+        setCep('');
+        setCity('');
+        setDistrict('');
+        setStreet('');
+        setState('');
+    }
 
     const loadAddressByCep = async (cep) => {
         const address = await getAddressByCep(cep);
@@ -33,6 +42,7 @@ function RegisterCostumer() {
         setCity(address.localidade);
         setDistrict(address.bairro);
         setStreet(address.logradouro);
+        setState(address.uf);
     }
 
     const onSubmit = async (data) => {
@@ -53,7 +63,8 @@ function RegisterCostumer() {
                     ...data, 
                     city, 
                     district, 
-                    street, 
+                    street,
+                    state, 
                     zipcode: 
                     cep
                 })
@@ -64,14 +75,11 @@ function RegisterCostumer() {
             if(response.ok) {
                 setAlert({
                     type: 'success',
-                    message: "Usuário cadastrado com sucesso!"
+                    message: "Cliente cadastrado com sucesso!"
                 });
 
                 reset();
-                setCep('');
-                setCity('');
-                setDistrict('');
-                setStreet('');
+                clearAddress();
 
                 return;
             }
@@ -202,11 +210,13 @@ function RegisterCostumer() {
 
                 <div className="double-input">
                     <InputCustomer
-                        id="additional"
-                        label="Complemento" 
+                        id="state"
+                        label="Estado" 
                         classType="half" 
                         type="text"
                         register={register}
+                        value={state}
+                        setState={setState}
                     />
                     <InputCustomer 
                         id="landmark"
@@ -217,8 +227,15 @@ function RegisterCostumer() {
                     />
                 </div>
 
+                <InputCustomer
+                    id="additional"
+                    label="Complemento" 
+                    type="text"
+                    register={register}
+                />
+
                 <div className="flex-row column-gap-20">
-                    <button className="btn btn-border-pink" type="reset">
+                    <button className="btn btn-border-pink" type="reset" onClick={clearAddress}>
                         Cancelar
                     </button>
                     <button className={`btn btn-${buttonClass}`} type="submit">

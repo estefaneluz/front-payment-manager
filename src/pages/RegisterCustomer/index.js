@@ -218,7 +218,7 @@ function RegisterCostumer() {
                 </div>
 
                 <div className="flex-row column-gap-20">
-                    <button className="btn btn-border-pink">
+                    <button className="btn btn-border-pink" type="reset">
                         Cancelar
                     </button>
                     <button className={`btn btn-${buttonClass}`} type="submit">

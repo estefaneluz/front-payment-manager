@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import InputCustomer from '../../components/InputCustomer';
 import getAddressByCep from '../../services/viaCEP';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
+import onlyNumbers from '../../functions/onlyNumbers';
 
 function RegisterCostumer() {
     const [cep, setCep] = useState('');
@@ -46,8 +47,10 @@ function RegisterCostumer() {
     }
 
     const onSubmit = async (data) => {
-        setLoading(true);
+        data.cpf = onlyNumbers(data.cpf);
+        data.phone = onlyNumbers(data.phone);
 
+        setLoading(true);
         try {
             const response = await fetch(
                 'https://api-payment-manager.herokuapp.com/clientes', {
@@ -131,10 +134,10 @@ function RegisterCostumer() {
         <div className="container-register-costumer">
             <h1>Adicionar Cliente</h1>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
-                <InputCustomer 
+                <InputCustomer
                     id="name"
                     label="Nome" 
-                    type="text" 
+                    type="text"
                     register={register}
                     required={true}
                     error={!!errors.name}
@@ -142,7 +145,7 @@ function RegisterCostumer() {
                 <InputCustomer
                     id="email"
                     label="E-mail" 
-                    type="email" 
+                    type="email"
                     register={register}
                     required={true}
                     error={!!errors.email}
@@ -154,13 +157,15 @@ function RegisterCostumer() {
                         label="CPF" 
                         classType="half" 
                         type="text"
+                        mask="999.999.999-99"
                         register={register}
                         required={true}
                         error={!!errors.cpf}
                     />
                     <InputCustomer
                         id="phone"
-                        label="Telefone" 
+                        label="Telefone"
+                        mask="(99) 999999999"
                         classType="half"
                         type="text"
                         register={register}
@@ -176,8 +181,7 @@ function RegisterCostumer() {
                         classType="half" 
                         type="text"
                         value={cep}
-                        maxLength={9}
-                        setState={setCep}
+                        onChange={(e) => setCep(e.target.value)}
                     />
                     <InputCustomer
                         id="street"
@@ -185,7 +189,7 @@ function RegisterCostumer() {
                         classType="half" 
                         type="text" 
                         value={street}
-                        setState={setStreet}
+                        onChange={(e) => setStreet(e.target.value)}
                     />
                 </div>
 
@@ -196,7 +200,7 @@ function RegisterCostumer() {
                         classType="half" 
                         type="text"
                         value={district}
-                        setState={setDistrict}
+                        onChange={(e) => setDistrict(e.target.value)}
                     />
                     <InputCustomer 
                         id="city"
@@ -204,7 +208,7 @@ function RegisterCostumer() {
                         classType="half" 
                         type="text"
                         value={city}
-                        setState={setCity}
+                        onChange={(e) => setCity(e.target.value)}
                     />
                 </div>
 
@@ -214,9 +218,8 @@ function RegisterCostumer() {
                         label="Estado" 
                         classType="half" 
                         type="text"
-                        register={register}
                         value={state}
-                        setState={setState}
+                        onChange={(e) => setState(e.target.value)}
                     />
                     <InputCustomer 
                         id="landmark"

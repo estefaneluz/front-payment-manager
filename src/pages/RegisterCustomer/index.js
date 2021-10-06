@@ -52,6 +52,7 @@ function RegisterCostumer() {
     const onSubmit = async (data) => {
         data.cpf = onlyNumbers(data.cpf);
         data.phone = onlyNumbers(data.phone);
+        const cepNumber = onlyNumbers(cep);
 
         if(data.cpf.length < 11) {
             return setAlert({
@@ -85,8 +86,7 @@ function RegisterCostumer() {
                     district, 
                     street,
                     state, 
-                    zipcode: 
-                    cep
+                    zipcode: cepNumber
                 })
             });
 

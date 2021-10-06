@@ -6,7 +6,7 @@ function InputCustomer(props) {
     value: props.value,
     onChange: props.onChange,
     type: props.type,
-    maxLength: props.maxLengt,
+    maxLength: props.maxLength,
     ...!!props.register && props.register(props.id, { required: !!props.required }) 
   }
 

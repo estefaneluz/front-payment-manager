@@ -53,6 +53,20 @@ function RegisterCostumer() {
         data.cpf = onlyNumbers(data.cpf);
         data.phone = onlyNumbers(data.phone);
 
+        if(data.cpf.length < 11) {
+            return setAlert({
+                type: 'error',
+                message: 'Insira um CPF válido.'
+            });
+        }
+
+        if(data.phone.length < 10) {
+            return setAlert({
+                type: 'error',
+                message: 'Insira um Telefone válido.'
+            });
+        }
+
         setLoading(true);
         try {
             const response = await fetch(
@@ -185,6 +199,7 @@ function RegisterCostumer() {
                         type="text"
                         value={cep}
                         onChange={(e) => setCep(e.target.value)}
+                        maxLength={9}
                     />
                     <InputCustomer
                         id="street"

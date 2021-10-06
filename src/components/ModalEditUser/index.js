@@ -5,6 +5,8 @@ import { TextField } from "@material-ui/core/";
 import { GlobalStatesContext } from "../../contexts/GlobalStatesContext";
 import { useForm } from "react-hook-form";
 import InputPassword from "../../components/InputPassword";
+import InputMask from 'react-input-mask'
+import onlyNumbers from "../../functions/onlyNumbers";
 
 function ModalEditUser({ open, setOpen }) {
   const styles = useStyles();
@@ -56,12 +58,16 @@ function ModalEditUser({ open, setOpen }) {
   }
 
   const onSubmit = async (data) => {
+
+    data.phone = onlyNumbers(data.phone);
+    data.cpf = onlyNumbers(data.cpf);
+
     clearAlert();
     setLoading(true);
 
     try {
       const response = await fetch(
-        "https://api-payment-manager.herokuapp.com/perfil",
+        "https://api-payment-manager.herokuapp.com/perfil/",
         {
           method: "PUT",
           mode: "cors",
@@ -136,20 +142,23 @@ function ModalEditUser({ open, setOpen }) {
                 placeholder="Deixe vazio para não editar."
                 register={register}
               />
-              <TextField
+              <InputMask 
+                mask="(99) 999999999"
                 id="phone"
                 label="Telefone"
-                className={styles.input}
                 defaultValue={user.phone && user.phone}
-                {...register("phone")}
-              />
-              <TextField
+                {...register("phone")}>
+                  { (inputProps) => <TextField {...inputProps} className={styles.input} /> }
+              </InputMask>
+              <InputMask 
+                mask="999.999.999-99"
                 id="cpf"
                 label="CPF"
-                className={styles.input}
                 defaultValue={user.cpf && user.cpf}
                 {...register("cpf")}
-              />
+              >
+                  { (inputProps) => <TextField {...inputProps} className={styles.input} /> }
+              </InputMask>
               <button className={`btn btn-${buttonClass}`} type="submit">
                 Editar conta
               </button>

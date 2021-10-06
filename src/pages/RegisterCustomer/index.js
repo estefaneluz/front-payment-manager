@@ -17,16 +17,19 @@ function RegisterCostumer() {
 
     const [buttonClass, setButtonClass] = useState('pink-opacity');
 
-    const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, watch, handleSubmit, formState: { errors }, reset, setValue } = useForm();
     const watchFields = watch(['name', 'email', 'cpf', 'phone']);
     const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
 
-    const clearAddress = () => {
+    const clearFields = () => {
         setCep('');
         setCity('');
         setDistrict('');
         setStreet('');
         setState('');
+
+        setValue('cpf', '');
+        setValue('phone', '');
     }
 
     const loadAddressByCep = async (cep) => {
@@ -82,7 +85,7 @@ function RegisterCostumer() {
                 });
 
                 reset();
-                clearAddress();
+                clearFields();
 
                 return;
             }
@@ -238,7 +241,7 @@ function RegisterCostumer() {
                 />
 
                 <div className="flex-row column-gap-20">
-                    <button className="btn btn-border-pink" type="reset" onClick={clearAddress}>
+                    <button className="btn btn-border-pink" type="reset" onClick={clearFields}>
                         Cancelar
                     </button>
                     <button className={`btn btn-${buttonClass}`} type="submit">

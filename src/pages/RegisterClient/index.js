@@ -3,12 +3,12 @@ import './styles.css';
 import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
-import InputCustomer from '../../components/InputCustomer';
+import InputClient from '../../components/InputClient';
 import getAddressByCep from '../../services/viaCEP';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 import onlyNumbers from '../../functions/onlyNumbers';
 
-function RegisterCostumer() {
+function RegisterClient() {
     const [cep, setCep] = useState('');
     const [city, setCity] = useState('');
     const [district, setDistrict] = useState('');
@@ -148,10 +148,10 @@ function RegisterCostumer() {
     }, [watchFields]);
 
     return (
-        <div className="container-register-costumer">
+        <div className="container-register-client">
             <h1>Adicionar Cliente</h1>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
-                <InputCustomer
+                <InputClient
                     id="name"
                     label="Nome" 
                     type="text"
@@ -159,7 +159,7 @@ function RegisterCostumer() {
                     required={true}
                     error={!!errors.name}
                 />
-                <InputCustomer
+                <InputClient
                     id="email"
                     label="E-mail" 
                     type="email"
@@ -169,7 +169,7 @@ function RegisterCostumer() {
                 />
 
                 <div className="double-input">
-                    <InputCustomer
+                    <InputClient
                         id="cpf"
                         label="CPF" 
                         classType="half" 
@@ -179,7 +179,7 @@ function RegisterCostumer() {
                         required={true}
                         error={!!errors.cpf}
                     />
-                    <InputCustomer
+                    <InputClient
                         id="phone"
                         label="Telefone"
                         mask="(99) 999999999"
@@ -192,7 +192,7 @@ function RegisterCostumer() {
                 </div>
 
                 <div className="double-input">
-                    <InputCustomer
+                    <InputClient
                         id="zipcode"
                         label="CEP" 
                         classType="half" 
@@ -201,7 +201,7 @@ function RegisterCostumer() {
                         onChange={(e) => setCep(e.target.value)}
                         maxLength={9}
                     />
-                    <InputCustomer
+                    <InputClient
                         id="street"
                         label="Logradouro" 
                         classType="half" 
@@ -212,7 +212,7 @@ function RegisterCostumer() {
                 </div>
 
                 <div className="double-input">
-                    <InputCustomer
+                    <InputClient
                         id="district"
                         label="Bairro" 
                         classType="half" 
@@ -220,7 +220,7 @@ function RegisterCostumer() {
                         value={district}
                         onChange={(e) => setDistrict(e.target.value)}
                     />
-                    <InputCustomer 
+                    <InputClient 
                         id="city"
                         label="Cidade" 
                         classType="half" 
@@ -231,7 +231,7 @@ function RegisterCostumer() {
                 </div>
 
                 <div className="double-input">
-                    <InputCustomer
+                    <InputClient
                         id="state"
                         label="Estado" 
                         classType="half" 
@@ -239,7 +239,7 @@ function RegisterCostumer() {
                         value={state}
                         onChange={(e) => setState(e.target.value)}
                     />
-                    <InputCustomer 
+                    <InputClient 
                         id="landmark"
                         label="Ponto de Referência" 
                         classType="half" 
@@ -248,7 +248,7 @@ function RegisterCostumer() {
                     />
                 </div>
 
-                <InputCustomer
+                <InputClient
                     id="additional"
                     label="Complemento" 
                     type="text"
@@ -268,4 +268,4 @@ function RegisterCostumer() {
     );
 }
 
-export default RegisterCostumer;
+export default RegisterClient;

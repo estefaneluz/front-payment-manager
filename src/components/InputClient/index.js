@@ -1,7 +1,7 @@
 import './styles.css'
 import InputMask from 'react-input-mask'
 
-function InputCustomer(props) {
+function InputClient(props) {
   const inputAttributes = {
     value: props.value,
     onChange: props.onChange,
@@ -12,7 +12,7 @@ function InputCustomer(props) {
 
   return (
     <div className={
-        `customer-input 
+        `client-input 
         ${!!props.classType && props.classType} 
         ${!!props.error ? 'error' : ''}`}>
       <label> {props.label} </label>
@@ -27,4 +27,4 @@ function InputCustomer(props) {
   )
 }
 
-export default InputCustomer
+export default InputClient

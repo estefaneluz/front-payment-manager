@@ -36,8 +36,8 @@ function Sidebar() {
                 </Link>
 
                 <Link 
-                    to="/customers"
-                    className={location.pathname.includes('/customers') ? 'activated' : ''}
+                    to="/clients"
+                    className={location.pathname.includes('/clients') ? 'activated' : ''}
                 >
                     <img src={userIcon} alt="icone da opção clientes" />
                     <p>Clientes</p>

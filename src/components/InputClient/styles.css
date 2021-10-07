@@ -1,4 +1,4 @@
-.customer-input {
+.client-input {
     width: 50%;
     min-width: 500px;
 
@@ -9,7 +9,7 @@
     color: #374952;
 }
 
-.customer-input input {
+.client-input input {
     border-radius: 8px;
     border: 1px solid #374952;
     padding: 12px 20px;

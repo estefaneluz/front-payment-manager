@@ -62,6 +62,20 @@ function ModalEditUser({ open, setOpen }) {
     data.phone = onlyNumbers(data.phone);
     data.cpf = onlyNumbers(data.cpf);
 
+    if(data.cpf.length > 0 && data.cpf.length < 11) {
+      return setAlert({
+          type: 'error',
+          message: 'Insira um CPF válido.'
+      });
+    }
+
+    if(data.phone.length > 0 && data.phone.length < 10) {
+        return setAlert({
+            type: 'error',
+            message: 'Insira um Telefone válido.'
+        });
+    }
+
     clearAlert();
     setLoading(true);
 

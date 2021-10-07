@@ -1,15 +1,12 @@
 import './styles.css'
+import InputMask from 'react-input-mask'
 
 function InputCustomer(props) {
-  const handleSetState = (e) => {
-    if (!!props.setState) {
-      props.setState(e.target.value)
-    }
-  }
-
   const inputAttributes = {
     value: props.value,
-    onChange: (e) => handleSetState(e),
+    onChange: props.onChange,
+    type: props.type,
+    maxLength: props.maxLength,
     ...!!props.register && props.register(props.id, { required: !!props.required }) 
   }
 
@@ -19,11 +16,13 @@ function InputCustomer(props) {
         ${!!props.classType && props.classType} 
         ${!!props.error ? 'error' : ''}`}>
       <label> {props.label} </label>
-      <input 
-        {...inputAttributes} 
-        type={props.type}
-        maxLength={props.maxLength}
-      />
+      {!!props.mask ?
+        <InputMask
+          {...inputAttributes}
+          mask={props.mask}
+        />
+      : <input {...inputAttributes}/>
+      }
     </div>
   )
 }

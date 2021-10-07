@@ -15,7 +15,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Home from "./pages/Home";
 import RegisterClient from "./pages/RegisterClient";
-import Client from "./pages/RegisterClient";
+import Client from "./pages/Client";
 
 const ProtectedRoutes = (props) => {
     const { token } = useContext(GlobalStatesContext);
@@ -59,7 +59,8 @@ function Routes() {
                     <ProtectedRoutes>
                         <Main>
                             <Route path="/home" component={Home} />
-                            <Route path="/clients" component={RegisterClient} />
+                            <Route path="/clients" exact component={Client} />
+                            <Route path="/clients/new" component={RegisterClient} />
                         </Main>
                     </ProtectedRoutes>
                 </Switch>

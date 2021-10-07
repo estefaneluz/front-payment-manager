@@ -26,3 +26,10 @@ h1:before {
     content: "//";
     margin-right: 8px;
 }
+
+.container {
+    margin: 0 60px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+}

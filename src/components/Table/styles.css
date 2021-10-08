@@ -3,17 +3,18 @@ table {
     border-spacing: 0 8px;
 }
 
-th, td {
+th {
     padding: 6px 24px;
 }
 
 td {
     background-color: #FFFFFF;
+    padding: 24px;
 }
 
 tr {
     box-shadow: 0 0 1px rgb(0,0,0,0.1);
-    height: 100px;
+    color: #4C4C4C;
 }
 
 .table-header {

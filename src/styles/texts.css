@@ -5,3 +5,15 @@
 .text-left {
     text-align: left;
 }
+
+.text-red {
+    color: #FF4D4D;
+}
+
+.text-green {
+    color: #4EC06E;
+}
+
+.text-blue {
+    color: #5197B5;
+}

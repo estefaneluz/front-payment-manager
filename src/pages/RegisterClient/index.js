@@ -148,7 +148,7 @@ function RegisterClient() {
     }, [watchFields]);
 
     return (
-        <div className="container-register-client">
+        <div className="container">
             <h1>Adicionar Cliente</h1>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
                 <InputClient

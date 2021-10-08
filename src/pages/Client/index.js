@@ -56,7 +56,7 @@ function Client() {
             </div>
 
             {open && (
-                <ModalEditClient />
+                <ModalEditClient setOpen={setOpen}/>
             )}
         </>
     )

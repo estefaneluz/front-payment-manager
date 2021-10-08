@@ -1,3 +1,4 @@
+import './styles.css';
 import { useState, useEffect, useContext } from 'react';
 import InputClient from "../InputClient";
 import { useForm } from 'react-hook-form';
@@ -5,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import getAddressByCep from '../../services/viaCEP';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 
-function ModalEditClient() {
+function ModalEditClient(props) {
     const [cep, setCep] = useState('');
     const [city, setCity] = useState('');
     const [district, setDistrict] = useState('');
@@ -79,11 +80,13 @@ function ModalEditClient() {
     }, [watchFields]);
 
     return(
-        <div className="modal">
+        <div className="modal modal-edit-client">
             <form 
                 className="form" 
+                id="form-edit-client" 
                 onSubmit={handleSubmit(onSubmit)}
             >
+                <div className="modal-close" onClick={() => props.setOpen(false)}>X</div>
                 <InputClient
                     id="name"
                     label="Nome" 

@@ -18,9 +18,7 @@ function RegisterCharge() {
 
                 <div className="round-input">
                     <label>Descrição</label>
-                    <textarea id="story" name="story" rows="3">
-                        asdasdsada
-                    </textarea>
+                    <textarea placeholder="Referente ao pagamento da compra online." rows="3" />
                 </div>
 
                 <div className="round-input">
@@ -37,6 +35,7 @@ function RegisterCharge() {
                 <div className="double-input">
                     <InputRound
                         id="valor"
+                        placeHolder="R$ 0,00"
                         label="Valor" 
                         classType="half" 
                         type="text"
@@ -44,7 +43,7 @@ function RegisterCharge() {
                     <InputRound
                         id="vencimento"
                         label="Vencimento" 
-                        classType="half" 
+                        classType="half --date" 
                         type="date"
                     /> 
                 </div>

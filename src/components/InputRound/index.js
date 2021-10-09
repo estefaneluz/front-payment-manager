@@ -7,6 +7,7 @@ function InputRound(props) {
     onChange: props.onChange,
     type: props.type,
     maxLength: props.maxLength,
+    placeHolder: props.placeHolder,
     ...!!props.register && props.register(props.id, { required: !!props.required }) 
   }
 

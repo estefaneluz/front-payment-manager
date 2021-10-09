@@ -18,6 +18,10 @@
     width: 100%;
 }
 
+.--date input {
+    padding: 9px 20px;
+}
+
 .half {
     width: 49%;
     min-width: 240px;

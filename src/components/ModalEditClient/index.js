@@ -1,6 +1,6 @@
 import './styles.css';
 import { useState, useEffect, useContext } from 'react';
-import InputClient from "../InputClient";
+import InputRound from "../InputRound";
 import { useForm } from 'react-hook-form';
 
 import getAddressByCep from '../../services/viaCEP';
@@ -87,7 +87,7 @@ function ModalEditClient(props) {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <div className="modal-close" onClick={props.onClick}>X</div>
-                <InputClient
+                <InputRound
                     id="name"
                     label="Nome" 
                     type="text"
@@ -95,7 +95,7 @@ function ModalEditClient(props) {
                     required={true}
                     error={!!errors.name}
                 />
-                <InputClient
+                <InputRound
                     id="email"
                     label="E-mail" 
                     type="email"
@@ -105,7 +105,7 @@ function ModalEditClient(props) {
                 />
 
                 <div className="double-input">
-                    <InputClient
+                    <InputRound
                         id="cpf"
                         label="CPF" 
                         classType="half" 
@@ -115,7 +115,7 @@ function ModalEditClient(props) {
                         required={true}
                         error={!!errors.cpf}
                     />
-                    <InputClient
+                    <InputRound
                         id="phone"
                         label="Telefone"
                         mask="(99) 999999999"
@@ -128,7 +128,7 @@ function ModalEditClient(props) {
                 </div>
 
                 <div className="double-input">
-                    <InputClient
+                    <InputRound
                         id="zipcode"
                         label="CEP" 
                         classType="half" 
@@ -137,7 +137,7 @@ function ModalEditClient(props) {
                         onChange={(e) => setCep(e.target.value)}
                         maxLength={9}
                     />
-                    <InputClient
+                    <InputRound
                         id="street"
                         label="Logradouro" 
                         classType="half" 
@@ -148,7 +148,7 @@ function ModalEditClient(props) {
                 </div>
 
                 <div className="double-input">
-                    <InputClient
+                    <InputRound
                         id="district"
                         label="Bairro" 
                         classType="half" 
@@ -156,7 +156,7 @@ function ModalEditClient(props) {
                         value={district}
                         onChange={(e) => setDistrict(e.target.value)}
                     />
-                    <InputClient 
+                    <InputRound 
                         id="city"
                         label="Cidade" 
                         classType="half" 
@@ -167,7 +167,7 @@ function ModalEditClient(props) {
                 </div>
 
                 <div className="double-input">
-                    <InputClient
+                    <InputRound
                         id="state"
                         label="Estado" 
                         classType="half" 
@@ -175,7 +175,7 @@ function ModalEditClient(props) {
                         value={state}
                         onChange={(e) => setState(e.target.value)}
                     />
-                    <InputClient 
+                    <InputRound 
                         id="landmark"
                         label="Ponto de Referência" 
                         classType="half" 
@@ -184,7 +184,7 @@ function ModalEditClient(props) {
                     />
                 </div>
 
-                <InputClient
+                <InputRound
                     id="additional"
                     label="Complemento" 
                     type="text"

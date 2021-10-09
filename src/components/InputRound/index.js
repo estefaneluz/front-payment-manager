@@ -1,7 +1,7 @@
 import './styles.css'
 import InputMask from 'react-input-mask'
 
-function InputClient(props) {
+function InputRound(props) {
   const inputAttributes = {
     value: props.value,
     onChange: props.onChange,
@@ -27,4 +27,4 @@ function InputClient(props) {
   )
 }
 
-export default InputClient
+export default InputRound

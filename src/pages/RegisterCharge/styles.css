@@ -1,0 +1,9 @@
+.round-input {    
+    border-radius: 8px;
+    border: 1px solid #374952;
+    padding: 12px 20px;
+    width: 100%;
+
+    width: 50%;
+    min-width: 500px;
+}

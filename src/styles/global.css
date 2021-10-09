@@ -31,6 +31,10 @@ a {
     text-decoration: none;
 }
 
+textarea {
+    resize: none;
+}
+
 .container {
     margin: 0 60px 60px 60px;
     display: flex;

@@ -1,4 +1,4 @@
-.client-input {
+.round-input {
     width: 50%;
     min-width: 500px;
 
@@ -9,7 +9,9 @@
     color: #374952;
 }
 
-.client-input input {
+.round-input input, 
+.round-input select,
+.round-input textarea {
     border-radius: 8px;
     border: 1px solid #374952;
     padding: 12px 20px;

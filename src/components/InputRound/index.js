@@ -12,7 +12,7 @@ function InputRound(props) {
 
   return (
     <div className={
-        `client-input 
+        `round-input 
         ${!!props.classType && props.classType} 
         ${!!props.error ? 'error' : ''}`}>
       <label> {props.label} </label>

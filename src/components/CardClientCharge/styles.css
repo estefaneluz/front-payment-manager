@@ -1,0 +1,29 @@
+.card-client-charge {
+    background: #F9F9F9;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    padding: 20px;
+    width: 410px;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+
+    color: #4C4C4C;
+}
+
+.card-client-charge div {
+    justify-content: space-between;
+}
+
+.client-charge-title {
+    width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.client-charge-title span {
+    margin-right: 5px;
+}

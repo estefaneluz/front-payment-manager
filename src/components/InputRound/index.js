@@ -8,6 +8,7 @@ function InputRound(props) {
     type: props.type,
     maxLength: props.maxLength,
     placeHolder: props.placeHolder,
+    step: props.step,
     ...!!props.register && props.register(props.id, { required: !!props.required }) 
   }
 

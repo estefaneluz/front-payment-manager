@@ -38,7 +38,8 @@ function RegisterCharge() {
                         placeHolder="R$ 0,00"
                         label="Valor" 
                         classType="half" 
-                        type="text"
+                        type="number"
+                        step="0.01"
                     />
                     <InputRound
                         id="vencimento"

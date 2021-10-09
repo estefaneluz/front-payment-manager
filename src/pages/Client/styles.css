@@ -11,6 +11,7 @@
 .table-client-name {
     font-weight: bold;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .table-client-contact {

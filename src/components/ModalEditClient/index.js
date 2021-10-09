@@ -86,7 +86,7 @@ function ModalEditClient(props) {
                 id="form-edit-client" 
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <div className="modal-close" onClick={() => props.setOpen(false)}>X</div>
+                <div className="modal-close" onClick={props.onClick}>X</div>
                 <InputClient
                     id="name"
                     label="Nome" 

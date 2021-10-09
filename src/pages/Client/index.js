@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import Table from '../../components/Table';
 import ModalEditClient from '../../components/ModalEditClient';
+import ModalClientData from '../../components/ModalClientData'
+
 import emailIcon from '../../assets/email-icon.svg';
 import phoneIcon from '../../assets/phone-icon.svg';
 import editIcon from '../../assets/edit-icon.svg';
@@ -16,7 +18,7 @@ const tableTitles = [
 ]
 
 function Client() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState({ modalEdit: false, modalData: false });
 
     return (
         <>
@@ -26,8 +28,15 @@ function Client() {
                 </Link> 
                 <Table titles={tableTitles}>
                     <tr>
-                        <td className="table-client-data">
-                            <p className="table-client-name">Nome e Sobrenome da Cliente</p>
+                        <td className="table-client-data" >
+                            <p 
+                                className="table-client-name"
+                                onClick={ () => 
+                                    setOpen((prevState) => { return {...prevState, modalData: true}})
+                                }
+                            >
+                                Nome e Sobrenome da Cliente
+                            </p>
                             <div className="table-client-contact">
                                 <div>
                                     <img src={emailIcon} alt="icone de e-mail"/>
@@ -47,7 +56,9 @@ function Client() {
                                 <img 
                                     src={editIcon} 
                                     alt="Icone de editar cliente" 
-                                    onClick={() => setOpen(true)}
+                                    onClick={ () => 
+                                        setOpen((prevState) => { return {...prevState, modalEdit: true}})
+                                    }
                                 />
                             </div>
                         </td>
@@ -55,8 +66,16 @@ function Client() {
                 </Table>
             </div>
 
-            {open && (
-                <ModalEditClient setOpen={setOpen}/>
+            {!!open.modalEdit ? (
+                <ModalEditClient onClick={ () => 
+                    setOpen((prevState) => { return {...prevState, modalEdit: false}})
+                }/>
+            ) : '' }
+
+            {!!open.modalData && (
+                <ModalClientData onClick={ () => 
+                    setOpen((prevState) => { return {...prevState, modalData: false}})
+                }/>
             )}
         </>
     )

@@ -8,7 +8,7 @@ function ModalClientData(props) {
     return(
         <div className="modal">
             <div className="card">
-                <div className="modal-close" onClick={() => props.setOpen(false)}>X</div>
+                <div className="modal-close" onClick={props.onClick}>X</div>
                 <h2>Adriano Silva</h2>
                 <p>000.000.000-00</p>
                 <div className="card-row">

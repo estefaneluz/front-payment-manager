@@ -1,0 +1,5 @@
+.card-column-charges {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}

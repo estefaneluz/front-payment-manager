@@ -4,8 +4,12 @@ import CardCounter from '../../components/CardCounter';
 import userIcon from '../../assets/user-icon.svg';
 import moneyIcon from '../../assets/money-icon.svg';
 
+import ModalClientData from '../../components/ModalClientData';
+
 function Home() {
     return(
+        <>
+        <ModalClientData />
         <div className="home-container">
             <Card icon={userIcon} title="Clientes">
                 <CardCounter 
@@ -37,6 +41,7 @@ function Home() {
                 />
             </Card>
         </div>
+        </>
     );
 }
 

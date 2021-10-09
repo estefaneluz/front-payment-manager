@@ -6,14 +6,24 @@
     text-align: left;
 }
 
-.text-red {
+.text-status {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.text-status.--red {
     color: #FF4D4D;
 }
 
-.text-green {
+.text-status.--green {
     color: #4EC06E;
+    
 }
 
-.text-blue {
+.text-status.--blue {
     color: #5197B5;
+}
+
+.text-bold {
+    font-weight: bold;
 }

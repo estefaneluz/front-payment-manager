@@ -20,8 +20,6 @@
 }
 
 .table-client-status {
-    font-weight: bold;
-    text-transform: uppercase;
     min-width: 150px;
 
     display: flex;

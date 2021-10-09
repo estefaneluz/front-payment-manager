@@ -42,7 +42,7 @@ function Client() {
                         <td>R$ 00.000,00</td>
                         <td>R$ 00.000,00</td>
                         <td>
-                            <div className="table-client-status text-red">
+                            <div className="table-client-status text-status --red">
                                 <p> Inadimplente </p>
                                 <img 
                                     src={editIcon} 

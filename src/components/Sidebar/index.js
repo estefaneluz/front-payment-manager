@@ -43,7 +43,9 @@ function Sidebar() {
                     <p>Clientes</p>
                 </Link>
             </div>
-            <button className="btn btn-pink">Criar cobrança</button>
+            <Link to="/charges/new" className="sidebar-button">
+                <button className="btn btn-pink">Criar cobrança</button>
+            </Link>
         </nav>
     )
 }

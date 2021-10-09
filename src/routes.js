@@ -17,6 +17,7 @@ import Home from "./pages/Home";
 import RegisterClient from "./pages/RegisterClient";
 import Client from "./pages/Client";
 import Charges from "./pages/Charges";
+import RegisterCharge from "./pages/RegisterCharge";
 
 const ProtectedRoutes = (props) => {
     const { token } = useContext(GlobalStatesContext);
@@ -60,9 +61,10 @@ function Routes() {
                     <ProtectedRoutes>
                         <Main>
                             <Route path="/home" component={Home} />
-                            <Route path="/clients" exact component={Client} />
                             <Route path="/clients/new" component={RegisterClient} />
-                            <Route path="/charges" component={Charges} />
+                            <Route path="/clients" exact component={Client} />
+                            <Route path="/charges/new" component={RegisterCharge} />
+                            <Route path="/charges" exact component={Charges} />
                         </Main>
                     </ProtectedRoutes>
                 </Switch>

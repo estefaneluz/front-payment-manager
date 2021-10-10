@@ -21,7 +21,7 @@ const tableTitles = [
 function Client() {
     const [open, setOpen] = useState({ modalEdit: false, modalData: false });
     const [clients, setClients] = useState([]);
-    const [selectedClient, setSelectedClient] = useState({});
+    const [idClient, setIdClient] = useState(null);
     const { token, setLoading } = useContext(GlobalStatesContext);
 
     const getClients = async () => {
@@ -51,13 +51,13 @@ function Client() {
         console.log(clients);
     }, [clients])
 
-    const handleDetailedClient = (data) => {
-        setSelectedClient(data);
+    const handleDetailedClient = (id) => {
+        setIdClient(id);
         setOpen((prevState) => { return {...prevState, modalData: true}})
     }
 
     const clearStates = () => {
-        setSelectedClient({});
+        setIdClient(null);
         setOpen({modalEdit: false, modalData: false});
     }
 
@@ -73,7 +73,7 @@ function Client() {
                             <td className="table-client-data" >
                                 <p 
                                     className="table-client-name"
-                                    onClick={() => handleDetailedClient(client)}
+                                    onClick={() => handleDetailedClient(client.id)}
                                 >
                                     {client.name}
                                 </p>
@@ -118,10 +118,7 @@ function Client() {
             ) : '' }
 
             {!!open.modalData && (
-                <ModalClientData 
-                    onClick= {clearStates}
-                    client={selectedClient}
-                />
+                <ModalClientData onClick= {clearStates} id={idClient} />
             )}
         </>
     )

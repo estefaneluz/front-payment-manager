@@ -14,9 +14,10 @@ const tableTitles = [
 
 function Charges() {
     const [charges, setCharges] = useState();
-    const { token } = useContext(GlobalStatesContext);
+    const { token, setLoading } = useContext(GlobalStatesContext);
 
     const getCharges = async () => {
+        setLoading(true);
         const response = await fetch(
             "https://api-payment-manager.herokuapp.com/cobrancas/",
             {
@@ -26,8 +27,8 @@ function Charges() {
             },
             }
         );
-
         setCharges(await response.json());
+        setLoading(false);
     }
 
     useEffect(() => {

@@ -27,3 +27,7 @@
 .card-charge-title span {
     margin-right: 5px;
 }
+
+.card-charge-title span::before {
+    content: '#';
+}

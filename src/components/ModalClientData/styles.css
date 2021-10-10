@@ -36,9 +36,12 @@
     color: #374952;
 }
 
+.card-client-information p {
+    font-size: 12px;
+}
+
 .card-row {
     display: flex;
-    justify-content: space-between;
     column-gap: 20px;
     row-gap: 10px;
 }

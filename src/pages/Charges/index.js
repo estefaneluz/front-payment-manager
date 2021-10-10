@@ -13,7 +13,7 @@ const tableTitles = [
 ]
 
 function Charges() {
-    const [charges, setCharges] = useState();
+    const [charges, setCharges] = useState([]);
     const { token, setLoading } = useContext(GlobalStatesContext);
 
     const getCharges = async () => {
@@ -37,7 +37,6 @@ function Charges() {
         }
 
         awaitGetCharges();
-        console.log(charges);
     }, []);
 
     return (

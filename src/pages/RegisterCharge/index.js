@@ -9,10 +9,20 @@ import '../../components/InputRound/styles.css';
 function RegisterCharge() {
     const [clients, setClients] = useState([]);
     const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset, setError } = useForm();
 
     const onSubmit = async (data) => {
         setLoading(true);
+
+        if(data.client_id === 'null') {
+            setLoading(false);
+            return setError('client_id', { type: "focus" }, { shouldFocus: true });
+        }
+
+        if(data.status === 'null') {
+            setLoading(false);
+            return setError('status', { type: "focus" }, { shouldFocus: true });
+        }
 
         data.amount = data.amount * 100;
         data.status = (data.status == true);
@@ -79,7 +89,7 @@ function RegisterCharge() {
         <div className="container">
             <h1>Criar Cobrança</h1>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
-                <div className="round-input">
+                <div className={`round-input ${!!errors.client_id ? 'error' : ''}`}>
                     <label>Cliente</label>
                     <select {...register('client_id', { required: true })}>
                         <option value="null" selected>
@@ -91,13 +101,13 @@ function RegisterCharge() {
                     </select>
                 </div>
 
-                <div className="round-input" id="charge-description">
+                <div className={`round-input ${!!errors.description ? 'error' : ''}`} id="charge-description">
                     <label>Descrição</label>
                     <textarea rows="3" {...register('description', { required: true })}/>
                     <span>A descrição informada será impressa no boleto.</span>
                 </div>
 
-                <div className="round-input">
+                <div className={`round-input ${!!errors.status ? 'error' : ''}`}>
                     <label>Status</label>
                     <select {...register('status', { required: true })}>
                         <option value="null" selected>
@@ -118,6 +128,7 @@ function RegisterCharge() {
                         step="0.01"
                         register={register}
                         required={true}
+                        error={!!errors.amount}
                     />
                     <InputRound
                         id="due_date"
@@ -126,6 +137,7 @@ function RegisterCharge() {
                         type="date"
                         register={register}
                         required={true}
+                        error={!!errors.due_date}
                     /> 
                 </div>
 

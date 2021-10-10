@@ -8,8 +8,12 @@ import '../../components/InputRound/styles.css';
 
 function RegisterCharge() {
     const [clients, setClients] = useState([]);
+    const [buttonClass, setButtonClass] = useState('pink-opacity');
     const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
-    const { register, handleSubmit, formState: { errors }, reset, setError } = useForm();
+    const { register, watch, handleSubmit, formState: { errors }, reset, setError } = useForm();
+    const watchAllFields = watch();
+
+    const clearForm = () => reset(); 
 
     const onSubmit = async (data) => {
         setLoading(true);
@@ -85,6 +89,16 @@ function RegisterCharge() {
         awaitGetClients();
     }, []);
 
+    useEffect(()=> {
+        const conditional = watchAllFields.client_id === 'null' || watchAllFields.status === 'null' ||!watchAllFields.description || !watchAllFields.amount || !watchAllFields.due_date;
+
+        if(conditional) {
+            setButtonClass('pink-opacity');
+        } else {
+            setButtonClass('pink');
+        }
+    }, [watchAllFields]);
+
     return (
         <div className="container">
             <h1>Criar Cobrança</h1>
@@ -142,10 +156,10 @@ function RegisterCharge() {
                 </div>
 
                 <div className="flex-row column-gap-20">
-                    <button className="btn btn-border-pink" type="reset">
+                    <button className="btn btn-border-pink" type="reset" onClick={clearForm}>
                         Cancelar
                     </button>
-                    <button className={`btn btn-pink-opacity`} type="submit">
+                    <button className={`btn btn-${buttonClass}`} type="submit">
                         Adicionar Cliente
                     </button>
                 </div>           

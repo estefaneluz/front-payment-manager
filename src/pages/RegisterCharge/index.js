@@ -15,11 +15,10 @@ function RegisterCharge() {
         setLoading(true);
 
         data.amount = data.amount * 100;
-        data.status = (data.status == true)
-        console.log(data);
+        data.status = (data.status == true);
         try {
             const response = await fetch(
-                'https://api-payment-manager.herokuapp.com/charges', {
+                'https://api-payment-manager.herokuapp.com/cobrancas', {
                 method: 'POST',
                 mode: 'cors',
                 headers: {

@@ -5,32 +5,22 @@ import { useForm } from 'react-hook-form';
 
 import getAddressByCep from '../../services/viaCEP';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
-import ifExistsPrint from '../../functions/ifExistsPrint';
 
 function ModalEditClient(props) {
     const [cep, setCep] = useState('');
-    const [city, setCity] = useState('');
-    const [district, setDistrict] = useState('');
-    const [street, setStreet] = useState('');
-    const [state, setState] = useState('');
-    // const [address, setAddress] = useState({});
+    const [address, setAddress] = useState({});
 
     const [buttonClass, setButtonClass] = useState('pink-opacity');
     const [client, setClient] = useState({});
 
-    const { register, watch, handleSubmit, formState: { errors }, setValue } = useForm();
+    const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const watchFields = watch(['name', 'email', 'cpf', 'phone']);
     const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
 
     const clearFields = () => {
-        setCep('');
-        setCity('');
-        setDistrict('');
-        setStreet('');
-        setState('');
-
-        setValue('cpf', '');
-        setValue('phone', '');
+        const { zipcode, ...clientAddress } = client.address;
+        setCep(zipcode);
+        setAddress(clientAddress);
     }
 
     const loadAddressByCep = async (cep) => {
@@ -44,11 +34,12 @@ function ModalEditClient(props) {
             return;
         }
 
-        setCity(address.localidade);
-        setDistrict(address.bairro);
-        setStreet(address.logradouro);
-        setState(address.uf);
-        // setAddress((prev) => { return {...prev, state: address.uf}});
+        setAddress({
+            state: address.uf,
+            city: address.localidade,
+            district: address.bairro,
+            street: address.logradouro
+        });
     }
 
     const getClientData = async () => {
@@ -70,12 +61,10 @@ function ModalEditClient(props) {
         
         setClient(clientData);
 
-        // setAddress(clientData.address);
-        setCep(ifExistsPrint(clientData.address.zipcode, ''));
-        setState(ifExistsPrint(clientData.address.state, ''));
-        setCity(ifExistsPrint(clientData.address.city, ''));
-        setDistrict(ifExistsPrint(clientData.address.district, ''));
-        setStreet(ifExistsPrint(clientData.address.street, ''));
+        const { zipcode, ...clientAddress } = clientData.address;
+        setCep(zipcode);
+        setAddress(clientAddress);
+
         return;
     }
 
@@ -85,11 +74,8 @@ function ModalEditClient(props) {
 
     useEffect(() => {
 
-        if(!!cep && cep.length < 9 && city.length > 0) {
-            setCity('');
-            setDistrict('');
-            setStreet('');
-            setState('');
+        if(!!cep && cep.length < 9 && address.city.length > 0) {
+            setAddress({});
         }
 
         if(!!cep && cep.indexOf('-') !== -1) {
@@ -189,9 +175,10 @@ function ModalEditClient(props) {
                             label="Logradouro" 
                             classType="half" 
                             type="text" 
-                            value={street}
-                            onChange={(e) => setStreet(e.target.value)}
-                        />
+                            value={address.street}
+                            onChange={(e) => setAddress((prev) => { 
+                                return {...prev, street: e.target.value}}
+                            )}                        />
                     </div>
 
                     <div className="double-input">
@@ -200,16 +187,20 @@ function ModalEditClient(props) {
                             label="Bairro" 
                             classType="half" 
                             type="text"
-                            value={district}
-                            onChange={(e) => setDistrict(e.target.value)}
+                            value={address.district}
+                            onChange={(e) => setAddress((prev) => { 
+                                return {...prev, district: e.target.value}}
+                            )}                        
                         />
                         <InputRound 
                             id="city"
                             label="Cidade" 
                             classType="half" 
                             type="text"
-                            value={city}
-                            onChange={(e) => setCity(e.target.value)}
+                            value={address.city}
+                            onChange={(e) => setAddress((prev) => { 
+                                return {...prev, city: e.target.value}}
+                            )}
                         />
                     </div>
 
@@ -219,9 +210,10 @@ function ModalEditClient(props) {
                             label="Estado" 
                             classType="half" 
                             type="text"
-                            value={state}
-                            onChange={(e) => setState(e.target.value)}
-                            // onChange={(e) => setAddress((prev) => { return {...prev, state: e.target.value}})}
+                            value={address.state}
+                            onChange={(e) => setAddress((prev) => { 
+                                return {...prev, state: e.target.value}}
+                            )}
                         />
                         <InputRound 
                             id="landmark"

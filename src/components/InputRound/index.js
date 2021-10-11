@@ -4,6 +4,7 @@ import InputMask from 'react-input-mask'
 function InputRound(props) {
   const inputAttributes = {
     value: props.value,
+    defaultValue: props.defaultValue,
     onChange: props.onChange,
     type: props.type,
     maxLength: props.maxLength,

@@ -125,6 +125,7 @@ function RegisterClient() {
             setCity('');
             setDistrict('');
             setStreet('');
+            setState('');
         }
 
         if(cep.indexOf('-') !== -1) {

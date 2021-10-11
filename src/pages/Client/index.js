@@ -56,6 +56,11 @@ function Client() {
         setOpen((prevState) => { return {...prevState, modalData: true}})
     }
 
+    const handleEditClient = (id) => {
+        setIdClient(id);
+        setOpen((prevState) => { return {...prevState, modalEdit: true}})
+    }
+
     const clearStates = () => {
         setIdClient(null);
         setOpen({modalEdit: false, modalData: false});
@@ -100,9 +105,7 @@ function Client() {
                                     <img 
                                         src={editIcon} 
                                         alt="Icone de editar cliente" 
-                                        onClick={ () => 
-                                            setOpen((prevState) => { return {...prevState, modalEdit: true}})
-                                        }
+                                        onClick={() => handleEditClient(client.id)}
                                     />
                                 </div>
                             </td>
@@ -112,9 +115,7 @@ function Client() {
             </div>
 
             {!!open.modalEdit ? (
-                <ModalEditClient onClick={ () => 
-                    setOpen((prevState) => { return {...prevState, modalEdit: false}})
-                }/>
+                <ModalEditClient onClick= {clearStates} id={idClient}/>
             ) : '' }
 
             {!!open.modalData && (

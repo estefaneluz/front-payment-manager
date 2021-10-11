@@ -70,7 +70,7 @@ function Client() {
                     Adicionar Cliente
                 </Link> 
                 <Table titles={tableTitles}>
-                    {!!clients && (clients.map( client => (
+                    {!!clients[0]?.id && (clients.map( client => (
                         <tr>
                             <td className="table-client-data" >
                                 <p 

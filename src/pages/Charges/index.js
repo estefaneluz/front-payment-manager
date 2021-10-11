@@ -42,7 +42,7 @@ function Charges() {
     return (
         <div className="container">
             <Table titles={tableTitles}>
-                {!!charges &&
+                {!!charges[0]?.id &&
                     charges.map( charge => (
                         <tr key={charge.id}>
                             <td className="text-bold">{`#${charge.id}`}</td>

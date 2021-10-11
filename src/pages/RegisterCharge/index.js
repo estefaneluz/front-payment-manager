@@ -2,6 +2,7 @@ import './styles.css';
 import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
+import dayjs from 'dayjs';
 
 import InputRound from '../../components/InputRound';
 import '../../components/InputRound/styles.css';
@@ -30,6 +31,8 @@ function RegisterCharge() {
 
         data.amount = data.amount * 100;
         data.status = (data.status == true);
+        data.due_date = dayjs(data.due_date).valueOf();
+
         try {
             const response = await fetch(
                 'https://api-payment-manager.herokuapp.com/cobrancas', {
@@ -160,7 +163,7 @@ function RegisterCharge() {
                         Cancelar
                     </button>
                     <button className={`btn btn-${buttonClass}`} type="submit">
-                        Adicionar Cliente
+                        Adicionar Cobrança
                     </button>
                 </div>           
             </form>

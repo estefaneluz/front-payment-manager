@@ -1,6 +1,7 @@
 import './styles.css';
 import { useState, useEffect, useContext } from 'react';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
+import { phoneMask, cpfMask, cepMask } from '../../functions/stringMasks';
 
 import CardCharge from '../CardCharge';
 import emailIcon from '../../assets/email-icon.svg';
@@ -10,6 +11,7 @@ import ifExistsPrint from '../../functions/ifExistsPrint';
 
 function ModalClientData({id, onClick}) {
     const [client, setClient] = useState({});
+    const [cep, setCep] = useState('');
     const { token, setLoading } = useContext(GlobalStatesContext);
 
     const getDetailedClient = async () => {
@@ -29,6 +31,10 @@ function ModalClientData({id, onClick}) {
     
         setLoading(false);
     
+        const cepExistente = ifExistsPrint(clientData.address.zipcode, "Não informado");
+        if(cepExistente !== "Não informado") {
+            setCep(cepMask(cepExistente));
+        }
         return setClient(clientData);
     }
     useEffect(() => {
@@ -49,7 +55,7 @@ function ModalClientData({id, onClick}) {
                 <div className="card">
                     <div className="modal-close" onClick={onClick}>X</div>
                     <h2>{client.name}</h2>
-                    <p>{client.cpf}</p>
+                    <p>{cpfMask(client.cpf)}</p>
                     <div className="card-row">
                         <div className="card-client-information --divider">
                             <div className="card-row card-contact --wrap">
@@ -59,13 +65,13 @@ function ModalClientData({id, onClick}) {
                                 </div>
                                 <div className="flex-row">
                                     <img src={phoneIcon} alt="icone de telefone" />
-                                    <p>{client.phone}</p>
+                                    <p>{phoneMask(client.phone)}</p>
                                 </div>
                             </div>
                             <div className="card-row --wrap">
                                 <div>
                                     <h5>CEP</h5>
-                                    <p>{ifExistsPrint(client.address.zipcode, "Não informado")}</p>
+                                    <p>{!!cep ? cep : "Não informado"}</p>
                                 </div>
 
                                 <div>

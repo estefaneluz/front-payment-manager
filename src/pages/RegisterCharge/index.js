@@ -32,7 +32,7 @@ function RegisterCharge() {
         data.amount = data.amount * 100;
         data.status = (data.status == true);
         data.due_date = dayjs(data.due_date).valueOf();
-
+        console.log(typeof data.due_date);
         try {
             const response = await fetch(
                 'https://api-payment-manager.herokuapp.com/cobrancas', {

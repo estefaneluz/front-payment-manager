@@ -6,6 +6,7 @@ import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 import Table from '../../components/Table';
 import ModalEditClient from '../../components/ModalEditClient';
 import ModalClientData from '../../components/ModalClientData'
+import { phoneMask } from '../../functions/stringMasks';
 
 import emailIcon from '../../assets/email-icon.svg';
 import phoneIcon from '../../assets/phone-icon.svg';
@@ -85,7 +86,7 @@ function Client() {
                                     </div>
                                     <div>
                                         <img src={phoneIcon} alt="icone de telefone"/>
-                                        <p>{client.phone}</p>
+                                        <p>{phoneMask(client.phone)}</p>
                                     </div>
                                 </div>
                             </td>

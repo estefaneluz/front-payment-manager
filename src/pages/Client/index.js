@@ -45,11 +45,7 @@ function Client() {
         }
 
         awaitGetClients();
-    }, []);
-
-    useEffect(() => {
-        console.log(clients);
-    }, [clients])
+    }, [!open.modalEdit]);
 
     const handleDetailedClient = (id) => {
         setIdClient(id);

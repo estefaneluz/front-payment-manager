@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import getAddressByCep from '../../services/viaCEP';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
+import onlyNumbers from "../../functions/onlyNumbers";
 
 function ModalEditClient(props) {
     const [cep, setCep] = useState('');
@@ -19,7 +20,7 @@ function ModalEditClient(props) {
 
     const clearFields = () => {
         const { zipcode, ...clientAddress } = client.address;
-        setCep(zipcode);
+        zipcode ? setCep(zipcode) : setCep('');
         setAddress(clientAddress);
     }
 
@@ -31,6 +32,7 @@ function ModalEditClient(props) {
                 type:"error",
                 message: "Endereço não encontrado"
             });
+            setAddress({});
             return;
         }
 
@@ -62,30 +64,93 @@ function ModalEditClient(props) {
         setClient(clientData);
 
         const { zipcode, ...clientAddress } = clientData.address;
-        setCep(zipcode);
+        zipcode && setCep(zipcode);
         setAddress(clientAddress);
 
         return;
     }
 
-    const onSubmit = () => {
-        console.log("oi");
+    const onSubmit = async (data) => {
+        data.phone = onlyNumbers(data.phone);
+        data.cpf = onlyNumbers(data.cpf);
+        const cepNumber = onlyNumbers(cep);
+
+        if(data.cpf.length > 0 && data.cpf.length < 11) {
+            return setAlert({
+                type: 'error',
+                message: 'Insira um CPF válido.'
+            });
+        }
+
+        if(data.phone.length > 0 && data.phone.length < 10) {
+            return setAlert({
+                type: 'error',
+                message: 'Insira um Telefone válido.'
+            });
+        }
+
+        setLoading(true);
+
+        try {
+            const response = await fetch(
+            `https://api-payment-manager.herokuapp.com/clientes/${props.id}`,
+            {
+                method: "PUT",
+                mode: "cors",
+                headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    ...data,
+                    ...address, 
+                    zipcode: cepNumber
+                }),
+            }
+            );
+
+            setLoading(false);
+
+            if (response.ok) {
+                setAlert({
+                    type: "success",
+                    message: "Cliente atualizado com sucesso!",
+                });
+
+                setTimeout(() => props.onClick(), 2000);
+                return;
+            }
+
+            const message = await response.json();
+
+            setAlert({
+                type: "error",
+                message,
+            });
+
+        } catch (error) {
+            setLoading(false);
+
+            return setAlert({
+                type: "error",
+                message: error.message
+            });
+        }
     }
 
     useEffect(() => {
-
-        if(!!cep && cep.length < 9 && address.city.length > 0) {
-            setAddress({});
+        if(cep.length < 9 && !!address.city) {
+            if(address.city.length > 0) setAddress({});
         }
 
-        if(!!cep && cep.indexOf('-') !== -1) {
+        if(cep.indexOf('-') !== -1) {
             if(cep.length === 9) {
                 loadAddressByCep(cep)
             }
             return;
         }
 
-        if(!!cep && cep.length === 8) {
+        if(cep.length === 8) {
             loadAddressByCep(cep)
         }
     }, [cep]);
@@ -178,7 +243,8 @@ function ModalEditClient(props) {
                             value={address.street}
                             onChange={(e) => setAddress((prev) => { 
                                 return {...prev, street: e.target.value}}
-                            )}                        />
+                            )}                        
+                        />
                     </div>
 
                     <div className="double-input">

@@ -110,7 +110,7 @@ function RegisterCharge() {
                         <option value="null" selected>
                             Selecione a cliente
                         </option>
-                        {!!clients && clients.map(
+                        {!!clients[0]?.id && clients.map(
                             client => <option value={client.id}>{client.name}</option>
                         )}
                     </select>

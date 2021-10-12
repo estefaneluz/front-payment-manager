@@ -98,8 +98,10 @@ function Client() {
                                 R$ {!!client.totaAmountReceived ? client.totaAmountReceived / 100 : '0'}
                             </td>
                             <td>
-                                <div className="table-client-status text-status --red">
-                                    <p> Inadimplente </p>
+                                <div className={
+                                    `table-client-status text-status --${client.isLate ? 'red' : 'green'}`}
+                                >
+                                    <p> {client.isLate ? 'Inadimplente' : 'Em dia'} </p>
                                     <img 
                                         src={editIcon} 
                                         alt="Icone de editar cliente" 

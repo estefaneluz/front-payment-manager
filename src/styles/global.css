@@ -26,3 +26,18 @@ h1:before {
     content: "//";
     margin-right: 8px;
 }
+
+a {
+    text-decoration: none;
+}
+
+textarea {
+    resize: none;
+}
+
+.container {
+    margin: 0 60px 60px 60px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+}

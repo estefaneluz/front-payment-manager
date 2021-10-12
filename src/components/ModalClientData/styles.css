@@ -1,0 +1,61 @@
+.card-column-charges {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    max-height: 300px;
+    overflow: auto;
+
+    padding-right: 20px;
+}
+
+.card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 40px 60px 50px 60px;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.card h2 {
+    color: #374952;
+    font-size: 24px;
+}
+
+.card-client-information {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    justify-content: center;
+    max-width: 380px;
+}
+
+.card-client-information h5 {
+    font-size: 14px;
+    color: #374952;
+}
+
+.card-client-information p {
+    font-size: 12px;
+}
+
+.card-row {
+    display: flex;
+    column-gap: 20px;
+    row-gap: 10px;
+}
+
+.--divider {
+    border-right: 1px solid #DDDDDD;
+    padding-right: 20px;
+}
+
+.card-contact {
+    margin: 25px 0;
+    font-size: 12px;
+}
+
+.card-contact img {
+    margin-right: 8px;
+}

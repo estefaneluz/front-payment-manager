@@ -1,18 +1,21 @@
 import './styles.css'
 import InputMask from 'react-input-mask'
 
-function InputCustomer(props) {
+function InputRound(props) {
   const inputAttributes = {
     value: props.value,
+    defaultValue: props.defaultValue,
     onChange: props.onChange,
     type: props.type,
     maxLength: props.maxLength,
+    placeHolder: props.placeHolder,
+    step: props.step,
     ...!!props.register && props.register(props.id, { required: !!props.required }) 
   }
 
   return (
     <div className={
-        `customer-input 
+        `round-input 
         ${!!props.classType && props.classType} 
         ${!!props.error ? 'error' : ''}`}>
       <label> {props.label} </label>
@@ -27,4 +30,4 @@ function InputCustomer(props) {
   )
 }
 
-export default InputCustomer
+export default InputRound

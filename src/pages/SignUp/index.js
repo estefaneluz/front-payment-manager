@@ -15,7 +15,7 @@ function SignUp() {
     const styles = useStyles();
 
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
-    const [buttonClass, setButtonClass] = useState('-pink-opacity');
+    const [buttonClass, setButtonClass] = useState('pink-opacity');
     const watchAllFields = watch();
     const history = useHistory();
 

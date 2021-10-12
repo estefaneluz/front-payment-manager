@@ -1,4 +1,4 @@
-.customer-input {
+.round-input {
     width: 50%;
     min-width: 500px;
 
@@ -9,11 +9,17 @@
     color: #374952;
 }
 
-.customer-input input {
+.round-input input, 
+.round-input select,
+.round-input textarea {
     border-radius: 8px;
     border: 1px solid #374952;
     padding: 12px 20px;
     width: 100%;
+}
+
+.--date input {
+    padding: 9px 20px;
 }
 
 .half {
@@ -25,6 +31,8 @@
     color: #F44336;
 }
 
-.error input {
+.error input, 
+.error select, 
+.error textarea {
     border: 1px solid #F44336;
 }

@@ -1,0 +1,8 @@
+.no-records-link {
+    font-size: 12px;
+    color: #DA0175;
+}
+
+.no-records-link:hover {
+    text-decoration: underline dotted #DA0175;
+}

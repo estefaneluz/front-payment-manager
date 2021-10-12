@@ -2,6 +2,8 @@ import './styles.css';
 import { useState, useEffect, useContext } from 'react';
 import Table from '../../components/Table';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
+import timestampToDate from '../../functions/timestampToDate';
+import { handleStatus } from '../../functions/handleStatus';
 
 const tableTitles = [
     "Id",
@@ -13,7 +15,7 @@ const tableTitles = [
 ]
 
 function Charges() {
-    const [charges, setCharges] = useState([]);
+    const [charges, setCharges] = useState([]);    
     const { token, setLoading } = useContext(GlobalStatesContext);
 
     const getCharges = async () => {
@@ -49,10 +51,12 @@ function Charges() {
                             <td>{charge.name}</td>
                             <td className="charge-description">{charge.description}</td>
                             <td>R$ {charge.amount / 100}</td>
-                            <td className={`text-status ${charge.status ? '--green' : '--blue'}`}>
-                                {charge.status ? 'pago' : 'pendente'}
+                            <td className={`text-status 
+                                --${handleStatus(charge.status, charge.due_date).className}`}
+                            >
+                                {handleStatus(charge.status, charge.due_date).text}
                             </td>
-                            <td>{charge.due_date}</td>
+                            <td>{timestampToDate(charge.due_date)}</td>
                         </tr>
                     ))
                 }

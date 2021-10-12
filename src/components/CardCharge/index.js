@@ -1,6 +1,17 @@
 import './styles.css';
+import { useState, useEffect } from 'react';
+import timestampToDate from '../../functions/timestampToDate';
+import { handleStatus } from '../../functions/handleStatus';
 
 function CardCharge({charge}) {
+    const [status, setStatus] = useState({text: '', className: ''});
+
+    useEffect(()=>{
+        setStatus(
+            handleStatus(charge.status, charge.due_date)
+        );
+    }, []);
+
     return(
         <div className="card-charge">
             <div className="flex-row">
@@ -16,8 +27,8 @@ function CardCharge({charge}) {
             </div>
 
             <div className="flex-row">
-                <p>{charge.due_date}</p>
-                <p className="text-status --blue">{charge.status ? 'pago' : 'pendente' }</p>
+                <p>{timestampToDate(charge.due_date)}</p>
+                <p className={`text-status --${status.className}`}>{status.text}</p>
             </div>
         </div>
     );

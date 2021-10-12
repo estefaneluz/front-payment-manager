@@ -30,7 +30,6 @@ function RegisterCharge() {
         }
 
         data.amount = data.amount * 100;
-        data.status = (data.status == true);
         data.due_date = dayjs(data.due_date).valueOf();
         try {
             const response = await fetch(

@@ -61,7 +61,7 @@ function Charges() {
                         </tr>
                     ))
 
-                    : <NoRecords element='clientes' pronoun='o' link='/clients/new' />
+                    : <NoRecords element='cobranças' pronoun='a' link='/charges/new' />
                 }
             </Table>
         </div>

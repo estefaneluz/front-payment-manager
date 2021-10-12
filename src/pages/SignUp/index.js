@@ -15,7 +15,7 @@ function SignUp() {
     const styles = useStyles();
 
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
-    const [buttonClass, setButtonClass] = useState('-pink-opacity');
+    const [buttonClass, setButtonClass] = useState('pink-opacity');
     const watchAllFields = watch();
     const history = useHistory();
 
@@ -45,7 +45,7 @@ function SignUp() {
                     type: 'success',
                     message: "Usuário cadastrado com sucesso!"
                 });
-                setTimeout(()=>history.push('/'), 3000);
+                setTimeout(()=>history.push('/'), 2000);
                 return;
             }
 

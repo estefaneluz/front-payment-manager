@@ -3,32 +3,72 @@ import './styles.css';
 import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
-import InputCustomer from '../../components/InputCustomer';
+import InputRound from '../../components/InputRound';
 import getAddressByCep from '../../services/viaCEP';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
+import onlyNumbers from '../../functions/onlyNumbers';
 
-function RegisterCostumer() {
+function RegisterClient() {
     const [cep, setCep] = useState('');
     const [city, setCity] = useState('');
     const [district, setDistrict] = useState('');
     const [street, setStreet] = useState('');
+    const [state, setState] = useState('');
 
     const [buttonClass, setButtonClass] = useState('pink-opacity');
 
-    const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, watch, handleSubmit, formState: { errors }, reset, setValue } = useForm();
     const watchFields = watch(['name', 'email', 'cpf', 'phone']);
     const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
 
+    const clearFields = () => {
+        setCep('');
+        setCity('');
+        setDistrict('');
+        setStreet('');
+        setState('');
+
+        setValue('cpf', '');
+        setValue('phone', '');
+    }
+
     const loadAddressByCep = async (cep) => {
-        const { localidade, bairro, logradouro} = await getAddressByCep(cep);
-        setCity(localidade);
-        setDistrict(bairro);
-        setStreet(logradouro);
+        const address = await getAddressByCep(cep);
+        
+        if(!address) {
+            setAlert({
+                type:"error",
+                message: "Endereço não encontrado"
+            });
+            return;
+        }
+
+        setCity(address.localidade);
+        setDistrict(address.bairro);
+        setStreet(address.logradouro);
+        setState(address.uf);
     }
 
     const onSubmit = async (data) => {
-        setLoading(true);
+        data.cpf = onlyNumbers(data.cpf);
+        data.phone = onlyNumbers(data.phone);
+        const cepNumber = onlyNumbers(cep);
 
+        if(data.cpf.length < 11) {
+            return setAlert({
+                type: 'error',
+                message: 'Insira um CPF válido.'
+            });
+        }
+
+        if(data.phone.length < 10) {
+            return setAlert({
+                type: 'error',
+                message: 'Insira um Telefone válido.'
+            });
+        }
+
+        setLoading(true);
         try {
             const response = await fetch(
                 'https://api-payment-manager.herokuapp.com/clientes', {
@@ -44,9 +84,9 @@ function RegisterCostumer() {
                     ...data, 
                     city, 
                     district, 
-                    street, 
-                    zipcode: 
-                    cep
+                    street,
+                    state, 
+                    zipcode: cepNumber
                 })
             });
 
@@ -55,14 +95,11 @@ function RegisterCostumer() {
             if(response.ok) {
                 setAlert({
                     type: 'success',
-                    message: "Usuário cadastrado com sucesso!"
+                    message: "Cliente cadastrado com sucesso!"
                 });
 
                 reset();
-                setCep('');
-                setCity('');
-                setDistrict('');
-                setStreet('');
+                clearFields();
 
                 return;
             }
@@ -83,6 +120,14 @@ function RegisterCostumer() {
     }
 
     useEffect(() => {
+
+        if(cep.length < 9 && city.length > 0) {
+            setCity('');
+            setDistrict('');
+            setStreet('');
+            setState('');
+        }
+
         if(cep.indexOf('-') !== -1) {
             if(cep.length === 9) {
                 loadAddressByCep(cep)
@@ -104,39 +149,41 @@ function RegisterCostumer() {
     }, [watchFields]);
 
     return (
-        <div className="container-register-costumer">
+        <div className="container">
             <h1>Adicionar Cliente</h1>
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
-                <InputCustomer 
+                <InputRound
                     id="name"
                     label="Nome" 
-                    type="text" 
+                    type="text"
                     register={register}
                     required={true}
                     error={!!errors.name}
                 />
-                <InputCustomer
+                <InputRound
                     id="email"
                     label="E-mail" 
-                    type="email" 
+                    type="email"
                     register={register}
                     required={true}
                     error={!!errors.email}
                 />
 
                 <div className="double-input">
-                    <InputCustomer
+                    <InputRound
                         id="cpf"
                         label="CPF" 
                         classType="half" 
                         type="text"
+                        mask="999.999.999-99"
                         register={register}
                         required={true}
                         error={!!errors.cpf}
                     />
-                    <InputCustomer
+                    <InputRound
                         id="phone"
-                        label="Telefone" 
+                        label="Telefone"
+                        mask="(99) 999999999"
                         classType="half"
                         type="text"
                         register={register}
@@ -146,52 +193,54 @@ function RegisterCostumer() {
                 </div>
 
                 <div className="double-input">
-                    <InputCustomer
+                    <InputRound
                         id="zipcode"
                         label="CEP" 
                         classType="half" 
                         type="text"
                         value={cep}
-                        setState={setCep}
+                        onChange={(e) => setCep(e.target.value)}
+                        maxLength={9}
                     />
-                    <InputCustomer
+                    <InputRound
                         id="street"
                         label="Logradouro" 
                         classType="half" 
                         type="text" 
                         value={street}
-                        setState={setStreet}
+                        onChange={(e) => setStreet(e.target.value)}
                     />
                 </div>
 
                 <div className="double-input">
-                    <InputCustomer
+                    <InputRound
                         id="district"
                         label="Bairro" 
                         classType="half" 
                         type="text"
                         value={district}
-                        setState={setDistrict}
+                        onChange={(e) => setDistrict(e.target.value)}
                     />
-                    <InputCustomer 
+                    <InputRound 
                         id="city"
                         label="Cidade" 
                         classType="half" 
                         type="text"
                         value={city}
-                        setState={setCity}
+                        onChange={(e) => setCity(e.target.value)}
                     />
                 </div>
 
                 <div className="double-input">
-                    <InputCustomer
-                        id="additional"
-                        label="Complemento" 
+                    <InputRound
+                        id="state"
+                        label="Estado" 
                         classType="half" 
                         type="text"
-                        register={register}
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
                     />
-                    <InputCustomer 
+                    <InputRound 
                         id="landmark"
                         label="Ponto de Referência" 
                         classType="half" 
@@ -200,8 +249,15 @@ function RegisterCostumer() {
                     />
                 </div>
 
+                <InputRound
+                    id="additional"
+                    label="Complemento" 
+                    type="text"
+                    register={register}
+                />
+
                 <div className="flex-row column-gap-20">
-                    <button className="btn btn-border-pink">
+                    <button className="btn btn-border-pink" type="reset" onClick={clearFields}>
                         Cancelar
                     </button>
                     <button className={`btn btn-${buttonClass}`} type="submit">
@@ -213,4 +269,4 @@ function RegisterCostumer() {
     );
 }
 
-export default RegisterCostumer;
+export default RegisterClient;

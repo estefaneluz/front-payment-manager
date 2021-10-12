@@ -32,8 +32,14 @@
     margin-left: 30px;
 }
 
-.sidebar button {
+.sidebar-button {
     margin-top: 20vh;
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar-button button {
     width: 80%;
-    align-self: center;
 }

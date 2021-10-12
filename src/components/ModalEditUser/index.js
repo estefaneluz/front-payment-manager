@@ -5,6 +5,8 @@ import { TextField } from "@material-ui/core/";
 import { GlobalStatesContext } from "../../contexts/GlobalStatesContext";
 import { useForm } from "react-hook-form";
 import InputPassword from "../../components/InputPassword";
+import InputMask from 'react-input-mask'
+import onlyNumbers from "../../functions/onlyNumbers";
 
 function ModalEditUser({ open, setOpen }) {
   const styles = useStyles();
@@ -56,12 +58,30 @@ function ModalEditUser({ open, setOpen }) {
   }
 
   const onSubmit = async (data) => {
+
+    data.phone = onlyNumbers(data.phone);
+    data.cpf = onlyNumbers(data.cpf);
+
+    if(data.cpf.length > 0 && data.cpf.length < 11) {
+      return setAlert({
+          type: 'error',
+          message: 'Insira um CPF válido.'
+      });
+    }
+
+    if(data.phone.length > 0 && data.phone.length < 10) {
+        return setAlert({
+            type: 'error',
+            message: 'Insira um Telefone válido.'
+        });
+    }
+
     clearAlert();
     setLoading(true);
 
     try {
       const response = await fetch(
-        "https://api-payment-manager.herokuapp.com/perfil",
+        "https://api-payment-manager.herokuapp.com/perfil/",
         {
           method: "PUT",
           mode: "cors",
@@ -85,7 +105,7 @@ function ModalEditUser({ open, setOpen }) {
           message: "Usuário atualizado com sucesso!",
         });
 
-        setTimeout(() => closeModal(), 3000);
+        setTimeout(() => closeModal(), 2000);
         return;
       }
 
@@ -110,8 +130,7 @@ function ModalEditUser({ open, setOpen }) {
     <>
       {open && (
         <div className="modal">
-          <div id="form-edit-user">
-            <form className="form" onSubmit={handleSubmit(onSubmit)}>
+            <form className="form" id="form-edit-user" onSubmit={handleSubmit(onSubmit)}>
               <div className="modal-close" onClick={() => closeModal()}>X</div>
               <h1>Editar Usuário</h1>
               <TextField
@@ -137,25 +156,27 @@ function ModalEditUser({ open, setOpen }) {
                 placeholder="Deixe vazio para não editar."
                 register={register}
               />
-              <TextField
+              <InputMask 
+                mask="(99) 999999999"
                 id="phone"
                 label="Telefone"
-                className={styles.input}
                 defaultValue={user.phone && user.phone}
-                {...register("phone")}
-              />
-              <TextField
+                {...register("phone")}>
+                  { (inputProps) => <TextField {...inputProps} className={styles.input} /> }
+              </InputMask>
+              <InputMask 
+                mask="999.999.999-99"
                 id="cpf"
                 label="CPF"
-                className={styles.input}
                 defaultValue={user.cpf && user.cpf}
                 {...register("cpf")}
-              />
+              >
+                  { (inputProps) => <TextField {...inputProps} className={styles.input} /> }
+              </InputMask>
               <button className={`btn btn-${buttonClass}`} type="submit">
                 Editar conta
               </button>
             </form>
-          </div>
         </div>
       )}
     </>

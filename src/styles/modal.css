@@ -15,7 +15,8 @@
 
 .modal-close {
     position: relative;
-    right: -20px;
+    top: -5px;
+    right: -15px;
     cursor: pointer;
     align-self: flex-end;
 

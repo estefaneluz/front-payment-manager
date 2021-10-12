@@ -1,0 +1,6 @@
+.double-input {
+    display: flex;
+    width: 50%;
+    min-width: 500px;
+    justify-content: space-between;
+}

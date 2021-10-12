@@ -2,6 +2,7 @@ import './styles.css';
 import { useState, useEffect, useContext } from 'react';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 import { phoneMask, cpfMask, cepMask } from '../../functions/stringMasks';
+import NoRecords from '../NoRecords';
 
 import CardCharge from '../CardCharge';
 import emailIcon from '../../assets/email-icon.svg';
@@ -108,9 +109,12 @@ function ModalClientData({id, onClick}) {
                             </div>
                         </div>
                         <div className="card-column-charges">
-                            {client.charges.map(charge => 
-                                <CardCharge charge={charge} />
-                            )}
+                            {client.charges.length ? 
+                                client.charges.map(charge => 
+                                    <CardCharge charge={charge} />
+                                )
+                                : <NoRecords element='cobranças' pronoun={'a'} link='/charges/new' />
+                            }
                         </div>
                     </div>
                 </div>

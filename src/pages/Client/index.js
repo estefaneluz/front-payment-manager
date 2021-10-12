@@ -7,6 +7,7 @@ import Table from '../../components/Table';
 import ModalEditClient from '../../components/ModalEditClient';
 import ModalClientData from '../../components/ModalClientData'
 import { phoneMask } from '../../functions/stringMasks';
+import NoRecords from '../../components/NoRecords';
 
 import emailIcon from '../../assets/email-icon.svg';
 import phoneIcon from '../../assets/phone-icon.svg';
@@ -70,7 +71,7 @@ function Client() {
                     Adicionar Cliente
                 </Link> 
                 <Table titles={tableTitles}>
-                    {!!clients[0]?.id && (clients.map( client => (
+                    {!!clients[0]?.id ? (clients.map( client => (
                         <tr>
                             <td className="table-client-data" >
                                 <p 
@@ -107,7 +108,9 @@ function Client() {
                                 </div>
                             </td>
                         </tr>
-                    )))}
+                    )))
+                    : <NoRecords element='clientes' pronoun='o' link='/clients/new' />
+                }
                 </Table>
             </div>
 

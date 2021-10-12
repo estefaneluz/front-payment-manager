@@ -4,6 +4,7 @@ import Table from '../../components/Table';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 import timestampToDate from '../../functions/timestampToDate';
 import { handleStatus } from '../../functions/handleStatus';
+import NoRecords from '../../components/NoRecords';
 
 const tableTitles = [
     "Id",
@@ -44,7 +45,7 @@ function Charges() {
     return (
         <div className="container">
             <Table titles={tableTitles}>
-                {!!charges[0]?.id &&
+                {!!charges[0]?.id ?
                     charges.map( charge => (
                         <tr key={charge.id}>
                             <td className="text-bold">{`#${charge.id}`}</td>
@@ -59,6 +60,8 @@ function Charges() {
                             <td>{timestampToDate(charge.due_date)}</td>
                         </tr>
                     ))
+
+                    : <NoRecords element='clientes' pronoun='o' link='/clients/new' />
                 }
             </Table>
         </div>

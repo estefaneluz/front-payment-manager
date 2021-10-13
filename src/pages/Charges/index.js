@@ -5,6 +5,7 @@ import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 import timestampToDate from '../../functions/timestampToDate';
 import { handleStatus } from '../../functions/handleStatus';
 import NoRecords from '../../components/NoRecords';
+import Search from '../../components/Search';
 
 const tableTitles = [
     "Id",
@@ -44,6 +45,7 @@ function Charges() {
 
     return (
         <div className="container">
+            <Search className="self-end" />
             <Table titles={tableTitles}>
                 {!!charges[0]?.id ?
                     charges.map( charge => (

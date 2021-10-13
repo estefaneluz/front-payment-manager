@@ -22,6 +22,7 @@ function ModalEditClient(props) {
         const { zipcode, ...clientAddress } = client.address;
         zipcode ? setCep(zipcode) : setCep('');
         setAddress(clientAddress);
+        props.onClick();
     }
 
     const loadAddressByCep = async (cep) => {

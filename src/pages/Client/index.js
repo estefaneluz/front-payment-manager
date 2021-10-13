@@ -8,6 +8,7 @@ import ModalEditClient from '../../components/ModalEditClient';
 import ModalClientData from '../../components/ModalClientData'
 import { phoneMask } from '../../functions/stringMasks';
 import NoRecords from '../../components/NoRecords';
+import Search from '../../components/Search';
 
 import emailIcon from '../../assets/email-icon.svg';
 import phoneIcon from '../../assets/phone-icon.svg';
@@ -67,9 +68,12 @@ function Client() {
     return (
         <>
             <div className="container"> 
-                <Link className="btn btn-border-pink" to="/clients/new"> 
-                    Adicionar Cliente
-                </Link> 
+                <div className="flex-row items-center space-between">
+                    <Link className="btn btn-border-pink" to="/clients/new"> 
+                        Adicionar Cliente
+                    </Link> 
+                    <Search />
+                </div>
                 <Table titles={tableTitles}>
                     {!!clients[0]?.id ? (clients.map( client => (
                         <tr>

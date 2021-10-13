@@ -6,6 +6,10 @@
     align-items: center;
 }
 
+.space-between {
+    justify-content: space-between;
+}
+
 .flex-column {
     display: flex;
     flex-direction: column;

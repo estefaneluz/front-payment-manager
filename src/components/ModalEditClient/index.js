@@ -73,7 +73,7 @@ function ModalEditClient(props) {
     const onSubmit = async (data) => {
         data.phone = onlyNumbers(data.phone);
         data.cpf = onlyNumbers(data.cpf);
-        const cepNumber = onlyNumbers(cep);
+        const zipcode = !cep ? null : onlyNumbers(cep);
 
         if(data.cpf.length > 0 && data.cpf.length < 11) {
             return setAlert({
@@ -104,7 +104,7 @@ function ModalEditClient(props) {
                 body: JSON.stringify({
                     ...data,
                     ...address, 
-                    zipcode: cepNumber
+                    zipcode
                 }),
             }
             );

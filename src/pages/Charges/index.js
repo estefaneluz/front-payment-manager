@@ -6,6 +6,7 @@ import timestampToDate from '../../functions/timestampToDate';
 import { handleStatus } from '../../functions/handleStatus';
 import NoRecords from '../../components/NoRecords';
 import Search from '../../components/Search';
+import ModalEditCharge from '../../components/ModalEditCharge';
 
 const tableTitles = [
     "Id",
@@ -66,6 +67,8 @@ function Charges() {
                     : <NoRecords element='cobranças' pronoun='a' link='/charges/new' />
                 }
             </Table>
+
+            <ModalEditCharge />
         </div>
     );
 }

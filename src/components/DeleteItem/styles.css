@@ -2,6 +2,7 @@
     align-self: flex-start;
     column-gap: 8px;
     font-size: 12px;
+    height: 55px;
 }
 
 .delete-item {

@@ -8,7 +8,7 @@ import InputRound from '../../components/InputRound';
 import '../../components/InputRound/styles.css';
 import DeleteItem from '../DeleteItem';
 
-function ModalEditCharge() {
+function ModalEditCharge({id, closeModal}) {
     const [clients, setClients] = useState([]);
     const [buttonClass, setButtonClass] = useState('pink-opacity');
     const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
@@ -83,6 +83,33 @@ function ModalEditCharge() {
         setClients(await response.json());
     }
 
+    const deleteCharge = async () => {
+        setLoading(true);
+           
+        try {
+            const response = await fetch(
+                `https://api-payment-manager.herokuapp.com/cobrancas/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            setLoading(false);
+
+            if(response.ok) return closeModal();
+        } catch(error) {
+
+            setLoading(false);
+
+            return setAlert({
+                type: 'error',
+                message: error.message
+            });
+
+        }
+    }
+
     useEffect(() => {
         const awaitGetClients = async () => {
             await getClients();
@@ -146,7 +173,7 @@ function ModalEditCharge() {
                         error={!!errors.due_date}
                     /> 
                 </div>
-                <DeleteItem />
+                <DeleteItem functionDelete={deleteCharge} />
 
                 <div className="flex-row column-gap-20">
                     <button className="btn btn-border-pink" type="reset" onClick={clearForm}>

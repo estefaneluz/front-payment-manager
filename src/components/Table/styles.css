@@ -3,6 +3,11 @@ table {
     border-spacing: 0 8px;
 }
 
+
+tr:not(.table-header) {
+    cursor: pointer;
+}
+
 th {
     padding: 6px 24px;
 }

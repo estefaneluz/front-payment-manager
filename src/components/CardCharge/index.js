@@ -27,7 +27,7 @@ function CardCharge({charge}) {
             </div>
 
             <div className="flex-row">
-                <p>{timestampToDate(charge.due_date)}</p>
+                <p>{timestampToDate(charge.due_date, 'DD/MM/YYYY')}</p>
                 <p className={`text-status --${status.className}`}>{status.text}</p>
             </div>
         </div>

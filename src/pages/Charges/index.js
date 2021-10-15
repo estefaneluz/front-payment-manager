@@ -20,6 +20,13 @@ const tableTitles = [
 function Charges() {
     const [charges, setCharges] = useState([]);    
     const { token, setLoading } = useContext(GlobalStatesContext);
+    const [openModal, setOpenModal] = useState(false);
+    const [selectedCharge, setSelectedCharge] = useState({});
+
+    const handleModal = (charge) => {
+        setSelectedCharge(charge);
+        setOpenModal(true);
+    }
 
     const getCharges = async () => {
         setLoading(true);
@@ -50,7 +57,7 @@ function Charges() {
             <Table titles={tableTitles}>
                 {!!charges[0]?.id ?
                     charges.map( charge => (
-                        <tr key={charge.id}>
+                        <tr key={charge.id} onClick={() => handleModal(charge)}>
                             <td className="text-bold">{`#${charge.id}`}</td>
                             <td>{charge.name}</td>
                             <td className="charge-description">{charge.description}</td>
@@ -60,7 +67,7 @@ function Charges() {
                             >
                                 {handleStatus(charge.status, charge.due_date).text}
                             </td>
-                            <td>{timestampToDate(charge.due_date)}</td>
+                            <td>{timestampToDate(charge.due_date, 'DD/MM/YYYY')}</td>
                         </tr>
                     ))
 
@@ -68,7 +75,9 @@ function Charges() {
                 }
             </Table>
 
-            <ModalEditCharge />
+            { openModal && 
+                <ModalEditCharge closeModal={() => setOpenModal(false)} charge={selectedCharge}/> 
+            }
         </div>
     );
 }

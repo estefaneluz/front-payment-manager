@@ -7,8 +7,9 @@ import dayjs from 'dayjs';
 import InputRound from '../../components/InputRound';
 import '../../components/InputRound/styles.css';
 import DeleteItem from '../DeleteItem';
+import timestampToDate from '../../functions/timestampToDate';
 
-function ModalEditCharge({id, closeModal}) {
+function ModalEditCharge({charge, closeModal}) {
     const [clients, setClients] = useState([]);
     const [buttonClass, setButtonClass] = useState('pink-opacity');
     const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
@@ -88,7 +89,7 @@ function ModalEditCharge({id, closeModal}) {
            
         try {
             const response = await fetch(
-                `https://api-payment-manager.herokuapp.com/cobrancas/${id}`, {
+                `https://api-payment-manager.herokuapp.com/cobrancas/${charge.id}`, {
                 method: 'DELETE',
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -121,33 +122,38 @@ function ModalEditCharge({id, closeModal}) {
     return(
         <div className="modal">
             <form className="form form-edit-charge" onSubmit={handleSubmit(onSubmit)}>
-                <div className="modal-close">X</div>
+                <div className="modal-close" onClick={closeModal}>X</div>
                 <div className={`round-input ${!!errors.client_id ? 'error' : ''}`}>
                     <label>Cliente</label>
                     <select {...register('client_id', { required: true })}>
-                        <option value="null" selected>
-                            Selecione a cliente
-                        </option>
-                        {!!clients[0]?.id && clients.map(
-                            client => <option value={client.id}>{client.name}</option>
-                        )}
+                        {!!clients[0]?.id && clients.map((client) => {
+                            if(client.name === charge.name) {
+                                return <option value={client.id} selected>{client.name}</option>
+                            }
+                            return <option value={client.id}>{client.name}</option>
+                        })}
                     </select>
                 </div>
 
                 <div className={`round-input ${!!errors.description ? 'error' : ''}`} id="charge-description">
                     <label>Descrição</label>
-                    <textarea rows="3" {...register('description', { required: true })}/>
+                    <textarea 
+                        rows="3" 
+                        defaultValue={charge.description} 
+                        {...register('description', { required: true })}
+                    />
                     <span>A descrição informada será impressa no boleto.</span>
                 </div>
 
                 <div className={`round-input ${!!errors.status ? 'error' : ''}`}>
                     <label>Status</label>
                     <select {...register('status', { required: true })}>
-                        <option value="null" selected>
-                            Selecione um status
+                        <option value={charge.status} selected>
+                            {charge.status ? 'Pago' : 'Pendente'}
                         </option>
-                        <option value="false">Pendente</option>
-                        <option value="true">Pago</option>
+                        <option value={!charge.status}>
+                            {charge.status ? 'Pendente' : 'Pago'}
+                        </option>
                     </select>
                 </div>
 
@@ -162,6 +168,7 @@ function ModalEditCharge({id, closeModal}) {
                         register={register}
                         required={true}
                         error={!!errors.amount}
+                        defaultValue={charge.amount/100}
                     />
                     <InputRound
                         id="due_date"
@@ -171,12 +178,13 @@ function ModalEditCharge({id, closeModal}) {
                         register={register}
                         required={true}
                         error={!!errors.due_date}
+                        defaultValue={timestampToDate(charge.due_date, 'YYYY-MM-DD')}
                     /> 
                 </div>
                 <DeleteItem functionDelete={deleteCharge} />
 
                 <div className="flex-row column-gap-20">
-                    <button className="btn btn-border-pink" type="reset" onClick={clearForm}>
+                    <button className="btn btn-border-pink" type="reset" onClick={closeModal}>
                         Cancelar
                     </button>
                     <button className={`btn btn-${buttonClass}`} type="submit">

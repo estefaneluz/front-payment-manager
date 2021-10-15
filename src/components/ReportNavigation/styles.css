@@ -1,0 +1,12 @@
+.navigation-container {
+    display: flex;
+    column-gap: 10px;
+}
+
+.navigation-title {
+    color: #000000;
+    font-size: 24px;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}

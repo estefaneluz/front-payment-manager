@@ -20,7 +20,7 @@ function Client() {
 
     const getClients = async () => {
         setLoading(true);
-        const response = await fetch(
+        const request = await fetch(
             "https://api-payment-manager.herokuapp.com/clientes/",
             {
             method: "GET",
@@ -29,7 +29,9 @@ function Client() {
             },
             }
         );
-        setClients(await response.json());
+
+        const response = await request.json();
+        setClients(response);
         setLoading(false);
     }
 

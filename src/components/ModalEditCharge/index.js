@@ -16,27 +16,19 @@ function ModalEditCharge({charge, closeModal}) {
     const { register, watch, handleSubmit, formState: { errors }, reset, setError } = useForm();
     const watchAllFields = watch();
 
-    const clearForm = () => reset(); 
-
     const onSubmit = async (data) => {
         setLoading(true);
 
         if(data.client_id === 'null') {
-            setLoading(false);
-            return setError('client_id', { type: "focus" }, { shouldFocus: true });
-        }
-
-        if(data.status === 'null') {
-            setLoading(false);
-            return setError('status', { type: "focus" }, { shouldFocus: true });
+            data.client_id = charge.client_id;
         }
 
         data.amount = data.amount * 100;
         data.due_date = dayjs(data.due_date).valueOf();
         try {
             const response = await fetch(
-                'https://api-payment-manager.herokuapp.com/cobrancas', {
-                method: 'POST',
+                `https://api-payment-manager.herokuapp.com/cobrancas/${charge.id}`, {
+                method: 'PUT',
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,10 +42,10 @@ function ModalEditCharge({charge, closeModal}) {
             if(response.ok) {
                 setAlert({
                     type: 'success',
-                    message: "Cobrança cadastrada com sucesso!"
+                    message: "Cobrança editada com sucesso!"
                 });
 
-                reset();
+                closeModal();
                 return;
             }
 
@@ -119,6 +111,16 @@ function ModalEditCharge({charge, closeModal}) {
         awaitGetClients();
     }, []);
 
+    useEffect(()=> {
+        const conditional = !watchAllFields.description || !watchAllFields.amount || !watchAllFields.due_date;
+
+        if(conditional) {
+            setButtonClass('pink-opacity');
+        } else {
+            setButtonClass('pink');
+        }
+    }, [watchAllFields]);
+
     return(
         <div className="modal">
             <form className="form form-edit-charge" onSubmit={handleSubmit(onSubmit)}>
@@ -126,9 +128,10 @@ function ModalEditCharge({charge, closeModal}) {
                 <div className={`round-input ${!!errors.client_id ? 'error' : ''}`}>
                     <label>Cliente</label>
                     <select {...register('client_id', { required: true })}>
+                        <option value={charge.client_id}>{charge.name}</option>
                         {!!clients[0]?.id && clients.map((client) => {
                             if(client.name === charge.name) {
-                                return <option value={client.id} selected>{client.name}</option>
+                                return;
                             }
                             return <option value={client.id}>{client.name}</option>
                         })}

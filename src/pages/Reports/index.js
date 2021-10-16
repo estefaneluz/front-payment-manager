@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import ReportNavigation from "../../components/ReportNavigation";
 import Table from '../../components/Table';
 import RowClient from "../../components/RowClient";
-import Search from '../../components/Search';
+ import Search from '../../components/Search';
 import { clientTitles } from '../Client';
 import { chargesTitles } from '../Charges';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';

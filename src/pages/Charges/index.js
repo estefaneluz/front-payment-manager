@@ -19,7 +19,7 @@ function Charges() {
 
     const getCharges = async () => {
         setLoading(true);
-        const response = await fetch(
+        const request = await fetch(
             "https://api-payment-manager.herokuapp.com/cobrancas/",
             {
             method: "GET",
@@ -28,8 +28,10 @@ function Charges() {
             },
             }
         );
-        setCharges(await response.json());
+
+        const response = await request.json();
         setLoading(false);
+        setCharges(response);
     }
 
     useEffect(() => {

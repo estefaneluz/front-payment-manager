@@ -6,6 +6,7 @@ import {
     Redirect 
 } from "react-router-dom";
 import { GlobalStatesContext } from "./contexts/GlobalStatesContext";
+import { ReportsStatesContext } from './contexts/ReportsStatesContext';
 import { Backdrop, CircularProgress, Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
@@ -18,7 +19,7 @@ import RegisterClient from "./pages/RegisterClient";
 import Client from "./pages/Client";
 import Charges from "./pages/Charges";
 import RegisterCharge from "./pages/RegisterCharge";
-import Report from "./pages/Reports";
+import Reports from './pages/Reports';
 
 const ProtectedRoutes = (props) => {
     const { token } = useContext(GlobalStatesContext);
@@ -32,6 +33,7 @@ function Routes() {
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState({});
+    const [reportFilter, setReportFilter] = useState({page: '', status: ''});
     const styles = useStyles();
 
     const login = (value) => {
@@ -53,6 +55,8 @@ function Routes() {
         clearAlert
     }
 
+    const valueReport = { reportFilter, setReportFilter }
+
     return (
         <GlobalStatesContext.Provider value={valueContext}>
             <Router>
@@ -61,8 +65,10 @@ function Routes() {
                     <Route path="/sign-up" component={SignUp} />
                     <ProtectedRoutes>
                         <Main>
-                            <Route path="/home" component={Home} />
-                            <Route path="/report" component={Report} />
+                            <ReportsStatesContext.Provider value={valueReport}>
+                                <Route path="/home" component={Home} />
+                                <Route path="/reports" component={Reports}/>
+                            </ReportsStatesContext.Provider>
                             <Route path="/clients/new" component={RegisterClient} />
                             <Route path="/clients" exact component={Client} />
                             <Route path="/charges/new" component={RegisterCharge} />

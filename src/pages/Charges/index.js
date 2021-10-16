@@ -8,7 +8,7 @@ import NoRecords from '../../components/NoRecords';
 import Search from '../../components/Search';
 import ModalEditCharge from '../../components/ModalEditCharge';
 
-const tableTitles = [
+export const chargesTitles = [
     "Id",
     "Cliente",
     "Descrição",
@@ -54,7 +54,7 @@ function Charges() {
     return (
         <div className="container">
             <Search className="self-end" />
-            <Table titles={tableTitles}>
+            <Table titles={chargesTitles}>
                 {!!charges[0]?.id ?
                     charges.map( charge => (
                         <tr key={charge.id} onClick={() => handleModal(charge)}>

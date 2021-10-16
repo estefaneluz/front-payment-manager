@@ -1,4 +1,3 @@
-import './styles.css'
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
@@ -9,12 +8,13 @@ import ModalClientData from '../../components/ModalClientData'
 import { phoneMask } from '../../functions/stringMasks';
 import NoRecords from '../../components/NoRecords';
 import Search from '../../components/Search';
+import RowClient from '../../components/RowClient';
 
 import emailIcon from '../../assets/email-icon.svg';
 import phoneIcon from '../../assets/phone-icon.svg';
 import editIcon from '../../assets/edit-icon.svg';
 
-const tableTitles = [
+export const clientTitles = [
     "Clientes",
     "Cobranças Feitas",
     "Cobranças Recebidas",
@@ -74,49 +74,8 @@ function Client() {
                     </Link> 
                     <Search />
                 </div>
-                <Table titles={tableTitles}>
-                    {!!clients[0]?.id ? (clients.map( client => (
-                        <tr>
-                            <td className="table-client-data" >
-                                <p 
-                                    className="table-client-name"
-                                    onClick={() => handleDetailedClient(client.id)}
-                                >
-                                    {client.name}
-                                </p>
-                                <div className="table-client-contact">
-                                    <div>
-                                        <img src={emailIcon} alt="icone de e-mail"/>
-                                        <p>{client.email}</p>
-                                    </div>
-                                    <div>
-                                        <img src={phoneIcon} alt="icone de telefone"/>
-                                        <p>{phoneMask(client.phone)}</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                R$ {!!client.totalAmountCharges ? client.totalAmountCharges / 100 : '0'}
-                            </td>
-                            <td>
-                                R$ {!!client.totaAmountReceived ? client.totaAmountReceived / 100 : '0'}
-                            </td>
-                            <td>
-                                <div className={
-                                    `table-client-status text-status --${client.isLate ? 'red' : 'green'}`}
-                                >
-                                    <p> {client.isLate ? 'Inadimplente' : 'Em dia'} </p>
-                                    <img 
-                                        src={editIcon} 
-                                        alt="Icone de editar cliente" 
-                                        onClick={() => handleEditClient(client.id)}
-                                    />
-                                </div>
-                            </td>
-                        </tr>
-                    )))
-                    : <NoRecords element='clientes' pronoun='o' link='/clients/new' />
-                }
+                <Table titles={clientTitles}>
+                    <RowClient clients={clients} />
                 </Table>
             </div>
 

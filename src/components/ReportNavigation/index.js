@@ -8,7 +8,6 @@ const pages_options = ['Clientes', 'Cobrancas'];
 
 function ReportNavigation(props) {
     return(
-        <>
         <div className="flex-row navigation-container">
             <div>
                 <p className="navigation-title">
@@ -24,7 +23,6 @@ function ReportNavigation(props) {
                 <Dropdown options={clients_options} />
             </div>
         </div>
-        </>
     )
 }
 

@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import ReportNavigation from "../../components/ReportNavigation";
 import Table from '../../components/Table';
 import RowClient from "../../components/RowClient";
+import Search from '../../components/Search';
 import { clientTitles } from '../Client';
 import { chargesTitles } from '../Charges';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
@@ -35,7 +36,10 @@ function Reports() {
 
     return(
         <div className="container">
-            <ReportNavigation />
+            <div className="flex-row items-center space-between">
+                <ReportNavigation />
+                <Search />
+            </div>
             <Table titles={clientTitles}>
                 <RowClient clients={clients} getClients={getClients} />
             </Table>

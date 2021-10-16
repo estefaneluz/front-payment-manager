@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 import dayjs from 'dayjs';
+import { handleStatus } from '../../functions/handleStatus';
 
 import InputRound from '../../components/InputRound';
 import '../../components/InputRound/styles.css';
@@ -13,7 +14,7 @@ function ModalEditCharge({charge, closeModal}) {
     const [clients, setClients] = useState([]);
     const [buttonClass, setButtonClass] = useState('pink-opacity');
     const { token, setLoading, setAlert } = useContext(GlobalStatesContext);
-    const { register, watch, handleSubmit, formState: { errors }, reset, setError } = useForm();
+    const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const watchAllFields = watch();
 
     const onSubmit = async (data) => {
@@ -77,6 +78,23 @@ function ModalEditCharge({charge, closeModal}) {
     }
 
     const deleteCharge = async () => {
+
+        if(charge.status === true) {
+            return setAlert({
+                type: 'error',
+                message: "Não é possível deletar uma cobrança paga."
+            });
+        }
+
+        const status = handleStatus(charge.status, charge.due_date);
+
+        if(status.text === 'Vencido') {
+            return setAlert({
+                type: 'error',
+                message: "Não é possível deletar uma cobrança vencida."
+            });
+        }
+
         setLoading(true);
            
         try {
@@ -90,7 +108,13 @@ function ModalEditCharge({charge, closeModal}) {
 
             setLoading(false);
 
-            if(response.ok) return closeModal();
+            if(response.ok) {
+                setAlert({
+                    type: 'success',
+                    message: "Cobrança deletada com sucesso!"
+                });
+                return closeModal();
+            }
         } catch(error) {
 
             setLoading(false);

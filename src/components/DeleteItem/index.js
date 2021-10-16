@@ -17,7 +17,11 @@ function DeleteItem({functionDelete}) {
                 <div className="popup-delete">
                     <p>Apagar item?</p>
                     <div>
-                        <button className="delete-btn --blue" onClick={functionDelete}>
+                        <button 
+                            type="button" 
+                            className="delete-btn --blue" 
+                            onClick={functionDelete}
+                        >
                             Sim
                         </button>
                         <button className="delete-btn --red" onClick={handlePopup}>

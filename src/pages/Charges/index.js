@@ -31,12 +31,12 @@ function Charges() {
 
         const response = await request.json();
         setLoading(false);
-        setCharges(response);
+        return response;
     }
 
     useEffect(() => {
         const awaitGetCharges = async () => {
-            await getCharges();
+            setCharges(await getCharges());
         }
 
         awaitGetCharges();
@@ -46,7 +46,7 @@ function Charges() {
         <div className="container">
             <Search className="self-end" />
             <Table titles={chargesTitles}>
-                <RowCharge charges={charges} getCharges={getCharges} />
+                <RowCharge charges={charges} getCharges={getCharges} setCharges={setCharges}/>
             </Table>
         </div>
     );

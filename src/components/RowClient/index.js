@@ -9,7 +9,7 @@ import editIcon from '../../assets/edit-icon.svg';
 import ModalEditClient from "../ModalEditClient";
 import ModalClientData from "../ModalClientData";
 
-function RowClient({clients, getClients}) {
+function RowClient({clients, getClients, setClients}) {
 
     const [idClient, setIdClient] = useState(null);
     const [open, setOpen] = useState({ modalEdit: false, modalData: false });
@@ -27,7 +27,8 @@ function RowClient({clients, getClients}) {
     const clearStates = async () => {
         setIdClient(null);
         setOpen({modalEdit: false, modalData: false});
-        await getClients();
+        const response = await getClients();
+        setClients(response);
     }
 
     return(

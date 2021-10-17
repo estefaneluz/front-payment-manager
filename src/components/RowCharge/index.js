@@ -5,7 +5,7 @@ import { handleStatus } from '../../functions/handleStatus';
 import NoRecords from '../NoRecords';
 import ModalEditCharge from '../ModalEditCharge';
 
-function RowCharge({charges, getCharges}) {
+function RowCharge({charges, getCharges, setCharges}) {
     const [openModal, setOpenModal] = useState(false);
     const [selectedCharge, setSelectedCharge] = useState({});
 
@@ -16,7 +16,7 @@ function RowCharge({charges, getCharges}) {
 
     const closeModal = async () => {
         setOpenModal(false);
-        await getCharges();
+        setCharges(await getCharges());
     }
 
     return(

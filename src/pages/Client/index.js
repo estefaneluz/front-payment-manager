@@ -31,13 +31,13 @@ function Client() {
         );
 
         const response = await request.json();
-        setClients(response);
         setLoading(false);
+        return response;
     }
 
     useEffect(() => {
         const awaitGetClients = async () => {
-            await getClients();
+            setClients(await getClients());
         }
 
         awaitGetClients();
@@ -53,7 +53,7 @@ function Client() {
                     <Search />
                 </div>
                 <Table titles={clientTitles}>
-                    <RowClient clients={clients} getClients={getClients}/>
+                    <RowClient clients={clients} getClients={getClients} setClients={setClients}/>
                 </Table>
             </div>
         </>

@@ -61,13 +61,15 @@ function Reports() {
         );
 
         const response = await request.json();
-        response.sort(sortDataByName);
         setLoading(false);
 
-        if(orderTable === 'desc') {
-            return response.reverse();
-        }
+        if(Array.isArray(response)) {
+            response.sort(sortDataByName);
 
+            if(orderTable === 'desc') {
+                return response.reverse();
+            }
+        }
         return response;
     }
 
@@ -91,7 +93,7 @@ function Reports() {
         } else {
             sortData(charges, setCharges, orderTable);
         }
-    }, [orderTable, reportFilter]);
+    }, [orderTable]);
 
     return(
         <div className="container">

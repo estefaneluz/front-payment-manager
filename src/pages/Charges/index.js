@@ -33,11 +33,13 @@ function Charges() {
         );
 
         const response = await request.json();
-        response.sort(sortDataByName);
-        setLoading(false);
+        if(Array.isArray(response)) {
+            response.sort(sortDataByName);
+            setLoading(false);
 
-        if(orderTable === 'desc') {
-            return response.reverse();
+            if(orderTable === 'desc') {
+                return response.reverse();
+            }
         }
 
         return response;

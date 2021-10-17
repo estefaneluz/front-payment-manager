@@ -4,11 +4,12 @@ export function sortDataByName(a, b) {
 
 export function sortData(state, setState, orderTable) {
     const ordered = [...state];
-        ordered.sort(sortDataByName);
+        if(Array.isArray(ordered)) {
+            ordered.sort(sortDataByName);
 
-        if(orderTable === 'desc') {
-            setState(ordered.reverse());
+            if(orderTable === 'desc') {
+                setState(ordered.reverse());
+            }
         }
-
-        return setState(ordered);
+    return setState(ordered);
 }

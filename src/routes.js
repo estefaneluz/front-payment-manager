@@ -35,7 +35,7 @@ function Routes() {
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState({});
     const [reportFilter, setReportFilter] = useState({page: '', status: ''});
-    const [orderTable, setOrderTable] = useState({clients: 'asc', charges: 'asc'});
+    const [orderTable, setOrderTable] = useState('asc');
     
     const styles = useStyles();
 

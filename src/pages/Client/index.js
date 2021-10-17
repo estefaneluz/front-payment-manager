@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 import { OrderTableStatesContext } from '../../contexts/OrderTableStatesContext';
-import { sortDataByName, orderData} from '../../functions/sortDataByName';
+import { sortDataByName, sortData} from '../../functions/sortDataByName';
 
 import Table from '../../components/Table';
 import Search from '../../components/Search';
@@ -37,7 +37,7 @@ function Client() {
         response.sort(sortDataByName);
         setLoading(false);
 
-        if(orderTable.clients === 'desc') {
+        if(orderTable === 'desc') {
             return response.reverse();
         }
 
@@ -53,8 +53,8 @@ function Client() {
     }, []);
 
     useEffect(() => {
-        orderData(clients, setClients, orderTable.clients)
-    }, [orderTable.clients]);
+        sortData(clients, setClients, orderTable)
+    }, [orderTable]);
 
     return (
         <>

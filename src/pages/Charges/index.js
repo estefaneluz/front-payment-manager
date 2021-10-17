@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import Table from '../../components/Table';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
+import { OrderTableStatesContext } from '../../contexts/OrderTableStatesContext';
+import { sortDataByName, sortData} from '../../functions/sortDataByName';
 import Search from '../../components/Search';
 import RowCharge from '../../components/RowCharge';
 
@@ -16,6 +18,7 @@ export const chargesTitles = [
 function Charges() {
     const [charges, setCharges] = useState([]);    
     const { token, setLoading } = useContext(GlobalStatesContext);
+    const { orderTable } = useContext(OrderTableStatesContext);
 
     const getCharges = async () => {
         setLoading(true);
@@ -30,7 +33,13 @@ function Charges() {
         );
 
         const response = await request.json();
+        response.sort(sortDataByName);
         setLoading(false);
+
+        if(orderTable === 'desc') {
+            return response.reverse();
+        }
+
         return response;
     }
 
@@ -42,10 +51,14 @@ function Charges() {
         awaitGetCharges();
     }, []);
 
+    useEffect(() => {
+        sortData(charges, setCharges, orderTable)
+    }, [orderTable]);
+
     return (
         <div className="container">
             <Search className="self-end" />
-            <Table titles={chargesTitles}>
+            <Table titles={chargesTitles} type="clients">
                 <RowCharge charges={charges} getCharges={getCharges} setCharges={setCharges}/>
             </Table>
         </div>

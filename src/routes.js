@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { GlobalStatesContext } from "./contexts/GlobalStatesContext";
 import { ReportsStatesContext } from './contexts/ReportsStatesContext';
+import { OrderTableStatesContext } from "./contexts/OrderTableStatesContext";
 import { Backdrop, CircularProgress, Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
@@ -34,6 +35,8 @@ function Routes() {
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState({});
     const [reportFilter, setReportFilter] = useState({page: '', status: ''});
+    const [orderTable, setOrderTable] = useState({clients: 'asc', charges: 'asc'});
+    
     const styles = useStyles();
 
     const login = (value) => {
@@ -57,6 +60,8 @@ function Routes() {
 
     const valueReport = { reportFilter, setReportFilter }
 
+    const orderContextValue = { orderTable, setOrderTable }
+
     return (
         <GlobalStatesContext.Provider value={valueContext}>
             <Router>
@@ -65,14 +70,18 @@ function Routes() {
                     <Route path="/sign-up" component={SignUp} />
                     <ProtectedRoutes>
                         <Main>
+                            <OrderTableStatesContext.Provider value={orderContextValue}>
                             <ReportsStatesContext.Provider value={valueReport}>
                                 <Route path="/home" component={Home} />
                                 <Route path="/reports" component={Reports}/>
                             </ReportsStatesContext.Provider>
+
+                                <Route path="/clients" exact component={Client} />
+                                <Route path="/charges" exact component={Charges} />
+                            </OrderTableStatesContext.Provider>
+
                             <Route path="/clients/new" component={RegisterClient} />
-                            <Route path="/clients" exact component={Client} />
                             <Route path="/charges/new" component={RegisterCharge} />
-                            <Route path="/charges" exact component={Charges} />
                         </Main>
                     </ProtectedRoutes>
                 </Switch>

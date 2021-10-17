@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
+import { OrderTableStatesContext } from '../../contexts/OrderTableStatesContext';
+import sortDataByName from '../../functions/sortDataByName';
 
 import Table from '../../components/Table';
 import Search from '../../components/Search';
@@ -8,7 +10,7 @@ import RowClient from '../../components/RowClient';
 
 
 export const clientTitles = [
-    "Clientes",
+    "Cliente",
     "Cobranças Feitas",
     "Cobranças Recebidas",
     "Status"
@@ -17,6 +19,7 @@ export const clientTitles = [
 function Client() {
     const [clients, setClients] = useState([]);
     const { token, setLoading } = useContext(GlobalStatesContext);
+    const { orderTable } = useContext(OrderTableStatesContext);
 
     const getClients = async () => {
         setLoading(true);
@@ -37,11 +40,19 @@ function Client() {
 
     useEffect(() => {
         const awaitGetClients = async () => {
-            setClients(await getClients());
+            var fruit = ['cherries', 'apples', 'bananas'];
+            fruit.sort();
+            console.log(fruit);
+
+            const response = await getClients();
+            response.sort(sortDataByName);
+            console.log(response);
+
+            setClients(response);
         }
 
         awaitGetClients();
-    }, []);
+    }, [orderTable.clients]);
 
     return (
         <>

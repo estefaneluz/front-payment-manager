@@ -6,10 +6,12 @@ import RowClient from "../../components/RowClient";
 import { clientTitles } from '../Client';
 import { chargesTitles } from '../Charges';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
+import { ReportsStatesContext } from '../../contexts/ReportsStatesContext';
 
 function Reports() {
     const [clients, setClients] = useState([]);
     const { token, setLoading } = useContext(GlobalStatesContext);
+    const { reportFilter } = useContext(ReportsStatesContext);
 
     const getClients = async () => {
         setLoading(true);

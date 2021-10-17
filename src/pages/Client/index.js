@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
 import { OrderTableStatesContext } from '../../contexts/OrderTableStatesContext';
-import sortDataByName from '../../functions/sortDataByName';
+import { sortDataByName, orderData} from '../../functions/sortDataByName';
 
 import Table from '../../components/Table';
 import Search from '../../components/Search';
@@ -34,24 +34,26 @@ function Client() {
         );
 
         const response = await request.json();
+        response.sort(sortDataByName);
         setLoading(false);
+
+        if(orderTable.clients === 'desc') {
+            return response.reverse();
+        }
+
         return response;
     }
 
     useEffect(() => {
         const awaitGetClients = async () => {
-            var fruit = ['cherries', 'apples', 'bananas'];
-            fruit.sort();
-            console.log(fruit);
-
-            const response = await getClients();
-            response.sort(sortDataByName);
-            console.log(response);
-
-            setClients(response);
+            setClients(await getClients());
         }
 
         awaitGetClients();
+    }, []);
+
+    useEffect(() => {
+        orderData(clients, setClients, orderTable.clients)
     }, [orderTable.clients]);
 
     return (

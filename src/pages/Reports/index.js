@@ -15,6 +15,7 @@ import { sortDataByName, sortData } from '../../functions/sortDataByName';
 function Reports() {
     const [charges, setCharges] = useState([]);
     const [clients, setClients] = useState([]);
+    const [search, setSearch] = useState('');
     const { token, setLoading } = useContext(GlobalStatesContext);
     const { reportFilter } = useContext(ReportsStatesContext);
     const { orderTable } = useContext(OrderTableStatesContext);
@@ -73,6 +74,41 @@ function Reports() {
         return response;
     }
 
+    const searchCharge = async () => {
+        const chargesCopy = await getCharges();
+
+        if (!search) {
+            setCharges(chargesCopy);
+            return;
+        }
+
+        const filteredCharges = chargesCopy.filter((charge) =>
+            (
+                charge.name.toLowerCase().includes(search.toLowerCase()) ||  
+                charge.id.toString().includes(search) 
+
+            )
+        );
+        setCharges(filteredCharges);
+    }
+
+    const searchClient = async () => {
+        const clientsCopy = await getClients();
+
+        if (!search) {
+            setClients(clientsCopy);
+            return;
+        }
+
+        const filteredClients = clientsCopy.filter((client) =>
+            (
+                client.name.toLowerCase().includes(search.toLowerCase()) ||  
+                client.email.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+        setClients(filteredClients);
+    }
+
     useEffect(() => {
         const awaitGetClients = async () => {
             if(reportFilter.page === 'Clientes') {
@@ -99,7 +135,11 @@ function Reports() {
         <div className="container">
             <div className="flex-row items-center space-between">
                 <ReportNavigation />
-                <Search />
+                <Search 
+                    search={search} 
+                    setSearch={setSearch} 
+                    getSearch={reportFilter.page === 'Clientes' ? searchClient :  searchCharge} 
+                />
             </div>
             <Table titles={reportFilter.page === 'Clientes' ? clientTitles :  chargesTitles}>
                 {reportFilter.page === 'Clientes' ?

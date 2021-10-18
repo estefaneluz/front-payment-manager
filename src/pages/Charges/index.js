@@ -64,7 +64,6 @@ function Charges() {
         setCharges(filteredCharges);
     }
 
-
     useEffect(() => {
         const awaitGetCharges = async () => {
             setCharges(await getCharges());

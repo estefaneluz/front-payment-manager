@@ -16,6 +16,11 @@ body {
     font-size: 14px;
 }
 
+textarea {
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+}
+
 h1 {
     font-size: 22px;
     text-transform: uppercase;

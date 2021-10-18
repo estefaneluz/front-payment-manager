@@ -143,10 +143,8 @@ function Reports() {
             </div>
             <Table titles={reportFilter.page === 'Clientes' ? clientTitles :  chargesTitles}>
                 {reportFilter.page === 'Clientes' ?
-                    !!clients[0]?.id && 
-                        <RowClient clients={clients} getClients={getClients} setClients={setClients} />
-                    : !!charges[0]?.id &&
-                        <RowCharge charges={charges} getCharges={getCharges} setCharges={setCharges}/>
+                    <RowClient clients={clients} getClients={getClients} setClients={setClients} />
+                :   <RowCharge charges={charges} getCharges={getCharges} setCharges={setCharges}/>
                 }
             </Table>
         </div>

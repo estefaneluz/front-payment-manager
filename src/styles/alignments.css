@@ -6,6 +6,14 @@
     align-items: center;
 }
 
+.space-between {
+    justify-content: space-between;
+}
+
+.self-end {
+    align-self: flex-end;
+}
+
 .flex-column {
     display: flex;
     flex-direction: column;

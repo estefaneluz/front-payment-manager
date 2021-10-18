@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
 
-function timestampToDate(timestamp) {
+function timestampToDate(timestamp, mask) {
     const date = new Date(Number(timestamp));
 
-    return dayjs(date).format('DD/MM/YYYY');
+    return dayjs(date).format(mask);
 }
 
 export default timestampToDate;

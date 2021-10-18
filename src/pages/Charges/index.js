@@ -1,12 +1,12 @@
-import './styles.css';
 import { useState, useEffect, useContext } from 'react';
 import Table from '../../components/Table';
 import { GlobalStatesContext } from '../../contexts/GlobalStatesContext';
-import timestampToDate from '../../functions/timestampToDate';
-import { handleStatus } from '../../functions/handleStatus';
-import NoRecords from '../../components/NoRecords';
+import { OrderTableStatesContext } from '../../contexts/OrderTableStatesContext';
+import { sortDataByName, sortData} from '../../functions/sortDataByName';
+import Search from '../../components/Search';
+import RowCharge from '../../components/RowCharge';
 
-const tableTitles = [
+export const chargesTitles = [
     "Id",
     "Cliente",
     "Descrição",
@@ -16,12 +16,14 @@ const tableTitles = [
 ]
 
 function Charges() {
-    const [charges, setCharges] = useState([]);    
+    const [charges, setCharges] = useState([]);
+    const [search, setSearch] = useState('');    
     const { token, setLoading } = useContext(GlobalStatesContext);
+    const { orderTable } = useContext(OrderTableStatesContext);
 
     const getCharges = async () => {
         setLoading(true);
-        const response = await fetch(
+        const request = await fetch(
             "https://api-payment-manager.herokuapp.com/cobrancas/",
             {
             method: "GET",
@@ -30,39 +32,60 @@ function Charges() {
             },
             }
         );
-        setCharges(await response.json());
-        setLoading(false);
+
+        const response = await request.json();
+        if(Array.isArray(response)) {
+            response.sort(sortDataByName);
+            setLoading(false);
+
+            if(orderTable === 'desc') {
+                return response.reverse();
+            }
+        }
+
+        return response;
+    }
+
+    const searchCharge = async () => {
+        const chargesCopy = await getCharges();
+
+        if (!search) {
+            setCharges(chargesCopy);
+            return;
+        }
+
+        const filteredCharges = chargesCopy.filter((charge) =>
+            (
+                charge.name.toLowerCase().includes(search.toLowerCase()) ||  
+                charge.id.toString().includes(search) 
+
+            )
+        );
+        setCharges(filteredCharges);
     }
 
     useEffect(() => {
         const awaitGetCharges = async () => {
-            await getCharges();
+            setCharges(await getCharges());
         }
 
         awaitGetCharges();
     }, []);
 
+    useEffect(() => {
+        sortData(charges, setCharges, orderTable)
+    }, [orderTable]);
+
     return (
         <div className="container">
-            <Table titles={tableTitles}>
-                {!!charges[0]?.id ?
-                    charges.map( charge => (
-                        <tr key={charge.id}>
-                            <td className="text-bold">{`#${charge.id}`}</td>
-                            <td>{charge.name}</td>
-                            <td className="charge-description">{charge.description}</td>
-                            <td>R$ {charge.amount / 100}</td>
-                            <td className={`text-status 
-                                --${handleStatus(charge.status, charge.due_date).className}`}
-                            >
-                                {handleStatus(charge.status, charge.due_date).text}
-                            </td>
-                            <td>{timestampToDate(charge.due_date)}</td>
-                        </tr>
-                    ))
-
-                    : <NoRecords element='cobranças' pronoun='a' link='/charges/new' />
-                }
+            <Search 
+                className="self-end" 
+                search={search} 
+                setSearch={setSearch} 
+                getSearch={searchCharge}
+            />
+            <Table titles={chargesTitles} type="clients">
+                <RowCharge charges={charges} getCharges={getCharges} setCharges={setCharges}/>
             </Table>
         </div>
     );

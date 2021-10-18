@@ -8,6 +8,11 @@ function Search({className, search, setSearch, getSearch}) {
             <input 
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(e) => {
+                    if(e.key === 'Enter') {
+                        getSearch();
+                    }
+                }}
                 type="search" 
                 placeholder="Procurar por Nome, E-mail ou CPF"
             />

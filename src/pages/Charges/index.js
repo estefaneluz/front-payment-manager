@@ -54,14 +54,17 @@ function Charges() {
             return;
         }
 
-        const filteredCharges = chargesCopy.filter((charge) =>
-            (
-                charge.name.toLowerCase().includes(search.toLowerCase()) ||  
-                charge.id.toString().includes(search) 
-
-            )
-        );
-        setCharges(filteredCharges);
+        if(!!chargesCopy[0]?.name) {
+            const filteredCharges = chargesCopy.filter((charge) =>
+                (
+                    charge.name.toLowerCase().includes(search.toLowerCase()) || 
+                    charge.email.toLowerCase().includes(search.toLowerCase()) ||
+                    charge.id.toString().includes(search) ||
+                    charge.cpf.includes(search)
+                )
+            );
+            setCharges(filteredCharges);
+        }
     }
 
     useEffect(() => {

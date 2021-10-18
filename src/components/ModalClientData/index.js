@@ -110,7 +110,7 @@ function ModalClientData({id, onClick}) {
                                 client.charges.map(charge => 
                                     <CardCharge charge={charge} />
                                 )
-                                : <NoRecords element='cobranças' pronoun={'a'} link='/charges/new' />
+                                : <NoRecords message="Não há cobranças registradas." link='/charges/new' />
                             }
                         </div>
                     </div>

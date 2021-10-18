@@ -35,9 +35,10 @@ function Client() {
         );
 
         const response = await request.json();
+        setLoading(false);
+
         if(Array.isArray(response)) {
             response.sort(sortDataByName);
-            setLoading(false);
 
             if(orderTable === 'desc') {
                 return response.reverse();
@@ -54,13 +55,16 @@ function Client() {
             return;
         }
 
-        const filteredClients = clientsCopy.filter((client) =>
-            (
-                client.name.toLowerCase().includes(search.toLowerCase()) ||  
-                client.email.toLowerCase().includes(search.toLowerCase())
-            )
-        );
-        setClients(filteredClients);
+        if(!!clientsCopy[0]?.name) {
+            const filteredClients = clientsCopy.filter((client) =>
+                (
+                    client.name.toLowerCase().includes(search.toLowerCase()) ||  
+                    client.email.toLowerCase().includes(search.toLowerCase()) ||
+                    client.cpf.includes(search)
+                )
+            );
+            setClients(filteredClients);
+        }
     }
 
     useEffect(() => {

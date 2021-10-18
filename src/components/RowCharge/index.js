@@ -37,7 +37,7 @@ function RowCharge({charges, getCharges, setCharges}) {
                     </tr>
                 ))
 
-                : <NoRecords message="Não foram encontradas cobranças." link='/charges/new' />
+                : <NoRecords message="Não existem cobranças para essa pesquisa." link='/charges/new' />
             }
 
             { openModal && 

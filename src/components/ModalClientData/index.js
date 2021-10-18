@@ -46,10 +46,7 @@ function ModalClientData({id, onClick}) {
         awaitDetailedClient();
     }, []);
 
-    useEffect(() => {
-        console.log(client);
-        console.log(id);
-    }, [client])
+
     return(
         <div className="modal">
             {!!client.name && (

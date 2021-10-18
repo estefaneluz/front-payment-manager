@@ -1,0 +1,11 @@
+#charge-description span {
+    margin-top: 3px;
+    font-size: 14px;
+    color: #868686;
+    font-weight: normal;
+}
+
+.form-edit-charge {
+    row-gap: 15px;
+    padding: 30px 80px;
+}

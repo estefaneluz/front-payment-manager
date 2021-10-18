@@ -2,6 +2,7 @@ import './styles.css'
 import InputMask from 'react-input-mask'
 
 function InputRound(props) {
+
   const inputAttributes = {
     value: props.value,
     defaultValue: props.defaultValue,

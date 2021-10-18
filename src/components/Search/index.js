@@ -1,5 +1,4 @@
 import './styles.css';
-import { useEffect } from 'react';
 import searchIcon from '../../assets/search-icon.svg';
 
 function Search({className, search, setSearch, getSearch}) {

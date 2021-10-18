@@ -16,7 +16,8 @@ export const chargesTitles = [
 ]
 
 function Charges() {
-    const [charges, setCharges] = useState([]);    
+    const [charges, setCharges] = useState([]);
+    const [search, setSearch] = useState('');    
     const { token, setLoading } = useContext(GlobalStatesContext);
     const { orderTable } = useContext(OrderTableStatesContext);
 
@@ -45,6 +46,25 @@ function Charges() {
         return response;
     }
 
+    const searchCharge = async () => {
+        const chargesCopy = await getCharges();
+
+        if (!search) {
+            setCharges(chargesCopy);
+            return;
+        }
+
+        const filteredCharges = chargesCopy.filter((charge) =>
+            (
+                charge.name.toLowerCase().includes(search.toLowerCase()) ||  
+                charge.id.toString().includes(search) 
+
+            )
+        );
+        setCharges(filteredCharges);
+    }
+
+
     useEffect(() => {
         const awaitGetCharges = async () => {
             setCharges(await getCharges());
@@ -59,7 +79,12 @@ function Charges() {
 
     return (
         <div className="container">
-            <Search className="self-end" />
+            <Search 
+                className="self-end" 
+                search={search} 
+                setSearch={setSearch} 
+                getSearch={searchCharge}
+            />
             <Table titles={chargesTitles} type="clients">
                 <RowCharge charges={charges} getCharges={getCharges} setCharges={setCharges}/>
             </Table>

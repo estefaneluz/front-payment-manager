@@ -18,6 +18,7 @@ export const clientTitles = [
 
 function Client() {
     const [clients, setClients] = useState([]);
+    const [search, setSearch] = useState('');
     const { token, setLoading } = useContext(GlobalStatesContext);
     const { orderTable } = useContext(OrderTableStatesContext);
 
@@ -45,6 +46,23 @@ function Client() {
         return response;
     }
 
+    const searchClient = async () => {
+        const clientsCopy = await getClients();
+
+        if (!search) {
+            setClients(clientsCopy);
+            return;
+        }
+
+        const filteredClients = clientsCopy.filter((client) =>
+            (
+                client.name.toLowerCase().includes(search.toLowerCase()) ||  
+                client.email.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+        setClients(filteredClients);
+    }
+
     useEffect(() => {
         const awaitGetClients = async () => {
             setClients(await getClients());
@@ -64,10 +82,10 @@ function Client() {
                     <Link className="btn btn-border-pink" to="/clients/new"> 
                         Adicionar Cliente
                     </Link> 
-                    <Search />
+                    <Search search={search} setSearch={setSearch} getSearch={searchClient} />
                 </div>
                 <Table titles={clientTitles}>
-                    <RowClient clients={clients} getClients={getClients} setClients={setClients}/>
+                    <RowClient clients={clients} getClients={getClients} setClients={searchClient}/>
                 </Table>
             </div>
         </>

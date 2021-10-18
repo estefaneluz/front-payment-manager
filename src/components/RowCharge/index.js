@@ -37,7 +37,7 @@ function RowCharge({charges, getCharges, setCharges}) {
                     </tr>
                 ))
 
-                : <NoRecords element='cobranças' pronoun='a' link='/charges/new' />
+                : <NoRecords element='cobranças' link='/charges/new' />
             }
 
             { openModal && 

@@ -73,7 +73,7 @@ function RowClient({clients, getClients, setClients}) {
                 </td>
             </tr>
         )))
-        : <NoRecords element='clientes' pronoun='o' link='/clients/new' />
+        : <NoRecords element='clientes' link='/clients/new' />
         }
 
         {!!open.modalEdit ? (

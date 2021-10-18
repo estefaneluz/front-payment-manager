@@ -4,7 +4,6 @@ export function sortDataByName(a, b) {
 
 export function sortData(state, setState, orderTable) {
     const ordered = [...state];
-    console.log(ordered);
     if(!!ordered[0]?.name) {
         ordered.sort(sortDataByName);
 

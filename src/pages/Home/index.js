@@ -34,7 +34,6 @@ function Home() {
 
         const response = await request.json();
         setLoading(false);
-        console.log(response);
         return response;
     }
 

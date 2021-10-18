@@ -73,7 +73,7 @@ function RowClient({clients, getClients, setClients}) {
                 </td>
             </tr>
         )))
-        : <NoRecords element='clientes' link='/clients/new' />
+        : <NoRecords message="Não há resultados para esses clientes." link='/clients/new' />
         }
 
         {!!open.modalEdit ? (

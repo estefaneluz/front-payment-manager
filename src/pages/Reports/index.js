@@ -38,13 +38,15 @@ function Reports() {
             }
         );
         const response = await request.json();
-        response.sort(sortDataByName);
         setLoading(false);
 
-        if(orderTable === 'desc') {
-            return response.reverse();
-        }
+        if(Array.isArray(response)) {
+            response.sort(sortDataByName);
 
+            if(orderTable === 'desc') {
+                return response.reverse();
+            }
+        }
         return response;
     }
 
@@ -82,14 +84,17 @@ function Reports() {
             return;
         }
 
-        const filteredCharges = chargesCopy.filter((charge) =>
-            (
-                charge.name.toLowerCase().includes(search.toLowerCase()) ||  
-                charge.id.toString().includes(search) 
-
-            )
-        );
-        setCharges(filteredCharges);
+        if(!!chargesCopy[0]?.name) {
+            const filteredCharges = chargesCopy.filter((charge) =>
+                (
+                    charge.name.toLowerCase().includes(search.toLowerCase()) ||  
+                    charge.email.toLowerCase().includes(search.toLowerCase()) ||
+                    charge.id.toString().includes(search) ||
+                    charge.cpf.includes(search)
+                )
+            );
+            setCharges(filteredCharges);
+        }
     }
 
     const searchClient = async () => {
@@ -100,13 +105,16 @@ function Reports() {
             return;
         }
 
-        const filteredClients = clientsCopy.filter((client) =>
-            (
-                client.name.toLowerCase().includes(search.toLowerCase()) ||  
-                client.email.toLowerCase().includes(search.toLowerCase())
-            )
-        );
-        setClients(filteredClients);
+        if(!!clientsCopy[0]?.name) {
+            const filteredClients = clientsCopy.filter((client) =>
+                (
+                    client.name.toLowerCase().includes(search.toLowerCase()) ||
+                    client.email.toLowerCase().includes(search.toLowerCase()) ||
+                    client.cpf.includes(search)
+                )
+            );
+            setClients(filteredClients);
+        }
     }
 
     useEffect(() => {
@@ -143,10 +151,8 @@ function Reports() {
             </div>
             <Table titles={reportFilter.page === 'Clientes' ? clientTitles :  chargesTitles}>
                 {reportFilter.page === 'Clientes' ?
-                    !!clients[0]?.id && 
-                        <RowClient clients={clients} getClients={getClients} setClients={setClients} />
-                    : !!charges[0]?.id &&
-                        <RowCharge charges={charges} getCharges={getCharges} setCharges={setCharges}/>
+                    <RowClient clients={clients} getClients={getClients} setClients={setClients} />
+                :   <RowCharge charges={charges} getCharges={getCharges} setCharges={setCharges}/>
                 }
             </Table>
         </div>

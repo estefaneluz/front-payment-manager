@@ -46,7 +46,6 @@ function Home() {
     }, [])
 
     return(
-        <>
         <div className="home-container">
             <Card icon={userIcon} title="Clientes">
                 <CardCounter 
@@ -93,7 +92,6 @@ function Home() {
                 />
             </Card>
         </div>
-        </>
     );
 }
 

@@ -5,7 +5,7 @@
 - [Lucas Goulart](https://github.com/glrtlucas)
 
 #### Link  [⛓️https://payment-manager.netlify.app/](https://payment-manager.netlify.app/)
-#### [Repositório da API](https://github.com/glrtlucas)
+#### [Repositório da API](https://github.com/glrtlucas/back-payment-manager)
 
 ## Sobre
 > Uma aplicação para cadastrar e gerenciar cobranças.

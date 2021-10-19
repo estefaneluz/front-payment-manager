@@ -1,12 +1,7 @@
-.modal-edit-client {
-    padding-top: 40px;
-}
-
 #form-edit-client {
     row-gap: 20px;
-    padding: 35px 8vw;
+    padding: 30px 8vw 25px 8vw;
     font-size: 12px;
-    margin: 20px 0;
 }
 
 #form-edit-client div input {
